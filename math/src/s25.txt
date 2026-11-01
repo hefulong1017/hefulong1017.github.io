@@ -1,0 +1,989 @@
+1. 计算下列不定积分
+(1)
+Z
+x³
+1 + x dx
+解：将分子变形为x³ = (x³ + 1) −1 = (x + 1)(x² −x + 1) −1，则：
+Z
+x³
+1 + x dx =
+Z (x + 1)(x² −x + 1) −1
+x + 1
+dx
+=
+Z 
+x² −x + 1 −
+1
+x + 1
+
+dx
+= x³
+3 −x²
+2 + x −ln |x + 1| + C
+(2)
+Z x5 + x⁴ −8
+x³ −x
+dx
+解：分母因式分解为x³ −x = x(x −1)(x + 1)，对分子分母做多项式除法：
+x5 + x⁴ −8
+x³ −x
+= x² + x + 1 +
+x² + x −8
+x(x −1)(x + 1)
+用部分分式法拆分
+x²+x−8
+x(x−1)(x+1) = 8
+x −
+3
+x−1 −
+4
+x+1，则：
+Z x5 + x⁴ −8
+x³ −x
+dx =
+Z 
+x² + x + 1 + 8
+x −
+3
+x −1 −
+4
+x + 1
+
+dx
+= x³
+3 + x²
+2 + x + 8 ln |x| −3 ln |x −1| −4 ln |x + 1| + C
+(3)
+Z
+x³ + 1
+x³ −x² dx
+解：分母因式分解为x³ −x² = x2(x −1)，得：
+x³ + 1
+x³ −x² = 1 +
+x² + 1
+x2(x −1)
+用部分分式法拆分
+x²+1
+x2(x−1) = −1
+x −
+1
+x² +
+2
+x−1，则：
+Z
+x³ + 1
+x³ −x² dx =
+Z 
+1 −1
+x −1
+x² +
+2
+x −1
+
+dx
+= x −ln |x| + 1
+x + 2 ln |x −1| + C
+(4)
+Z
+x5
+(x −1)2(x² −1) dx
+解：分母化简为(x −1)3(x + 1)，令t = x −1，则x = t + 1，dx = dt，x5 = (t + 1)5
+Z
+(t + 1)5
+t3(t + 2) dt =
+Z 
+t² + 3t + 4 + 7t² + 5t + 1
+t3(t + 2)
+
+dt
+用部分分式法拆分7t²+5t+1
+t3(t+2) = 19/8
+t
++ 2
+t² + 1/2
+t³ −19/8
+t+2 ，则：
+Z
+x5
+(x −1)2(x² −1) dx = (x −1)3
+3
++ 3
+2(x −1)2 + 4(x −1)
++ 19
+8 ln |x −1| −
+2
+x −1 −
+1
+4(x −1)2 −19
+8 ln |x + 1| + C
+
+(5)
+Z
+1
+1 + x⁴ dx
+解：利用分式拆分1 + x⁴ = (x² +
+√
+2x + 1)(x² −
+√
+2x + 1)，拆分后积分：
+Z
+1
+1 + x⁴ dx =
+√
+2
+4 ln x² +
+√
+2x + 1
+x² −
+√
+2x + 1
++
+√
+2
+2 arctan(
+√
+2x + 1) +
+√
+2
+2 arctan(
+√
+2x −1) + C
+(6)
+Z
+x²
+1 −x⁴ dx
+解：因式分解分母1 −x⁴ = (1 −x²)(1 + x²)，拆分得：
+x²
+1 −x⁴ = 1
+2
+
+1
+1 −x² +
+1
+1 + x²
+
+Z
+x²
+1 −x⁴ dx = 1
+2
+Z
+1
+1 −x² dx + 1
+2
+Z
+1
+1 + x² dx
+= 1
+4 ln
+
+1 + x
+1 −x
+
+ + 1
+2 arctan x + C
+(7)
+Z
+1
+(x + 1)2(x² + 1) dx
+解：用部分分式法拆分：
+1
+(x + 1)2(x² + 1) = −
+1
+2(x + 1) +
+1
+2(x + 1)2 +
+x
+2(x² + 1)
+Z
+1
+(x + 1)2(x² + 1) dx = −1
+2 ln |x + 1| −
+1
+2(x + 1) + 1
+4 ln(x² + 1) + C
+(8)
+Z
+1 −x² −x + 3
+x³ −x² −x + 1 dx
+解：分母因式分解为(x −1)2(x + 1)，分子化简为−x² −x + 4 用部分分式法拆分：
+−x² −x + 4
+(x −1)2(x + 1) = −3/2
+x −1 −
+1
+(x −1)2 + 1/2
+x + 1
+Z
+1 −x² −x + 3
+x³ −x² −x + 1 dx = −3
+2 ln |x −1| +
+1
+x −1 + 1
+2 ln |x + 1| + C
+(9)
+Z
+2x + 2
+(x + 1)2(x −1) dx
+解：化简分子2x + 2 = 2(x + 1)，得：
+2(x + 1)
+(x + 1)2(x −1) =
+2
+(x + 1)(x −1)
+拆分得：
+2
+(x + 1)(x −1) =
+1
+x −1 −
+1
+x + 1
+Z
+2x + 2
+(x + 1)2(x −1) dx =
+Z 
+1
+x −1 −
+1
+x + 1
+
+dx
+= ln
+
+x −1
+x + 1
+
+ + C
+
+(10)
+Z
+1
+(x −1)2(x −2)3 dx
+解：用部分分式法拆分：
+1
+(x −1)2(x −2)3 =
+2
+x −1 −
+1
+(x −1)2 −
+2
+x −2 +
+3
+(x −2)2 +
+1
+(x −2)3
+Z
+1
+(x −1)2(x −2)3 dx = 2 ln |x −1| +
+1
+x −1 −2 ln |x −2| −
+3
+x −2 −
+1
+2(x −2)2 + C
+(11)
+Z
+x³
+(x −1)100 dx
+解：令t = x −1，则x = t + 1，dx = dt，x³ = (t + 1)3
+Z (t + 1)3
+t100
+dt =
+Z
+(t−97 + 3t−98 + 3t−99 + t−100) dt
+= −
+1
+96t96 −
+3
+97t97 −
+3
+98t98 −
+1
+99t99 + C
+= −
+1
+96(x −1)96 −
+3
+97(x −1)97 −
+3
+98(x −1)98 −
+1
+99(x −1)99 + C
+(12)
+Z
+1
+x(x10 + 2) dx
+解：令u = x10，则du = 10x9dx，x9dx =
+1
+10du
+Z
+1
+x(x10 + 2) dx =
+Z
+x9
+x10(x10 + 2) dx = 1
+10
+Z
+1
+u(u + 2) du
+= 1
+20 ln
+
+u
+u + 2
+
+ + C = 1
+20 ln
+
+x10
+x10 + 2
+
+ + C
+2. 计算下列不定积分
+(1)
+Z 2 sin x −cos x + 5
+1 + sin x
+dx
+解：拆分分子：
+2 sin x −cos x + 5 = 2(1 + sin x) −cos x + 3
+Z 2 sin x −cos x + 5
+1 + sin x
+dx =
+Z 
+2 + 3 −cos x
+1 + sin x
+
+dx
+= 2x + 3
+Z
+1
+1 + sin x dx −
+Z
+cos x
+1 + sin x dx
+= 2x + 3(tan x −sec x) −ln |1 + sin x| + C
+(2)
+Z
+1
+(2 + cos x) sin x dx
+
+解：用万能代换t = tan x
+2，则：sin x =
+2t
+1+t² ，cos x = 1−t²
+1+t² ，dx =
+2
+1+t² dt
+Z
+1
+(2 + cos x) sin x dx =
+Z
+1
+
+2 + 1−t²
+1+t²
+
+·
+2t
+1+t²
+·
+2
+1 + t² dt
+=
+Z 1 + t²
+3 + t² · 1
+t dt
+=
+Z 1
+t −
+2
+3 + t²
+
+dt
+= ln |t| −2
+√
+3 arctan t
+√
+3 + C
+= ln
+
+tan x
+2
+
+ −2
+√
+3 arctan
+tan x
+2
+√
+3
+
++ C
+(3)
+Z
+1
+sin x(1 + cos x) dx
+解：用万能代换t = tan x
+2：
+Z
+1
+sin x(1 + cos x) dx =
+Z
+1
+2t
+1+t² ·
+
+1 + 1−t²
+1+t²
+ ·
+2
+1 + t² dt
+=
+Z 1
+t dt = ln |t| + C = ln
+
+tan x
+2
+
+ + C
+(4)
+Z
+1
+sin x + tan x dx
+解：化简被积函数：
+sin x + tan x = sin x + sin x
+cos x = sin x(cos x + 1)
+cos x
+1
+sin x + tan x =
+cos x
+sin x(1 + cos x)
+用万能代换t = tan x
+2：
+Z
+cos x
+sin x(1 + cos x) dx =
+Z
+1−t²
+1+t²
+2t
+1+t² ·
+
+1 + 1−t²
+1+t²
+ ·
+2
+1 + t² dt
+=
+Z 1 −t²
+2t
+dt = 1
+2
+Z 1
+t −t
+
+dt
+= 1
+2 ln |t| −1
+4t² + C
+= 1
+2 ln
+
+tan x
+2
+
+ −1
+4 tan² x
+2 + C
+(5)
+Z
+1
+(sin x + cos x)2 dx
+解：化简分母：
+(sin x + cos x)2 = sin² x + 2 sin x cos x + cos² x = 1 + sin 2x
+
+Z
+1
+(sin x + cos x)2 dx =
+Z
+1
+1 + sin 2x dx
+=
+Z 1 −sin 2x
+cos² 2x
+dx
+=
+Z
+(sec² 2x −tan 2x sec 2x) dx
+= 1
+2 tan 2x −1
+2 sec 2x + C
+(6)
+Z
+1
+sin x cos³ x dx
+解：拆分：
+Z
+1
+sin x cos³ x dx =
+Z sin² x + cos² x
+sin x cos³ x
+dx
+=
+Z  sin x
+cos³ x +
+1
+sin x cos x
+
+dx
+=
+Z
+tan x sec² x dx +
+Z
+2
+sin 2x dx
+= 1
+2 tan² x + ln | tan x| + C
+(7)
+Z
+cos x
+1 + sin x dx
+解：令u = 1 + sin x，则du = cos x dx
+Z
+cos x
+1 + sin x dx =
+Z 1
+u du = ln |u| + C = ln |1 + sin x| + C
+(8)
+Z
+1
+3 + 5 cos x dx
+解：用万能代换t = tan x
+2：
+Z
+1
+3 + 5 cos x dx =
+Z
+1
+3 + 5 · 1−t²
+1+t²
+·
+2
+1 + t² dt
+=
+Z
+2
+3(1 + t²) + 5(1 −t²) dt
+=
+Z
+2
+8 −2t² dt =
+Z
+1
+4 −t² dt
+= 1
+4 ln
+
+2 + t
+2 −t
+
+ + C
+= 1
+4 ln
+
+2 + tan x
+2
+2 −tan x
+2
+
+ + C
+(9)
+Z
+1
+sin 2x −2 sin x dx
+解：化简分母：
+sin 2x −2 sin x = 2 sin x cos x −2 sin x = 2 sin x(cos x −1)
+Z
+1
+sin 2x −2 sin x dx =
+Z
+1
+2 sin x(cos x −1) dx
+= 1
+2
+Z
+1
+sin x(cos x −1) dx
+
+用万能代换t = tan x
+2：
+1
+2
+Z
+1
+sin x(cos x −1) dx = 1
+2
+Z
+1
+2t
+1+t² ·
+
+1−t²
+1+t² −1
+ ·
+2
+1 + t² dt
+= 1
+2
+Z 1
+t dt = 1
+2 ln |t| + C
+= 1
+2 ln
+
+tan x
+2
+
+ + C
+(10)
+Z
+1
+sin⁴ x + cos⁴ x dx
+解：化简分母：
+sin⁴ x + cos⁴ x = (sin² x + cos² x)2 −2 sin² x cos² x = 1 −1
+2 sin² 2x
+Z
+1
+sin⁴ x + cos⁴ x dx =
+Z
+2
+2 −sin² 2x dx
+=
+Z
+2
+2 −1−cos 4x
+2
+dx
+=
+Z
+4
+3 + cos 4x dx
+=
+1
+√
+2 arctan
+tan 2x
+√
+2
+
++ C
+3. 求下列不定积分
+(1)
+Z 1
+x
+r
+1 −x
+1 + x dx
+解：令t =
+q
+1−x
+1+x，则x = 1−t²
+1+t² ，dx =
+−4t
+(1+t²)2 dt
+Z 1
+x
+r
+1 −x
+1 + x dx =
+Z 1 + t²
+1 −t² · t ·
+−4t
+(1 + t²)2 dt
+=
+Z
+−4t²
+(1 −t²)(1 + t²) dt
+=
+Z 
+2
+1 + t² −
+2
+1 −t²
+
+dt
+= 2 arctan t −ln
+
+1 + t
+1 −t
+
+ + C
+= 2 arctan
+r
+1 −x
+1 + x −ln
+
+1 +
+q
+1−x
+1+x
+1 −
+q
+1−x
+1+x
+
++ C
+(2)
+Z
+√x
+3√
+x² −
+4√x
+dx
+
+解：令t =
+12√x，则x = t12，dx = 12t11dt
+Z
+√x
+3√
+x² −
+4√x
+dx =
+Z
+t6
+t8 −t³ · 12t11 dt
+= 12
+Z
+t17
+t3(t5 −1) dt = 12
+Z
+t14
+t5 −1 dt
+= 12
+Z 
+t9 + t⁴ +
+t⁴
+t5 −1
+
+dt
+= 12
+t10
+10 + t5
+5 + 1
+5 ln |t5 −1|
+
++ C
+= 6
+5x5/6 + 12
+5 x1/2 + 12
+5 ln |x5/12 −1| + C
+(3)
+Z 1 +
+√
+1 −x²
+1 −
+√
+1 −x² dx
+解：分子分母同乘1 +
+√
+1 −x²：
+1 +
+√
+1 −x²
+1 −
+√
+1 −x² = (1 +
+√
+1 −x²)2
+1 −(1 −x²)
+= (1 +
+√
+1 −x²)2
+x²
+Z 1 +
+√
+1 −x²
+1 −
+√
+1 −x² dx =
+Z (1 +
+√
+1 −x²)2
+x²
+dx
+=
+Z 1 + 2
+√
+1 −x² + 1 −x²
+x²
+dx
+=
+Z  2
+x² + 2
+√
+1 −x²
+x²
+−1
+
+dx
+= −2
+x + 2
+Z √
+1 −x²
+x²
+dx −x
+令x = sin θ，则dx = cos θdθ，
+√
+1 −x² = cos θ
+Z √
+1 −x²
+x²
+dx =
+Z
+cos θ
+sin² θ cos θ dθ =
+Z
+cot² θ dθ =
+Z
+(csc² θ −1)dθ = −cot θ −θ + C
+回代θ = arcsin x：
+= −
+√
+1 −x²
+x
+−arcsin x + C
+最终结果：
+−2
+x −2
+√
+1 −x²
+x
+−2 arcsin x −x + C
+(4)
+Z
+1
+√ex + 1 dx
+解：令t = √ex + 1，则t² = ex + 1，2tdt = exdx，dx =
+2t
+t²−1dt
+Z
+1
+√ex + 1 dx =
+Z 1
+t ·
+2t
+t² −1 dt
+=
+Z
+2
+t² −1 dt
+= ln
+
+t −1
+t + 1
+
+ + C
+= ln
+
+√ex + 1 −1
+√ex + 1 + 1
+
+ + C
+
+(5)
+Z
+1
+1 +
+3√x + 1 dx
+解：令t =
+3√x + 1，则x = t³ −1，dx = 3t2dt
+Z
+1
+1 +
+3√x + 1 dx =
+Z
+1
+1 + t · 3t² dt
+= 3
+Z
+t²
+1 + t dt
+= 3
+Z 
+t −1 +
+1
+1 + t
+
+dt
+= 3
+t²
+2 −t + ln |1 + t|
+
++ C
+= 3
+2(x + 1)2/3 −3(x + 1)1/3 + 3 ln |1 + (x + 1)1/3| + C
+(6)
+Z
+x
+√
+5 + x −x² dx
+解：配方分母：
+5 + x −x² = 21
+4 −
+
+x −1
+2
+2
+Z
+x
+√
+5 + x −x² dx =
+Z
+x
+q
+21
+4 −
+ x −1
+2
+2 dx
+令u = x −1
+2，则x = u + 1
+2，dx = du
+Z
+u + 1
+2
+q
+21
+4 −u²
+du =
+Z
+u
+q
+21
+4 −u²
+du + 1
+2
+Z
+1
+q
+21
+4 −u²
+du
+= −
+r
+21
+4 −u² + 1
+2 ·
+√
+21
+2
+arcsin 2u
+√
+21 + C
+= −
+√
+5 + x −x² +
+√
+21
+4
+arcsin 2x −1
+√
+21
++ C

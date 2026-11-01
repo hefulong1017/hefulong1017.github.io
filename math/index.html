@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
@@ -86,6 +86,27 @@
       border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,.12);
     }
     .page-images[hidden], .answer-text[hidden] { display: none; }
+
+    .latex-view { padding: 16px 26px 26px; }
+    .latex-toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .latex-toolbar button {
+      border: 1px solid var(--line); background: transparent; color: var(--muted);
+      border-radius: 999px; padding: 6px 11px; font-size: 11px; cursor: pointer;
+    }
+    .latex-toolbar button:hover { color: var(--ink); border-color: var(--muted); }
+    .latex-toolbar span { color: var(--faint); font-size: 10px; margin-left: auto; }
+    .latex-preview {
+      white-space: pre-wrap; word-break: break-word; font: 15px/1.95 var(--serif);
+      color: var(--ink); font-weight: 400; padding: 18px; border: 1px solid var(--line); border-radius: 12px;
+      background: var(--surface); min-height: 300px;
+    }
+    .latex-preview .katex-display { margin: 10px 0; overflow-x: auto; overflow-y: hidden; }
+    .latex-source {
+      display: block; width: 100%; min-height: 420px; resize: vertical;
+      border: 1px solid var(--line); border-radius: 12px; background: var(--surface);
+      color: var(--ink); padding: 16px; font: 12px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .latex-source[hidden], .latex-preview[hidden] { display: none; }
     .answer-text {
       margin: 0; padding: 24px 26px 30px; white-space: pre-wrap; word-break: break-word;
       font: 15px/1.95 var(--serif); color: var(--ink); overflow-wrap: anywhere;
@@ -109,6 +130,7 @@
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
+  <link rel="stylesheet" href="../katex.min.css">
 </head>
 <body>
   <header class="top">
@@ -123,7 +145,7 @@
     <p class="eyebrow">ADVANCED MATHEMATICS · 上册</p>
     <h1>高等数学上册 · 课本答案</h1>
     <p class="sub">安徽大学版 · 230 页 · 39 个习题与复习题</p>
-    <p class="note">按「习题 / 复习题」分类整理。默认显示原 PDF 的排版页，公式是完整的 LaTeX 排版；切到「文字」可检索、复制，文字由 OCR 识别，可能有偏差，以排版页为准。</p>
+    <p class="note">按「习题 / 复习题」分类整理。默认显示可编辑、可复制的 LaTeX 源码并实时渲染；「排版页」可对照原 PDF，「文字」用于全文检索。</p>
   </section>
 
   <div class="wrap">
@@ -141,8 +163,18 @@
           <a id="pdf-link" href="advanced-math.pdf" target="_blank" rel="noreferrer">PDF 原页 ↗</a>
         </div>
       </div>
-      <div class="view-switch"><button id="view-pages" type="button" class="active">排版页</button><button id="view-text" type="button">文字</button></div>
-      <div class="page-images" id="page-images"></div>
+      <div class="view-switch"><button id="view-pages" type="button">排版页</button><button id="view-latex" type="button" class="active">LaTeX</button><button id="view-text" type="button">文字</button></div>
+      <div class="page-images" id="page-images" hidden></div>
+      <div class="latex-view" id="latex-view">
+        <div class="latex-toolbar">
+          <button id="latex-edit" type="button">源码 / 编辑</button>
+          <button id="latex-copy" type="button">复制本节 LaTeX</button>
+          <button id="latex-copy-doc" type="button">复制完整 .tex</button>
+          <span>可直接编辑；复制后可在 Overleaf / TeX Live 编译</span>
+        </div>
+        <div class="latex-preview" id="latex-preview">正在转换…</div>
+        <textarea class="latex-source" id="latex-source" spellcheck="false" hidden></textarea>
+      </div>
       <pre class="answer-text" id="text" hidden>正在加载…</pre>
       <div class="pager">
         <button id="prev" type="button">← 上一节</button>
@@ -152,6 +184,8 @@
     </main>
   </div>
 
+  <script src="../katex.min.js"></script>
+  <script src="../auto-render.min.js"></script>
   <script src="data.js"></script>
   <script>
     (function () {
@@ -174,8 +208,57 @@
       var pageImages = document.getElementById('page-images');
       var viewPages = document.getElementById('view-pages');
       var viewText = document.getElementById('view-text');
-      var viewMode = 'pages';
+      var viewLatex = document.getElementById('view-latex');
+      var latexView = document.getElementById('latex-view');
+      var latexPreview = document.getElementById('latex-preview');
+      var latexSource = document.getElementById('latex-source');
+      var viewMode = 'latex';
       var current = 0;
+
+
+      function latexForDisplay(s) {
+        return String(s || '')
+          .replace(/\\section\*\{([^}]*)\}/g, '$1')
+          .replace(/\\subsection\*\{([^}]*)\}/g, '$1')
+          .replace(/\\textbf\{([^}]*)\}/g, '$1')
+          .replace(/\\emph\{([^}]*)\}/g, '$1')
+          .replace(/\\text\{([^{}]*)\}/g, '$1')
+          .replace(/\\quad/g, ' ')
+          .replace(/\\qquad/g, ' ')
+          .replace(/\\ /g, ' ');
+      }
+
+      function renderLatex() {
+        var sec = flat[current].sec;
+        var src = sec.latex || '';
+        latexSource.value = src;
+        if (!src) {
+          latexPreview.textContent = '本节的 LaTeX 源码还在转换中，稍后刷新。';
+          return;
+        }
+        latexPreview.textContent = latexForDisplay(src);
+        if (window.renderMathInElement) {
+          window.renderMathInElement(latexPreview, {
+            delimiters: [
+              { left: '\\[', right: '\\]', display: true },
+              { left: '\\(', right: '\\)', display: false }
+            ],
+            throwOnError: false
+          });
+        }
+      }
+
+      function copyText(t) {
+        if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t);
+        var ta = document.createElement('textarea');
+        ta.value = t; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); ta.remove();
+        return Promise.resolve();
+      }
+
+      function docWrap(body) {
+        return '\\documentclass[11pt]{article}\n\\usepackage[margin=2.2cm]{geometry}\n\\usepackage{amsmath,amssymb}\n\\usepackage[UTF8]{ctex}\n\\begin{document}\n\n' + body + '\n\n\\end{document}\n';
+      }
 
       function renderToc(filter) {
         toc.innerHTML = '';
@@ -227,6 +310,8 @@
         pageImages.innerHTML = html;
         pageImages.hidden = viewMode !== 'pages';
         text.hidden = viewMode !== 'text';
+        latexView.hidden = viewMode !== 'latex';
+        renderLatex();
         count.textContent = (i + 1) + ' / ' + flat.length;
         prev.disabled = i === 0;
         next.disabled = i === flat.length - 1;
@@ -239,11 +324,46 @@
         viewMode = mode;
         pageImages.hidden = mode !== 'pages';
         text.hidden = mode !== 'text';
+        latexView.hidden = mode !== 'latex';
         viewPages.classList.toggle('active', mode === 'pages');
+        viewLatex.classList.toggle('active', mode === 'latex');
         viewText.classList.toggle('active', mode === 'text');
+        if (mode === 'latex') renderLatex();
       }
       viewPages.addEventListener('click', function () { setView('pages'); });
+      viewLatex.addEventListener('click', function () { setView('latex'); });
       viewText.addEventListener('click', function () { setView('text'); });
+
+      document.getElementById('latex-copy').addEventListener('click', function () {
+        copyText(latexSource.value);
+        this.textContent = '已复制';
+        var b = this;
+        setTimeout(function () { b.textContent = '复制本节 LaTeX'; }, 1400);
+      });
+      document.getElementById('latex-copy-doc').addEventListener('click', function () {
+        copyText(docWrap(latexSource.value));
+        this.textContent = '已复制 .tex';
+        var b = this;
+        setTimeout(function () { b.textContent = '复制完整 .tex'; }, 1600);
+      });
+      document.getElementById('latex-edit').addEventListener('click', function () {
+        var showSource = latexSource.hidden;
+        latexSource.hidden = !showSource;
+        latexPreview.hidden = showSource;
+        this.textContent = showSource ? '渲染预览' : '源码 / 编辑';
+        if (showSource) {
+          latexPreview.textContent = latexForDisplay(latexSource.value);
+          if (window.renderMathInElement) {
+            window.renderMathInElement(latexPreview, {
+              delimiters: [
+                { left: '\\[', right: '\\]', display: true },
+                { left: '\\(', right: '\\)', display: false }
+              ],
+              throwOnError: false
+            });
+          }
+        }
+      });
 
       prev.addEventListener('click', function () { select(current - 1); });
       next.addEventListener('click', function () { select(current + 1); });

@@ -1,0 +1,424 @@
+\section*{习题 7.2\quad 一阶微分方程}
+
+1. 求下列微分方程的通解
+
+(1) \(y'=e^{x-y}\)
+
+解：分离变量，得
+\[ e^{y}dy=e^{x}dx. \]
+积分两边：
+\[ \int e^{y}dy=\int e^{x}dx\Rightarrow e^{y}=e^{x}+C, \]
+所以通解为
+\[ y=\ln(e^{x}+C). \]
+（注：需满足 \(e^{x}+C>0\)）
+
+(2) \(xy\,dx+\sqrt{1-x^{2}}\,dy=0\)
+
+解：分离变量，得
+\[ \frac{dy}{y}=-\frac{x}{\sqrt{1-x^{2}}}dx. \]
+积分两边：
+\[ \int\frac{1}{y}dy=-\int\frac{x}{\sqrt{1-x^{2}}}dx. \]
+右边积分令 \(u=1-x^{2},\ du=-2x\,dx\)，则
+\[ -\int\frac{x}{\sqrt{1-x^{2}}}dx=\frac{1}{2}\int\frac{1}{\sqrt{u}}du=\sqrt{u}+C_{1}=\sqrt{1-x^{2}}+C_{1}. \]
+所以
+\[ \ln|y|=\sqrt{1-x^{2}}+C_{1}\Rightarrow y=Ce^{\sqrt{1-x^{2}}}\quad(C=\pm e^{C_{1}}). \]
+（注：\(|x|<1\)）
+
+(3) \(y'=\sqrt{\frac{1-y^{2}}{1-x^{2}}}\)
+
+解：分离变量，得
+\[ \frac{dy}{\sqrt{1-y^{2}}}=\frac{dx}{\sqrt{1-x^{2}}}. \]
+积分两边：
+\[ \int\frac{dy}{\sqrt{1-y^{2}}}=\int\frac{dx}{\sqrt{1-x^{2}}}\Rightarrow\arcsin y=\arcsin x+C, \]
+所以通解为
+\[ y=\sin(\arcsin x+C)=x\cos C+\sqrt{1-x^{2}}\sin C, \]
+或写为
+\[ \arcsin y-\arcsin x=C. \]
+（注：\(|x|<1,\ |y|<1\)）
+
+(4) \(e^{x}y\,dx+2(e^{x}-1)dy=0\)
+
+解：分离变量，得
+\[ \frac{dy}{y}=-\frac{e^{x}}{2(e^{x}-1)}dx. \]
+积分两边：
+\[ \int\frac{1}{y}dy=-\frac{1}{2}\int\frac{e^{x}}{e^{x}-1}dx. \]
+右边积分令 \(u=e^{x}-1,\ du=e^{x}dx\)，则
+\[ -\frac{1}{2}\int\frac{1}{u}du=-\frac{1}{2}\ln|u|+C=-\frac{1}{2}\ln|e^{x}-1|+C. \]
+所以
+\[ \ln|y|=-\frac{1}{2}\ln|e^{x}-1|+C\Rightarrow y=\frac{C}{\sqrt{e^{x}-1}}. \]
+（注：\(x>0\)）
+
+2. 求下列齐次方程的通解
+
+(1) \(xy'=y\ln\frac{y}{x}\)
+
+解：令 \(y=xv\)，则 \(y'=v+xv'\)，代入方程：
+\[ x(v+xv')=xv\ln v\Rightarrow v+xv'=v\ln v. \]
+整理得
+\[ xv'=v(\ln v-1). \]
+分离变量：
+\[ \frac{dv}{v(\ln v-1)}=\frac{dx}{x}. \]
+积分两边，令 \(u=\ln v-1,\ du=\frac{dv}{v}\)，则
+\[ \int\frac{du}{u}=\int\frac{dx}{x}\Rightarrow\ln|u|=\ln|x|+C\Rightarrow u=C_{1}x, \]
+即
+\[ \ln v-1=C_{1}x\Rightarrow v=e^{C_{1}x+1}. \]
+代回 \(y=xv\)，得通解
+\[ y=xe^{C_{1}x+1}. \]
+
+(2) \(y'=e^{\frac{y}{x}}+\frac{y}{x}\)
+
+解：令 \(y=xv\)，则 \(y'=v+xv'\)，代入方程：
+\[ v+xv'=e^{v}+v\Rightarrow xv'=e^{v}. \]
+分离变量：
+\[ e^{-v}dv=\frac{dx}{x}. \]
+积分两边：
+\[ \int e^{-v}dv=\int\frac{dx}{x}\Rightarrow-e^{-v}=\ln|x|+C, \]
+所以
+\[ e^{-v}=-\ln|x|-C\Rightarrow v=-\ln(-\ln|x|-C). \]
+代回 \(y=xv\)，得通解
+\[ y=-x\ln(-\ln|x|-C). \]
+（注：\(x\ne0,\ -\ln|x|-C>0\)）
+
+(3) \(xy'-y-\sqrt{y^{2}-x^{2}}=0\ (x>0)\)
+
+解：令 \(y=xv\)，则 \(y'=v+xv'\)，代入方程：
+\[ x(v+xv')-xv-\sqrt{x^{2}v^{2}-x^{2}}=0\Rightarrow x^{2}v'=\sqrt{x^{2}(v^{2}-1)}=x\sqrt{v^{2}-1}, \]
+所以
+\[ v'=\frac{\sqrt{v^{2}-1}}{x}. \]
+分离变量：
+\[ \frac{dv}{\sqrt{v^{2}-1}}=\frac{dx}{x}. \]
+积分两边：
+\[ \int\frac{dv}{\sqrt{v^{2}-1}}=\int\frac{dx}{x}\Rightarrow\ln\left|v+\sqrt{v^{2}-1}\right|=\ln|x|+C. \]
+所以
+\[ v+\sqrt{v^{2}-1}=Cx. \]
+代回 \(v=\frac{y}{x}\)，得通解
+\[ \frac{y}{x}+\sqrt{\frac{y^{2}}{x^{2}}-1}=Cx\Rightarrow y+\sqrt{y^{2}-x^{2}}=Cx^{2}. \]
+（注：\(|y|\ge|x|\)）
+
+(4) \(\frac{dy}{dx}=\frac{2x-y+5}{2x-y-4}\)
+
+解：令 \(u=2x-y\)，则 \(\frac{du}{dx}=2-\frac{dy}{dx}\)，代入方程：
+\[ 2-\frac{du}{dx}=\frac{u+5}{u-4}\Rightarrow\frac{du}{dx}=2-\frac{u+5}{u-4}=\frac{u-13}{u-4}. \]
+分离变量：
+\[ \frac{u-4}{u-13}du=dx. \]
+积分两边：
+\[ \int\frac{u-4}{u-13}du=\int dx\Rightarrow\int\left(1+\frac{9}{u-13}\right)du=x+C, \]
+所以
+\[ u+9\ln|u-13|=x+C. \]
+代回 \(u=2x-y\)，得通解
+\[ 2x-y+9\ln|2x-y-13|=x+C\Rightarrow x-y+9\ln|2x-y-13|=C. \]
+
+(5) \((2x-y+1)dx+(2y-x-1)dy=0\)
+
+解：检查恰当性。令 \(M=2x-y+1,\ N=2y-x-1\)，则
+\[ \frac{\partial M}{\partial y}=-1,\qquad\frac{\partial N}{\partial x}=-1, \]
+所以方程是恰当的。求势函数 \(\varphi(x,y)\)：
+\[ \frac{\partial\varphi}{\partial x}=M=2x-y+1\Rightarrow\varphi=\int(2x-y+1)dx=x^{2}-xy+x+g(y). \]
+对 \(y\) 求偏导：
+\[ \frac{\partial\varphi}{\partial y}=-x+g'(y)=N=2y-x-1\Rightarrow g'(y)=2y-1. \]
+积分得
+\[ g(y)=y^{2}-y. \]
+所以势函数为
+\[ \varphi(x,y)=x^{2}-xy+x+y^{2}-y, \]
+通解为
+\[ x^{2}-xy+x+y^{2}-y=C. \]
+
+(6) \(y(1+x^{2}y^{2})dx=x\,dy\)（提示：设 \(z=xy\)）
+
+解：令 \(z=xy\)，则 \(y=\frac{z}{x}\)，\(dy=\frac{x\,dz-z\,dx}{x^{2}}\)，代入方程：
+\[ \frac{z}{x}(1+z^{2})dx=x\cdot\frac{x\,dz-z\,dx}{x^{2}}\Rightarrow z(1+z^{2})dx=x\,dz-z\,dx. \]
+整理得
+\[ (z+z^{3})dx+z\,dx=x\,dz\Rightarrow(2z+z^{3})dx=x\,dz. \]
+分离变量：
+\[ \frac{dz}{z(2+z^{2})}=\frac{dx}{x}. \]
+积分左边，分解部分分式：
+\[ \frac{1}{z(2+z^{2})}=\frac{A}{z}+\frac{Bz+C}{2+z^{2}}, \]
+解得 \(A=\frac{1}{2},\ B=-\frac{1}{2},\ C=0\)，所以
+\[ \frac{1}{z(2+z^{2})}=\frac{1}{2z}-\frac{z}{2(2+z^{2})}. \]
+积分：
+\[ \int\frac{dz}{z(2+z^{2})}=\frac{1}{2}\int\frac{1}{z}dz-\frac{1}{2}\int\frac{z}{2+z^{2}}dz=\frac{1}{2}\ln|z|-\frac{1}{4}\ln(2+z^{2})+C. \]
+右边积分：
+\[ \int\frac{dx}{x}=\ln|x|+C. \]
+所以
+\[ \frac{1}{2}\ln|z|-\frac{1}{4}\ln(2+z^{2})=\ln|x|+C_{1}. \]
+整理得
+\[ \ln\left|\frac{z}{\sqrt{2+z^{2}}}\right|=\ln|x|+C_{1}\Rightarrow\frac{z}{\sqrt{2+z^{2}}}=Cx. \]
+代回 \(z=xy\)，得
+\[ \frac{xy}{\sqrt{2+x^{2}y^{2}}}=Cx\Rightarrow\frac{y}{\sqrt{2+x^{2}y^{2}}}=C, \]
+所以通解为
+\[ y^{2}=C^{2}(2+x^{2}y^{2})\Rightarrow y^{2}(1-C^{2}x^{2})=2C^{2}. \]
+
+3. 求下列微分方程的通解
+
+(1) \(xy'+y=\cos x\)
+
+解：方程可写为
+\[ \frac{d}{dx}(xy)=\cos x. \]
+积分两边：
+\[ xy=\int\cos x\,dx=\sin x+C, \]
+所以通解为
+\[ y=\frac{\sin x}{x}+\frac{C}{x}. \]
+（注：\(x\ne0\)）
+
+(2) \(y'-\frac{2y}{x}=x^{2}\sin3x\)
+
+解：这是一阶线性微分方程。积分因子为
+\[ \mu=e^{\int-\frac{2}{x}dx}=e^{-2\ln|x|}=x^{-2}. \]
+乘以积分因子：
+\[ x^{-2}y'-2x^{-3}y=\sin3x\Rightarrow\frac{d}{dx}(x^{-2}y)=\sin3x. \]
+积分两边：
+\[ x^{-2}y=\int\sin3x\,dx=-\frac{1}{3}\cos3x+C, \]
+所以通解为
+\[ y=-\frac{x^{2}}{3}\cos3x+Cx^{2}. \]
+
+(3) \((y^{2}-6x)y'+2y=0\)
+
+解：把 \(x\) 视为 \(y\) 的函数。由原式得到
+\[ (y^{2}-6x)dy+2y\,dx=0\Longrightarrow2y\,dx=(6x-y^{2})dy, \]
+即
+\[ \frac{dx}{dy}=\frac{6x-y^{2}}{2y}\Longrightarrow\frac{dx}{dy}-\frac{3}{y}x=-\frac{y}{2}. \]
+这是关于 \(x(y)\) 的一阶线性方程，积分因子 \(\mu(y)=e^{\int-\frac{3}{y}dy}=y^{-3}\)，于是
+\[ \frac{d}{dy}\left(xy^{-3}\right)=-\frac{1}{2}y^{-2}. \]
+积分得
+\[ xy^{-3}=\frac{1}{2y}+C\Longrightarrow x=\frac{1}{2}y^{2}+Cy^{3}, \]
+即通解按 \(x\) 表示为上式。
+
+(4) \(y'\cos x+y\sin x=1\)
+
+解：方程写为标准形式：
+\[ y'+y\tan x=\sec x. \]
+积分因子为
+\[ \mu=e^{\int\tan x\,dx}=e^{-\ln|\cos x|}=\sec x. \]
+乘以积分因子：
+\[ \sec x\,y'+\sec x\tan x\,y=\sec^{2}x\Rightarrow\frac{d}{dx}(y\sec x)=\sec^{2}x. \]
+积分两边：
+\[ y\sec x=\int\sec^{2}x\,dx=\tan x+C, \]
+所以通解为
+\[ y=\sin x+C\cos x. \]
+
+4. 求下列微分方程的通解
+
+(1) \(y'+\frac{2y}{x}=x^{2}y^{\frac{4}{3}}\)
+
+解：这是伯努利方程。令 \(z=y^{1-\frac{4}{3}}=y^{-\frac{1}{3}}\)，则 \(y=z^{-3},\ y'=-3z^{-4}z'\)，代入方程：
+\[ -3z^{-4}z'+\frac{2z^{-3}}{x}=x^{2}z^{-4}\Rightarrow z'-\frac{2}{3x}z=-\frac{1}{3}x^{2}. \]
+这是一阶线性方程。积分因子为
+\[ \mu=e^{\int-\frac{2}{3x}dx}=x^{-\frac{2}{3}}. \]
+乘以积分因子：
+\[ x^{-\frac{2}{3}}z'-\frac{2}{3}x^{-\frac{5}{3}}z=-\frac{1}{3}x^{\frac{4}{3}}\Rightarrow\frac{d}{dx}\left(x^{-\frac{2}{3}}z\right)=-\frac{1}{3}x^{\frac{4}{3}}. \]
+积分两边：
+\[ x^{-\frac{2}{3}}z=-\frac{1}{3}\int x^{\frac{4}{3}}dx=-\frac{1}{3}\cdot\frac{3}{7}x^{\frac{7}{3}}+C=-\frac{1}{7}x^{\frac{7}{3}}+C, \]
+所以
+\[ z=-\frac{1}{7}x^{3}+Cx^{\frac{2}{3}}. \]
+代回 \(y=z^{-3}\)，得通解
+\[ y=\left(-\frac{1}{7}x^{3}+Cx^{\frac{2}{3}}\right)^{-3}. \]
+
+(2) \(\frac{dy}{dx}=\frac{1}{xy+x^{3}y^{3}}\)
+
+解：写成关于 \(x(y)\) 的方程：
+\[ \frac{dx}{dy}=xy+x^{3}y^{3}. \]
+令 \(z=x^{-2}\)，则
+\[ \frac{dz}{dy}=-2x^{-3}\frac{dx}{dy}=-2zy-2y^{3}, \]
+即
+\[ \frac{dz}{dy}+2yz=-2y^{3}. \]
+积分因子 \(\mu(y)=e^{\int2y\,dy}=e^{y^{2}}\)，因此
+\[ \frac{d}{dy}\left(ze^{y^{2}}\right)=-2y^{3}e^{y^{2}}. \]
+令 \(u=y^{2}\)，积分得
+\[ \int-2y^{3}e^{y^{2}}dy=\int-ue^{u}du=-ue^{u}+e^{u}+C, \]
+于是
+\[ ze^{y^{2}}=e^{y^{2}}(1-y^{2})+C\Longrightarrow z=1-y^{2}+Ce^{-y^{2}}. \]
+回代 \(z=x^{-2}\)：
+\[ x^{-2}=1-y^{2}+Ce^{-y^{2}}, \]
+即
+\[ x^{2}=\frac{1}{1-y^{2}+Ce^{-y^{2}}}. \]
+
+(3) \(\frac{dy}{dx}=\frac{1}{x-y+1}\)
+
+解：令 \(u=x-y\)，则 \(y=x-u\)，\(\frac{dy}{dx}=1-\frac{du}{dx}\)，代入方程：
+\[ 1-\frac{du}{dx}=\frac{1}{u+1}\Rightarrow-\frac{du}{dx}=\frac{1}{u}\Rightarrow\frac{du}{dx}=-\frac{1}{u}. \]
+分离变量：
+\[ u\,du=-dx. \]
+积分两边：
+\[ \int u\,du=-\int dx\Rightarrow\frac{u^{2}}{2}=-x+C, \]
+所以
+\[ u^{2}=-2x+C\Rightarrow(x-y)^{2}=-2x+C. \]
+通解为
+\[ y=x\pm\sqrt{C-2x}. \]
+
+(4) \((1-xy+x^{2}y^{2})dx+(x^{3}y-x^{2})dy=0\)
+
+解：假设积分因子 \(\mu\) 是 \(x\) 的函数，则
+\[ \frac{d\mu}{dx}=\mu\frac{\frac{\partial M}{\partial y}-\frac{\partial N}{\partial x}}{N}=\mu\frac{(-x+2x^{2}y)-(3x^{2}y-2x)}{x^{3}y-x^{2}}=\mu\frac{-x-x^{2}y+2x}{x^{2}(xy-1)}=\mu\frac{1-xy}{x(xy-1)}=-\frac{\mu}{x}. \]
+所以
+\[ \frac{d\mu}{\mu}=-\frac{dx}{x}\Rightarrow\ln\mu=-\ln x\Rightarrow\mu=\frac{1}{x}. \]
+乘以积分因子 \(\mu=\frac{1}{x}\)：
+\[ \frac{1-xy+x^{2}y^{2}}{x}dx+(x^{2}y-x)dy=0\Rightarrow\left(\frac{1}{x}-y+xy^{2}\right)dx+(x^{2}y-x)dy=0. \]
+令 \(M^{*}=\frac{1}{x}-y+xy^{2},\ N^{*}=x^{2}y-x\)，则
+\[ \frac{\partial M^{*}}{\partial y}=-1+2xy,\qquad\frac{\partial N^{*}}{\partial x}=2xy-1. \]
+现在 \(\frac{\partial M^{*}}{\partial y}=\frac{\partial N^{*}}{\partial x}\)，所以方程恰当。求势函数 \(\varphi(x,y)\)：
+\[ \frac{\partial\varphi}{\partial x}=M^{*}=\frac{1}{x}-y+xy^{2}\Rightarrow\varphi=\int\left(\frac{1}{x}-y+xy^{2}\right)dx=\ln|x|-xy+\frac{x^{2}y^{2}}{2}+g(y). \]
+对 \(y\) 求偏导：
+\[ \frac{\partial\varphi}{\partial y}=-x+x^{2}y+g'(y)=N^{*}=x^{2}y-x\Rightarrow g'(y)=0\Rightarrow g(y)=C. \]
+所以势函数为
+\[ \varphi(x,y)=\ln|x|-xy+\frac{x^{2}y^{2}}{2}+C, \]
+通解为
+\[ \ln|x|-xy+\frac{x^{2}y^{2}}{2}=C. \]
+
+5. 求下列方程在给定初始条件下的特解
+
+(1) \(y'+3y=8,\ y(0)=2\)
+
+解：积分因子为 \(\mu=e^{3x}\)，乘以方程：
+\[ e^{3x}y'+3e^{3x}y=8e^{3x}\Rightarrow\frac{d}{dx}\left(e^{3x}y\right)=8e^{3x}. \]
+积分：
+\[ e^{3x}y=\int8e^{3x}dx=\frac{8}{3}e^{3x}+C\Rightarrow y=\frac{8}{3}+Ce^{-3x}. \]
+代入 \(y(0)=2\)：
+\[ 2=\frac{8}{3}+C\Rightarrow C=2-\frac{8}{3}=-\frac{2}{3}. \]
+所以特解为
+\[ y=\frac{8}{3}-\frac{2}{3}e^{-3x}. \]
+
+(2) \(xyy'=x^{2}+y^{2},\ y(1)=1\)
+
+解：令 \(y=xv\)，则 \(y'=v+xv'\)，代入方程：
+\[ x\cdot xv\cdot(v+xv')=x^{2}+x^{2}v^{2}\Rightarrow x^{2}v(v+xv')=x^{2}(1+v^{2})\Rightarrow v^{2}+xvv'=1+v^{2}. \]
+所以
+\[ xvv'=1\Rightarrow v\,dv=\frac{dx}{x}. \]
+积分：
+\[ \int v\,dv=\int\frac{dx}{x}\Rightarrow\frac{v^{2}}{2}=\ln|x|+C. \]
+代回 \(v=\frac{y}{x}\)：
+\[ \frac{y^{2}}{2x^{2}}=\ln|x|+C\Rightarrow y^{2}=2x^{2}(\ln|x|+C). \]
+代入 \(y(1)=1\)：
+\[ 1=2\cdot1\cdot(\ln1+C)=2C\Rightarrow C=\frac{1}{2}. \]
+所以特解为
+\[ y^{2}=2x^{2}\left(\ln|x|+\frac{1}{2}\right)\Rightarrow y=x\sqrt{2\ln|x|+1}\quad(x>0). \]
+
+(3) \((y-x^{2})y\,dy+x\,dx=0,\ y(\sqrt2)=0\)
+
+解：方程写为
+\[ x\,dx+y(y-x^{2})dy=0. \]
+令 \(u=x^{2}\)，则 \(du=2x\,dx\)，方程变为
+\[ \frac{1}{2}du+y(y-u)dy=0\Rightarrow\frac{du}{dy}+2y(y-u)=0\Rightarrow\frac{du}{dy}-2yu=-2y^{2}. \]
+这是一阶线性方程。积分因子为 \(\mu=e^{\int-2y\,dy}=e^{-y^{2}}\)，乘以方程：
+\[ e^{-y^{2}}\frac{du}{dy}-2ye^{-y^{2}}u=-2y^{2}e^{-y^{2}}\Rightarrow\frac{d}{dy}\left(ue^{-y^{2}}\right)=-2y^{2}e^{-y^{2}}. \]
+积分右边：
+\[ \int-2y^{2}e^{-y^{2}}dy=\int-2y\cdot ye^{-y^{2}}dy. \]
+令 \(t=y^{2},\ dt=2y\,dy\)，则
+\[ \int-2y^{2}e^{-y^{2}}dy=-\int te^{-t}dt=-\left(-te^{-t}-e^{-t}\right)+C=e^{-t}(t+1)+C=e^{-y^{2}}(y^{2}+1)+C. \]
+所以
+\[ ue^{-y^{2}}=e^{-y^{2}}(y^{2}+1)+C\Rightarrow u=y^{2}+1+Ce^{y^{2}}. \]
+代回 \(u=x^{2}\)：
+\[ x^{2}=y^{2}+1+Ce^{y^{2}}. \]
+代入 \(y(\sqrt2)=0\)，即 \(x=\sqrt2,\ y=0\)：
+\[ 2=0+1+C\cdot1\Rightarrow C=1. \]
+所以特解为
+\[ x^{2}=y^{2}+1+e^{y^{2}}. \]
+
+(4) \(xyy'=y+x\cos^{2}\frac{y}{x},\ y(1)=\frac{\pi}{4}\)
+
+解：令 \(v=\frac{y}{x}\)，则 \(y=xv\)，\(y'=v+xv'\)。代入原式得
+\[ x^{2}v(v+xv')=x(v+\cos^{2}v). \]
+除以 \(x\)（\(x\ne0\)）得
+\[ xv(v+xv')=v+\cos^{2}v, \]
+即
+\[ x^{2}v\frac{dv}{dx}+xv^{2}-v-\cos^{2}v=0. \]
+化为微分形式：
+\[ \left(xv^{2}-v-\cos^{2}v\right)dx+x^{2}v\,dv=0. \]
+该一阶方程并非对 \(x\) 的初等函数可积（亦非显式可分离、也非显式线性可积），因此一般不能写出初等闭式解。需要采用数值方法或局部展开来得到解析近似。
+
+检验题中提出的关系 \(\tan\frac{y}{x}=1+\frac{y}{x}\)：对两边求导可得 \((\sec^{2}v-1)v'=0\)，从而 \(v'=0\)，即 \(v\) 为常数。将常数代回原方程可见无法对所有 \(x\) 成立，因此该关系不是方程的一般解；并且它也不通过初值 \(y(1)=\frac{\pi}{4}\)（因为 \(\tan\frac{\pi}{4}=1\ne1+\frac{\pi}{4}\)）。
+
+下面给出通过初值点 \(x=1,\ v(1)=\frac{\pi}{4}\) 的局部线性近似。由前面得到的显式导数表达式
+\[ \frac{dv}{dx}=\frac{v+\cos^{2}v-xv^{2}}{x^{2}v}, \]
+在 \(x=1,\ v=\frac{\pi}{4}\) 处有
+\[ v'(1)=\left.\frac{v+\cos^{2}v-v^{2}}{v}\right|_{v=\frac{\pi}{4}}=\frac{1+\cos^{2}\frac{\pi}{4}}{\frac{\pi}{4}}-\frac{\pi}{4}=1+\frac{2}{\pi}-\frac{\pi}{4}. \]
+因此在 \(x=1\) 附近的一阶近似为
+\[ v(x)\approx\frac{\pi}{4}+\left(1+\frac{2}{\pi}-\frac{\pi}{4}\right)(x-1), \]
+从而（将 \(y=xv\) 展开）在 \(x=1\) 的局部线性近似为
+\[ y(x)\approx\frac{\pi}{4}+\left(1+\frac{2}{\pi}\right)(x-1) \]
+（数值形式约为 \(y\approx0.7853981634+1.6366197724\,(x-1)\)）。
+
+(5) \(y'-\frac{4xy}{x^{2}+1}=x\sqrt{y},\ y(0)=0\)
+
+解：先注意到零解 \(y\equiv0\) 显然满足方程。为求非零分支，令 \(y=z^{2}\)（取 \(z\ge0\)），则 \(y'=2zz'\)，代回原式得
+\[ 2zz'-\frac{4x}{x^{2}+1}z^{2}=xz. \]
+当 \(z>0\) 时可约去 \(z\)，得到一阶线性方程
+\[ 2z'-\frac{4x}{x^{2}+1}z=x\iff z'-\frac{2x}{x^{2}+1}z=\frac{x}{2}. \]
+积分因子
+\[ \mu(x)=\exp\left(\int-\frac{2x}{x^{2}+1}dx\right)=\frac{1}{x^{2}+1}. \]
+于是
+\[ \frac{d}{dx}\left(\frac{z}{x^{2}+1}\right)=\frac{x}{2(x^{2}+1)}. \]
+积分得
+\[ \frac{z}{x^{2}+1}=\frac{1}{4}\ln(1+x^{2})+C\Longrightarrow z=(x^{2}+1)\left(\frac{1}{4}\ln(1+x^{2})+C\right). \]
+回代 \(y=z^{2}\)，得到通解族
+\[ y(x)=\left[(x^{2}+1)\left(\frac{1}{4}\ln(1+x^{2})+C\right)\right]^{2}. \]
+由初值 \(y(0)=0\) 知 \(z(0)=0\)，从而 \(C=0\)，于是非零分支为
+\[ y(x)=\left[\frac{1}{4}(x^{2}+1)\ln(1+x^{2})\right]^{2}. \]
+说明：由于右端含 \(\sqrt{y}\) 在 \(y=0\) 处不满足利普希茨条件，初值问题解不唯一；除上式外，\(y\equiv0\) 也是满足 \(y(0)=0\) 的解。
+
+6. 求一条曲线的方程，该曲线通过原点，并且它在点 \((x,y)\) 处的切线斜率等于 \(2x+y\)
+
+解：根据题意，微分方程为
+\[ \frac{dy}{dx}=2x+y. \]
+这是一阶线性方程。积分因子为 \(\mu=e^{-x}\)，乘以方程：
+\[ e^{-x}\frac{dy}{dx}-e^{-x}y=2xe^{-x}\Rightarrow\frac{d}{dx}\left(ye^{-x}\right)=2xe^{-x}. \]
+积分右边：
+\[ \int2xe^{-x}dx=-2xe^{-x}-2e^{-x}+C. \]
+所以
+\[ ye^{-x}=-2xe^{-x}-2e^{-x}+C\Rightarrow y=-2x-2+Ce^{x}. \]
+曲线通过原点 \((0,0)\)，代入：
+\[ 0=-0-2+C\cdot1\Rightarrow C=2. \]
+所以曲线方程为
+\[ y=-2x-2+2e^{x}. \]
+
+7. 求过点 \(\left(\frac{1}{2},0\right)\) 且满足 \(y'\arcsin x+\frac{y}{\sqrt{1-x^{2}}}=1\) 的曲线方程
+
+解：注意到
+\[ \frac{d}{dx}\left(y\arcsin x\right)=y'\arcsin x+y\cdot\frac{1}{\sqrt{1-x^{2}}}. \]
+由此原方程化为
+\[ \frac{d}{dx}\left(y\arcsin x\right)=1. \]
+两边积分得
+\[ y\arcsin x=x+C\Longrightarrow y(x)=\frac{x+C}{\arcsin x}. \]
+利用初值 \(y\left(\frac{1}{2}\right)=0\)（此时 \(\arcsin\frac{1}{2}=\frac{\pi}{6}\ne0\)）：
+\[ 0=\frac{\frac{1}{2}+C}{\arcsin\frac{1}{2}}\Rightarrow C=-\frac{1}{2}. \]
+因此所求曲线为
+\[ y(x)=\frac{x-\frac{1}{2}}{\arcsin x},\qquad0<x<1. \]
+注：由于分母含 \(\arcsin x\)，需取 \(\arcsin x\ne0\) 的区间（例如 \(0<x<1\)）。
+
+8. 设连续函数 \(y(x)\) 满足方程 \(y(x)=\int_{0}^{x}y(t)dt+e^{x}\)，求 \(y(x)\)
+
+解：对方程两边求导：
+\[ y'(x)=y(x)+e^{x}. \]
+这是一阶线性方程。积分因子为 \(\mu=e^{-x}\)，乘以方程：
+\[ e^{-x}y'-e^{-x}y=1\Rightarrow\frac{d}{dx}\left(ye^{-x}\right)=1. \]
+积分得
+\[ ye^{-x}=x+C\Rightarrow y=(x+C)e^{x}. \]
+代入原方程验证。当 \(x=0\) 时，原方程给出：
+\[ y(0)=\int_{0}^{0}y(t)dt+e^{0}=1. \]
+所以
+\[ y(0)=(0+C)\cdot1=C=1. \]
+因此
+\[ y(x)=(x+1)e^{x}. \]
+
+9. 设 \(y=\varphi_{1}(x),\ y=\varphi_{2}(x)\) 都是齐次方程 \(y'+P(x)y=0\) 的解，\(y=\psi_{1}(x),\ y=\psi_{2}(x)\) 是非齐次方程 \(y'+P(x)y=Q(x)\) 的解。证明：
+
+(1) \(y=\varphi_{1}(x)+\varphi_{2}(x)\) 是齐次方程 \(y'+P(x)y=0\) 的解。
+
+证明：因为 \(\varphi_{1}\) 和 \(\varphi_{2}\) 是齐次方程的解，所以
+\[ \varphi_{1}'+P(x)\varphi_{1}=0,\qquad\varphi_{2}'+P(x)\varphi_{2}=0. \]
+令 \(y=\varphi_{1}+\varphi_{2}\)，则
+\[ y'+P(x)y=(\varphi_{1}'+\varphi_{2}')+P(x)(\varphi_{1}+\varphi_{2})=\left(\varphi_{1}'+P(x)\varphi_{1}\right)+\left(\varphi_{2}'+P(x)\varphi_{2}\right)=0+0=0. \]
+所以 \(y=\varphi_{1}+\varphi_{2}\) 是齐次方程的解。
+
+(2) \(y=\psi_{1}(x)-\psi_{2}(x)\) 是齐次方程 \(y'+P(x)y=0\) 的解。
+
+证明：因为 \(\psi_{1}\) 和 \(\psi_{2}\) 是非齐次方程的解，所以
+\[ \psi_{1}'+P(x)\psi_{1}=Q(x),\qquad\psi_{2}'+P(x)\psi_{2}=Q(x). \]
+令 \(y=\psi_{1}-\psi_{2}\)，则
+\[ y'+P(x)y=(\psi_{1}'-\psi_{2}')+P(x)(\psi_{1}-\psi_{2})=\left(\psi_{1}'+P(x)\psi_{1}\right)-\left(\psi_{2}'+P(x)\psi_{2}\right)=Q(x)-Q(x)=0. \]
+所以 \(y=\psi_{1}-\psi_{2}\) 是齐次方程的解。
+
+(3) \(y=\varphi_{1}(x)+\psi_{1}(x)\) 是非齐次方程 \(y'+P(x)y=Q(x)\) 的解。
+
+证明：令 \(y=\varphi_{1}+\psi_{1}\)，则
+\[ y'+P(x)y=(\varphi_{1}'+\psi_{1}')+P(x)(\varphi_{1}+\psi_{1})=\left(\varphi_{1}'+P(x)\varphi_{1}\right)+\left(\psi_{1}'+P(x)\psi_{1}\right)=0+Q(x)=Q(x). \]
+所以 \(y=\varphi_{1}+\psi_{1}\) 是非齐次方程的解。

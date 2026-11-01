@@ -1,0 +1,208 @@
+\section*{换元积分法}
+
+1. 计算下列不定积分。
+
+(1) \(\int\frac{dx}{(3-2x)^{2}}\)。
+
+解：令 \(u=3-2x\)，则 \(du=-2\,dx\)，\(dx=-\frac{1}{2}du\)。
+\[ \int\frac{dx}{(3-2x)^{2}}=-\frac{1}{2}\int u^{-2}\,du=-\frac{1}{2}\cdot\frac{u^{-1}}{-1}+C=\frac{1}{2u}+C=\frac{1}{2(3-2x)}+C. \]
+
+(2) \(\int\tan(5x-3)\,dx\)。
+
+解：\(\tan(5x-3)=\frac{\sin(5x-3)}{\cos(5x-3)}\)，令 \(u=\cos(5x-3)\)，则 \(du=-5\sin(5x-3)\,dx\)。
+\[ \int\tan(5x-3)\,dx=-\frac{1}{5}\int\frac{du}{u}=-\frac{1}{5}\ln|u|+C=-\frac{1}{5}\ln|\cos(5x-3)|+C. \]
+
+(3) \(\int x^{3}e^{-x^{4}}\,dx\)。
+
+解：令 \(u=-x^{4}\)，则 \(du=-4x^{3}dx\)，\(x^{3}dx=-\frac{1}{4}du\)。
+\[ \int x^{3}e^{-x^{4}}\,dx=-\frac{1}{4}\int e^{u}\,du=-\frac{1}{4}e^{u}+C=-\frac{1}{4}e^{-x^{4}}+C. \]
+
+(4) \(\int\frac{dx}{x\ln x}\)。
+
+解：令 \(u=\ln x\)，则 \(du=\frac{1}{x}dx\)。
+\[ \int\frac{dx}{x\ln x}=\int\frac{du}{u}=\ln|u|+C=\ln|\ln x|+C. \]
+
+(5) \(\int\frac{\cos x-\sin x}{\cos x+\sin x}\,dx\)。
+
+解：令 \(u=\cos x+\sin x\)，则 \(du=(-\sin x+\cos x)dx=(\cos x-\sin x)dx\)。
+\[ \int\frac{\cos x-\sin x}{\cos x+\sin x}\,dx=\int\frac{du}{u}=\ln|u|+C=\ln|\cos x+\sin x|+C. \]
+
+(6) \(\int\frac{1}{x^{2}}a^{\frac{1}{x}}\,dx\)。
+
+解：令 \(u=\frac{1}{x}\)，则 \(du=-\frac{1}{x^{2}}dx\)，\(\frac{1}{x^{2}}dx=-du\)。
+\[ \int\frac{1}{x^{2}}a^{\frac{1}{x}}\,dx=-\int a^{u}\,du=-\frac{a^{u}}{\ln a}+C=-\frac{a^{\frac{1}{x}}}{\ln a}+C. \]
+
+(7) \(\int\frac{x^{3}}{\sqrt[3]{x^{4}+1}}\,dx\)。
+
+解：令 \(u=x^{4}+1\)，则 \(du=4x^{3}dx\)，\(x^{3}dx=\frac{1}{4}du\)。
+\[ \int\frac{x^{3}}{\sqrt[3]{x^{4}+1}}\,dx=\frac{1}{4}\int u^{-\frac{1}{3}}\,du=\frac{1}{4}\cdot\frac{3}{2}u^{\frac{2}{3}}+C=\frac{3}{8}(x^{4}+1)^{\frac{2}{3}}+C. \]
+
+(8) \(\int\frac{f'(x)}{\sqrt{f(x)}}\,dx\)。
+
+解：令 \(u=f(x)\)，则 \(du=f'(x)dx\)。
+\[ \int\frac{f'(x)}{\sqrt{f(x)}}\,dx=\int\frac{du}{\sqrt{u}}=2\sqrt{u}+C=2\sqrt{f(x)}+C. \]
+
+(9) \(\int\frac{1}{\sqrt{\tan x}\cos^{2}x}\,dx\)。
+
+解：令 \(u=\sqrt{\tan x}\)，则 \(u^{2}=\tan x\)，\(2u\,du=\sec^{2}x\,dx=\frac{1}{\cos^{2}x}dx\)。
+\[ \int\frac{1}{\sqrt{\tan x}\cos^{2}x}\,dx=\int\frac{1}{u}\cdot 2u\,du=2\int du=2u+C=2\sqrt{\tan x}+C. \]
+
+(10) \(\int\frac{1}{\sqrt{1-x^{2}}(\arcsin x)^{2}}\,dx\)。
+
+解：令 \(u=\arcsin x\)，则 \(du=\frac{1}{\sqrt{1-x^{2}}}dx\)。
+\[ \int\frac{1}{\sqrt{1-x^{2}}(\arcsin x)^{2}}\,dx=\int\frac{du}{u^{2}}=-\frac{1}{u}+C=-\frac{1}{\arcsin x}+C. \]
+
+(11) \(\int\frac{\cos\sqrt{x}}{\sqrt{x}}\,dx\)。
+
+解：令 \(u=\sqrt{x}\)，则 \(du=\frac{1}{2\sqrt{x}}dx\)，\(\frac{dx}{\sqrt{x}}=2du\)。
+\[ \int\frac{\cos\sqrt{x}}{\sqrt{x}}\,dx=2\int\cos u\,du=2\sin u+C=2\sin\sqrt{x}+C. \]
+
+(12) \(\int\frac{x}{4+x^{4}}\,dx\)。
+
+解：令 \(u=x^{2}\)，则 \(du=2x\,dx\)，\(x\,dx=\frac{1}{2}du\)。
+\[ \int\frac{x}{4+x^{4}}\,dx=\frac{1}{2}\int\frac{du}{4+u^{2}}=\frac{1}{2}\cdot\frac{1}{2}\arctan\frac{u}{2}+C=\frac{1}{4}\arctan\frac{x^{2}}{2}+C. \]
+
+(13) \(\int\sin^{3}x\,dx\)。
+
+解：\(\sin^{3}x=\sin x(1-\cos^{2}x)\)，令 \(u=\cos x\)，则 \(du=-\sin x\,dx\)。
+\[ \int\sin^{3}x\,dx=\int(1-u^{2})(-du)=-\int(1-u^{2})\,du=-u+\frac{u^{3}}{3}+C=-\cos x+\frac{\cos^{3}x}{3}+C. \]
+
+(14) \(\int(x^{2}-3x+1)^{10}(2x-3)\,dx\)。
+
+解：令 \(u=x^{2}-3x+1\)，则 \(du=(2x-3)dx\)。
+\[ \int(x^{2}-3x+1)^{10}(2x-3)\,dx=\int u^{10}\,du=\frac{u^{11}}{11}+C=\frac{(x^{2}-3x+1)^{11}}{11}+C. \]
+
+(15) \(\int\frac{1}{x^{2}}\cot\frac{1}{x}\,dx\)。
+
+解：令 \(u=\frac{1}{x}\)，则 \(du=-\frac{1}{x^{2}}dx\)，\(\frac{1}{x^{2}}dx=-du\)。
+\[ \int\frac{1}{x^{2}}\cot\frac{1}{x}\,dx=-\int\cot u\,du=-\ln|\sin u|+C=-\ln\left|\sin\frac{1}{x}\right|+C. \]
+
+(16) \(\int\sin^{5}x\cos^{3}x\,dx\)。
+
+解：
+\[ \sin^{5}x\cos^{3}x=\sin^{5}x\cos^{2}x\cos x=\sin^{5}x(1-\sin^{2}x)\cos x, \]
+令 \(u=\sin x\)，则 \(du=\cos x\,dx\)。
+\[ \int\sin^{5}x\cos^{3}x\,dx=\int u^{5}(1-u^{2})\,du=\int(u^{5}-u^{7})\,du=\frac{u^{6}}{6}-\frac{u^{8}}{8}+C=\frac{\sin^{6}x}{6}-\frac{\sin^{8}x}{8}+C. \]
+
+(17) \(\int\frac{1}{x(x^{8}+1)}\,dx\)。
+
+解：由于
+\[ \frac{1}{x(x^{8}+1)}=\frac{1}{x}-\frac{x^{7}}{x^{8}+1}, \]
+所以
+\[ \int\frac{1}{x(x^{8}+1)}\,dx=\int\frac{1}{x}dx-\int\frac{x^{7}}{x^{8}+1}dx. \]
+令 \(u=x^{8}+1\)，则 \(du=8x^{7}dx\)，\(x^{7}dx=\frac{1}{8}du\)。
+\[ \int\frac{x^{7}}{x^{8}+1}\,dx=\frac{1}{8}\int\frac{du}{u}=\frac{1}{8}\ln|u|+C=\frac{1}{8}\ln|x^{8}+1|+C. \]
+所以
+\[ \int\frac{1}{x(x^{8}+1)}\,dx=\ln|x|-\frac{1}{8}\ln|x^{8}+1|+C=\frac{1}{8}\ln\frac{x^{8}}{x^{8}+1}+C. \]
+
+(18) \(\int\frac{x^{2}+1}{x^{4}+1}\,dx\)。
+
+解：分子分母同除以 \(x^{2}\)：
+\[ \frac{x^{2}+1}{x^{4}+1}=\frac{1+\frac{1}{x^{2}}}{x^{2}+\frac{1}{x^{2}}}=\frac{1+\frac{1}{x^{2}}}{\left(x-\frac{1}{x}\right)^{2}+2}. \]
+令 \(t=x-\frac{1}{x}\)，则 \(dt=\left(1+\frac{1}{x^{2}}\right)dx\)。
+\[ \int\frac{x^{2}+1}{x^{4}+1}\,dx=\int\frac{dt}{t^{2}+2}=\frac{1}{\sqrt{2}}\arctan\frac{t}{\sqrt{2}}+C=\frac{1}{\sqrt{2}}\arctan\frac{x-\frac{1}{x}}{\sqrt{2}}+C. \]
+
+(19) \(\int\frac{\ln(1+x)-\ln x}{x(x+1)}\,dx\)。
+
+解：\(\ln(1+x)-\ln x=\ln\left(\frac{1+x}{x}\right)\)，所以
+\[ \int\frac{\ln(1+x)-\ln x}{x(x+1)}\,dx=\int\frac{\ln\left(\frac{1+x}{x}\right)}{x(x+1)}\,dx. \]
+令 \(u=\ln\left(\frac{1+x}{x}\right)\)，则
+\[ du=\frac{x}{1+x}\cdot\frac{x\cdot 1-(1+x)\cdot 1}{x^{2}}dx=\frac{x}{1+x}\cdot\frac{-1}{x^{2}}dx=-\frac{1}{x(1+x)}dx. \]
+于是
+\[ \int\frac{\ln\left(\frac{1+x}{x}\right)}{x(x+1)}\,dx=-\int u\,du=-\frac{u^{2}}{2}+C=-\frac{1}{2}\left[\ln\left(\frac{1+x}{x}\right)\right]^{2}+C. \]
+
+2. 计算下列不定积分。
+
+(1) \(\int\frac{1}{x^{2}(1-x^{2})^{\frac{3}{2}}}\,dx\)。
+
+解：令 \(x=\sin t\)，则 \(dx=\cos t\,dt\)，\(1-x^{2}=\cos^{2}t\)，\((1-x^{2})^{\frac{3}{2}}=\cos^{3}t\)。
+\[ \int\frac{1}{x^{2}(1-x^{2})^{\frac{3}{2}}}\,dx=\int\frac{1}{\sin^{2}t\cos^{3}t}\cdot\cos t\,dt=\int\frac{1}{\sin^{2}t\cos^{2}t}\,dt. \]
+利用恒等式
+\[ \frac{1}{\sin^{2}t\cos^{2}t}=\frac{1}{\sin^{2}t}+\frac{1}{\cos^{2}t}=\csc^{2}t+\sec^{2}t, \]
+得
+\[ \int(\csc^{2}t+\sec^{2}t)\,dt=-\cot t+\tan t+C. \]
+回代：\(\tan t=\frac{x}{\sqrt{1-x^{2}}}\)，\(\cot t=\frac{\sqrt{1-x^{2}}}{x}\)，所以
+\[ \int\frac{1}{x^{2}(1-x^{2})^{\frac{3}{2}}}\,dx=\frac{x}{\sqrt{1-x^{2}}}-\frac{\sqrt{1-x^{2}}}{x}+C=\frac{2x^{2}-1}{x\sqrt{1-x^{2}}}+C. \]
+
+(2) \(\int\frac{\sqrt{x^{2}-1}}{x^{3}}\,dx\)。
+
+解：令 \(x=\sec t\)，则 \(dx=\sec t\tan t\,dt\)，\(\sqrt{x^{2}-1}=\tan t\)。
+\[ \int\frac{\sqrt{x^{2}-1}}{x^{3}}\,dx=\int\frac{\tan t}{\sec^{3}t}\cdot\sec t\tan t\,dt=\int\frac{\tan^{2}t}{\sec^{2}t}\,dt=\int\sin^{2}t\,dt \]
+\[ =\int\frac{1-\cos 2t}{2}\,dt=\frac{t}{2}-\frac{\sin 2t}{4}+C=\frac{t}{2}-\frac{\sin t\cos t}{2}+C. \]
+回代：\(t=\operatorname{arcsec} x\)，\(\sin t=\frac{\sqrt{x^{2}-1}}{x}\)，\(\cos t=\frac{1}{x}\)，所以
+\[ \int\frac{\sqrt{x^{2}-1}}{x^{3}}\,dx=\frac{1}{2}\operatorname{arcsec} x-\frac{\sqrt{x^{2}-1}}{2x^{2}}+C. \]
+
+(3) \(\int\frac{1}{x\sqrt{x^{2}-1}}\,dx\)。
+
+解：令 \(x=\sec t\)，则 \(dx=\sec t\tan t\,dt\)，\(\sqrt{x^{2}-1}=\tan t\)。
+\[ \int\frac{1}{x\sqrt{x^{2}-1}}\,dx=\int\frac{1}{\sec t\tan t}\cdot\sec t\tan t\,dt=\int dt=t+C=\operatorname{arcsec} x+C. \]
+
+(4) \(\int\frac{1}{(x^{2}+a^{2})^{2}}\,dx\)。
+
+解：令 \(x=a\tan t\)，则 \(dx=a\sec^{2}t\,dt\)，\(x^{2}+a^{2}=a^{2}\sec^{2}t\)。
+\[ \int\frac{1}{(x^{2}+a^{2})^{2}}\,dx=\int\frac{1}{a^{4}\sec^{4}t}\cdot a\sec^{2}t\,dt=\frac{1}{a^{3}}\int\cos^{2}t\,dt=\frac{1}{a^{3}}\int\frac{1+\cos 2t}{2}\,dt \]
+\[ =\frac{1}{2a^{3}}\left(t+\frac{\sin 2t}{2}\right)+C=\frac{t}{2a^{3}}+\frac{\sin t\cos t}{2a^{3}}+C. \]
+回代：\(t=\arctan\frac{x}{a}\)，\(\sin t=\frac{x}{\sqrt{x^{2}+a^{2}}}\)，\(\cos t=\frac{a}{\sqrt{x^{2}+a^{2}}}\)，所以
+\[ \int\frac{1}{(x^{2}+a^{2})^{2}}\,dx=\frac{1}{2a^{3}}\arctan\frac{x}{a}+\frac{x}{2a^{2}(x^{2}+a^{2})}+C. \]
+
+(5) \(\int\frac{dx}{\sqrt{3+2x-x^{2}}}\)。
+
+解：配方：
+\[ 3+2x-x^{2}=-(x^{2}-2x-3)=-[(x-1)^{2}-4]=4-(x-1)^{2}. \]
+于是
+\[ \int\frac{dx}{\sqrt{3+2x-x^{2}}}=\int\frac{dx}{\sqrt{4-(x-1)^{2}}}. \]
+令 \(u=x-1\)，则 \(du=dx\)。
+\[ \int\frac{du}{\sqrt{4-u^{2}}}=\arcsin\frac{u}{2}+C=\arcsin\frac{x-1}{2}+C. \]
+
+(6) \(\int\frac{x^{2}}{\sqrt{9-x^{2}}}\,dx\)。
+
+解：令 \(x=3\sin t\)，则 \(dx=3\cos t\,dt\)，\(\sqrt{9-x^{2}}=3\cos t\)。
+\[ \int\frac{x^{2}}{\sqrt{9-x^{2}}}\,dx=\int\frac{9\sin^{2}t}{3\cos t}\cdot 3\cos t\,dt=9\int\sin^{2}t\,dt=9\int\frac{1-\cos 2t}{2}\,dt \]
+\[ =\frac{9}{2}t-\frac{9}{4}\sin 2t+C=\frac{9}{2}t-\frac{9}{2}\sin t\cos t+C. \]
+回代：\(t=\arcsin\frac{x}{3}\)，\(\sin t=\frac{x}{3}\)，\(\cos t=\frac{\sqrt{9-x^{2}}}{3}\)，所以
+\[ \int\frac{x^{2}}{\sqrt{9-x^{2}}}\,dx=\frac{9}{2}\arcsin\frac{x}{3}-\frac{x}{2}\sqrt{9-x^{2}}+C. \]
+
+(7) \(\int\frac{\sqrt{x^{2}-4}}{x}\,dx\)。
+
+解：令 \(x=2\sec t\)，则 \(dx=2\sec t\tan t\,dt\)，\(\sqrt{x^{2}-4}=2\tan t\)。
+\[ \int\frac{\sqrt{x^{2}-4}}{x}\,dx=\int\frac{2\tan t}{2\sec t}\cdot 2\sec t\tan t\,dt=2\int\tan^{2}t\,dt=2\int(\sec^{2}t-1)\,dt \]
+\[ =2(\tan t-t)+C. \]
+回代：\(\tan t=\frac{\sqrt{x^{2}-4}}{2}\)，\(t=\operatorname{arcsec}\frac{x}{2}\)，所以
+\[ \int\frac{\sqrt{x^{2}-4}}{x}\,dx=\sqrt{x^{2}-4}-2\operatorname{arcsec}\frac{x}{2}+C. \]
+
+(8) \(\int\frac{x^{3}}{(1+x^{2})^{\frac{3}{2}}}\,dx\)。
+
+解：令 \(u=1+x^{2}\)，则 \(du=2x\,dx\)，\(x^{2}=u-1\)，且
+\[ x^{3}dx=x^{2}\cdot x\,dx=\frac{u-1}{2}du. \]
+\[ \int\frac{x^{3}}{(1+x^{2})^{\frac{3}{2}}}\,dx=\frac{1}{2}\int\frac{u-1}{u^{\frac{3}{2}}}\,du=\frac{1}{2}\int\left(u^{-\frac{1}{2}}-u^{-\frac{3}{2}}\right)du \]
+\[ =\frac{1}{2}\left(2u^{\frac{1}{2}}+2u^{-\frac{1}{2}}\right)+C=\sqrt{u}+\frac{1}{\sqrt{u}}+C=\sqrt{1+x^{2}}+\frac{1}{\sqrt{1+x^{2}}}+C. \]
+
+(9) \(\int\frac{1}{(1-x^{2})^{\frac{3}{2}}}\,dx\)。
+
+解：令 \(x=\sin t\)，则 \(dx=\cos t\,dt\)，\(1-x^{2}=\cos^{2}t\)，\((1-x^{2})^{\frac{3}{2}}=\cos^{3}t\)。
+\[ \int\frac{1}{(1-x^{2})^{\frac{3}{2}}}\,dx=\int\frac{1}{\cos^{3}t}\cdot\cos t\,dt=\int\sec^{2}t\,dt=\tan t+C=\frac{x}{\sqrt{1-x^{2}}}+C. \]
+
+(10) \(\int\frac{1}{(a^{2}+x^{2})^{\frac{3}{2}}}\,dx\)。
+
+解：令 \(x=a\tan t\)，则 \(dx=a\sec^{2}t\,dt\)，\(a^{2}+x^{2}=a^{2}\sec^{2}t\)，\((a^{2}+x^{2})^{\frac{3}{2}}=a^{3}\sec^{3}t\)。
+\[ \int\frac{1}{(a^{2}+x^{2})^{\frac{3}{2}}}\,dx=\int\frac{1}{a^{3}\sec^{3}t}\cdot a\sec^{2}t\,dt=\frac{1}{a^{2}}\int\cos t\,dt=\frac{1}{a^{2}}\sin t+C. \]
+回代：\(\sin t=\frac{x}{\sqrt{a^{2}+x^{2}}}\)，所以
+\[ \int\frac{1}{(a^{2}+x^{2})^{\frac{3}{2}}}\,dx=\frac{x}{a^{2}\sqrt{a^{2}+x^{2}}}+C. \]
+
+(11) \(\int\frac{1}{x^{2}\sqrt{x^{2}+9}}\,dx\)。
+
+解：令 \(x=3\tan t\)，则 \(dx=3\sec^{2}t\,dt\)，\(\sqrt{x^{2}+9}=3\sec t\)。
+\[ \int\frac{1}{x^{2}\sqrt{x^{2}+9}}\,dx=\int\frac{1}{9\tan^{2}t\cdot 3\sec t}\cdot 3\sec^{2}t\,dt=\frac{1}{9}\int\frac{\sec t}{\tan^{2}t}\,dt=\frac{1}{9}\int\frac{\cos t}{\sin^{2}t}\,dt. \]
+令 \(u=\sin t\)，则 \(du=\cos t\,dt\)。
+\[ \frac{1}{9}\int\frac{du}{u^{2}}=-\frac{1}{9u}+C=-\frac{1}{9\sin t}+C. \]
+回代：\(\sin t=\frac{x}{\sqrt{x^{2}+9}}\)，所以
+\[ \int\frac{1}{x^{2}\sqrt{x^{2}+9}}\,dx=-\frac{\sqrt{x^{2}+9}}{9x}+C. \]
+
+(12) \(\int\frac{\sqrt{4-x^{2}}}{x^{4}}\,dx\)。
+
+解：令 \(x=2\sin t\)，则 \(dx=2\cos t\,dt\)，\(\sqrt{4-x^{2}}=2\cos t\)。
+\[ \int\frac{\sqrt{4-x^{2}}}{x^{4}}\,dx=\int\frac{2\cos t}{16\sin^{4}t}\cdot 2\cos t\,dt=\frac{1}{4}\int\frac{\cos^{2}t}{\sin^{4}t}\,dt=\frac{1}{4}\int\cot^{2}t\csc^{2}t\,dt. \]
+令 \(u=\cot t\)，则 \(du=-\csc^{2}t\,dt\)。
+\[ \frac{1}{4}\int u^{2}(-du)=-\frac{1}{4}\cdot\frac{u^{3}}{3}+C=-\frac{u^{3}}{12}+C. \]
+回代：\(u=\cot t=\frac{\cos t}{\sin t}=\frac{\sqrt{4-x^{2}}}{x}\)，所以
+\[ \int\frac{\sqrt{4-x^{2}}}{x^{4}}\,dx=-\frac{(4-x^{2})^{\frac{3}{2}}}{12x^{3}}+C. \]
