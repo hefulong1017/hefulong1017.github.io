@@ -116,6 +116,9 @@
     catTitle.textContent = meta.name;
     catSub.textContent = `${yearLabel(meta.years)} · 共 ${meta.count} 道题`;
     catTotal.textContent = "加载中…";
+    qList.innerHTML = "";
+    emptyEl.hidden = true;
+    moreWrap.hidden = true;
     setHash();
     if (!opts || opts.scroll !== false) {
       browserEl.scrollIntoView({ behavior: "smooth", block: "start" });
