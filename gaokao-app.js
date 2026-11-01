@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   "use strict";
 
   const FULL = window.GAOKAO || null;
@@ -82,7 +82,7 @@
     if (catPromises[id]) return catPromises[id];
     catPromises[id] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=4";
+      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=5";
       s.onload = resolve;
       s.onerror = resolve;
       document.head.appendChild(s);
@@ -224,7 +224,7 @@
         <button class="ans-toggle" type="button" aria-expanded="false" data-ans="${esc(q.id)}" data-cat="${esc(cat.id)}">显示答案 <span aria-hidden="true">↓</span></button>
         <div class="answer" hidden></div>` : "";
       return `<article class="q-card">
-        <div class="q-meta">${meta}<span class="num">${q.number ? "第 " + q.number + " 题" : ""}</span></div>
+        <div class="q-meta">${meta}<span class="num"${q.paperNo ? ' title="按原卷题目顺序匹配"' : ''}>${q.paperNo ? "卷面第 " + q.paperNo + " 题" : ""}</span></div>
         <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="公式加载中"></span>')}</div>
         ${answer}
         <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
