@@ -73,7 +73,7 @@
     .reader h2 { margin: 7px 0 6px; font-size: clamp(23px, 3vw, 30px); letter-spacing: -.025em; }
     .reader-meta { display: flex; flex-wrap: wrap; gap: 12px; color: var(--faint); font-size: 11px; }
     .reader-meta a { color: var(--accent); }
-    .view-switch { display: flex; gap: 8px; padding: 12px 26px 0; }
+    .view-switch { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px 26px 0; }
     .view-switch button {
       border: 1px solid var(--line); background: transparent; border-radius: 999px;
       padding: 7px 13px; color: var(--muted); font-size: 11px; cursor: pointer;
@@ -85,7 +85,53 @@
       display: block; width: 100%; height: auto; background: #fff;
       border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,.12);
     }
-    .page-images[hidden], .answer-text[hidden] { display: none; }
+    .page-images[hidden], .answer-text[hidden], .qa-view[hidden] { display: none; }
+
+    .qa-view { padding: 16px 26px 26px; }
+    .qa-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; justify-content: space-between; margin-bottom: 12px; }
+    .qa-count { color: var(--muted); font-size: 12px; }
+    .qa-count b { color: var(--ink); font-weight: 600; }
+    .qa-tools { display: flex; gap: 8px; }
+    .qa-tools button {
+      border: 1px solid var(--line); background: transparent; color: var(--muted);
+      border-radius: 999px; padding: 6px 11px; font-size: 11px; cursor: pointer;
+    }
+    .qa-tools button:hover { color: var(--ink); border-color: var(--muted); }
+    .qa-intro {
+      margin: 0 0 10px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px;
+      color: var(--muted); font: 13px/1.85 var(--serif); white-space: pre-wrap; overflow-wrap: anywhere;
+    }
+    .qa-card { padding: 22px 0 20px; border-top: 1px solid var(--line); }
+    .qa-card:first-child { border-top: 0; padding-top: 6px; }
+    .qa-head { display: grid; grid-template-columns: 38px minmax(0,1fr); gap: 14px; align-items: start; }
+    .qa-num {
+      display: grid; place-items: center; min-width: 34px; height: 26px; margin-top: 2px;
+      border-radius: 8px; background: var(--accent-soft); color: var(--accent);
+      font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .qa-q {
+      font: 15px/1.95 var(--serif); color: var(--ink);
+      white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word;
+    }
+    .qa-q .katex-display { margin: 10px 0; overflow-x: auto; overflow-y: hidden; }
+    .qa-actions { padding-left: 52px; margin-top: 10px; }
+    .qa-toggle {
+      border: 1px solid var(--line); background: transparent; color: var(--muted);
+      border-radius: 999px; padding: 6px 12px; font-size: 11px; cursor: pointer;
+    }
+    .qa-toggle:hover { color: var(--accent); border-color: var(--accent); }
+    .qa-a {
+      margin: 12px 0 0 52px; padding: 16px 18px 18px;
+      border-left: 2px solid var(--accent); border-radius: 0 12px 12px 0;
+      background: color-mix(in srgb, var(--accent-soft) 72%, var(--surface));
+    }
+    .qa-a-tag { margin-bottom: 8px; color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: .1em; }
+    .qa-a-body {
+      font: 15px/1.9 var(--serif); color: var(--ink);
+      white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word;
+    }
+    .qa-a-body .katex-display { margin: 10px 0; overflow-x: auto; overflow-y: hidden; }
+    .qa-empty { padding: 30px 0; color: var(--faint); font-size: 13px; }
 
     .latex-view { padding: 16px 26px 26px; }
     .latex-toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
@@ -121,12 +167,21 @@
     .pager span { color: var(--faint); font-size: 10px; }
 
     @media (max-width: 820px) {
-      .wrap { grid-template-columns: 1fr; }
+      .wrap { grid-template-columns: minmax(0,1fr); }
+      .side, .reader { min-width: 0; }
       .side { position: static; max-height: 250px; }
-      .view-switch, .page-images { padding-left: 18px; padding-right: 18px; }
+      .view-switch, .page-images, .qa-view, .latex-view { padding-left: 18px; padding-right: 18px; }
       .page-images { gap: 12px; }
       .answer-text { padding: 18px 18px 24px; font-size: 14px; }
       .reader-head, .pager { padding-left: 18px; padding-right: 18px; }
+      .qa-toolbar { align-items: flex-start; }
+      .qa-tools { width: 100%; }
+      .qa-head { grid-template-columns: 26px minmax(0,1fr); gap: 10px; }
+      .qa-num { min-width: 26px; }
+      .qa-actions { padding-left: 0; }
+      .qa-a { margin-left: 0; padding: 14px 14px 16px; }
+      .qa-q, .qa-a-body { font-size: 14px; }
+      .qa-q .katex-display, .qa-a-body .katex-display { max-width: 100%; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   </style>
@@ -145,7 +200,7 @@
     <p class="eyebrow">ADVANCED MATHEMATICS · 上册</p>
     <h1>高等数学上册 · 课本答案</h1>
     <p class="sub">安徽大学版 · 230 页 · 39 个习题与复习题</p>
-    <p class="note">按「习题 / 复习题」分类整理。默认显示可编辑、可复制的 LaTeX 源码并实时渲染；「排版页」可对照原 PDF，「文字」用于全文检索。</p>
+    <p class="note">按「习题 / 复习题」分类，题目和答案分开排布。默认先看题，点「显示答案」再展开；需要原排版或可复制源码时，可切到「LaTeX」或「排版页」。</p>
   </section>
 
   <div class="wrap">
@@ -163,9 +218,27 @@
           <a id="pdf-link" href="advanced-math.pdf" target="_blank" rel="noreferrer">PDF 原页 ↗</a>
         </div>
       </div>
-      <div class="view-switch"><button id="view-pages" type="button">排版页</button><button id="view-latex" type="button" class="active">LaTeX</button><button id="view-text" type="button">文字</button></div>
+      <div class="view-switch">
+        <button id="view-qa" type="button" class="active">题目答案</button>
+        <button id="view-latex" type="button">LaTeX 源码</button>
+        <button id="view-pages" type="button">排版页</button>
+        <button id="view-text" type="button">文字</button>
+      </div>
+
+      <div class="qa-view" id="qa-view">
+        <div class="qa-toolbar">
+          <div class="qa-count" id="qa-count">正在加载…</div>
+          <div class="qa-tools">
+            <button id="qa-expand" type="button">全部展开</button>
+            <button id="qa-collapse" type="button">全部收起</button>
+          </div>
+        </div>
+        <div class="qa-intro" id="qa-intro" hidden></div>
+        <div class="qa-list" id="qa-list"></div>
+      </div>
+
       <div class="page-images" id="page-images" hidden></div>
-      <div class="latex-view" id="latex-view">
+      <div class="latex-view" id="latex-view" hidden>
         <div class="latex-toolbar">
           <button id="latex-edit" type="button">源码 / 编辑</button>
           <button id="latex-copy" type="button">复制本节 LaTeX</button>
@@ -195,6 +268,7 @@
       data.chapters.forEach(function (ch) {
         ch.sections.forEach(function (s) { flat.push({ ch: ch.name, sec: s }); });
       });
+
       var toc = document.getElementById('toc');
       var title = document.getElementById('title');
       var kicker = document.getElementById('kicker');
@@ -206,26 +280,183 @@
       var next = document.getElementById('next');
       var search = document.getElementById('search');
       var pageImages = document.getElementById('page-images');
+      var qaView = document.getElementById('qa-view');
+      var qaList = document.getElementById('qa-list');
+      var qaIntro = document.getElementById('qa-intro');
+      var qaCount = document.getElementById('qa-count');
+      var viewQa = document.getElementById('view-qa');
       var viewPages = document.getElementById('view-pages');
       var viewText = document.getElementById('view-text');
       var viewLatex = document.getElementById('view-latex');
       var latexView = document.getElementById('latex-view');
       var latexPreview = document.getElementById('latex-preview');
       var latexSource = document.getElementById('latex-source');
-      var viewMode = 'latex';
+      var itemsCache = {};
+      var itemsLoading = {};
+      var viewMode = 'qa';
       var current = 0;
+      var renderToken = 0;
 
-
-      function latexForDisplay(s) {
+      function cleanDisplay(s) {
         return String(s || '')
           .replace(/\\section\*\{([^}]*)\}/g, '$1')
           .replace(/\\subsection\*\{([^}]*)\}/g, '$1')
-          .replace(/\\textbf\{([^}]*)\}/g, '$1')
-          .replace(/\\emph\{([^}]*)\}/g, '$1')
+          .replace(/\\begin\{itemize\}|\\end\{itemize\}|\\begin\{enumerate\}|\\end\{enumerate\}/g, '')
+          .replace(/\\item\s*/g, '• ')
+          .replace(/\\textbf\{([^{}]*)\}/g, '$1')
+          .replace(/\\emph\{([^{}]*)\}/g, '$1')
           .replace(/\\text\{([^{}]*)\}/g, '$1')
           .replace(/\\quad/g, ' ')
           .replace(/\\qquad/g, ' ')
-          .replace(/\\ /g, ' ');
+          .replace(/\\ /g, ' ')
+          .replace(/\n{3,}/g, '\n\n');
+      }
+
+      function cleanAnswer(s) {
+        var t = cleanDisplay(s);
+        var n = (t.match(/答案\s*[：:]/g) || []).length;
+        if (n >= 2) {
+          return t.replace(/(^|\n)\s*答案\s*[：:]\s*/g, '$1• ').replace(/\n{2,}/g, '\n');
+        }
+        return t.replace(/^\s*答案\s*[：:]\s*/, '').replace(/\n{3,}/g, '\n\n');
+      }
+
+      function typeset(el) {
+        if (window.renderMathInElement) {
+          window.renderMathInElement(el, {
+            delimiters: [
+              { left: '\\[', right: '\\]', display: true },
+              { left: '\\(', right: '\\)', display: false }
+            ],
+            throwOnError: false
+          });
+        }
+      }
+
+      function loadItems(id) {
+        if (Object.prototype.hasOwnProperty.call(itemsCache, id)) return Promise.resolve(itemsCache[id]);
+        if (itemsLoading[id]) return itemsLoading[id];
+        itemsLoading[id] = new Promise(function (resolve) {
+          var s = document.createElement('script');
+          s.src = 'items/' + encodeURIComponent(id) + '.js?v=1';
+          s.onload = function () {
+            itemsCache[id] = (window.ADV_MATH_ITEMS || {})[id] || null;
+            resolve(itemsCache[id]);
+          };
+          s.onerror = function () {
+            itemsCache[id] = null;
+            resolve(null);
+          };
+          document.head.appendChild(s);
+        });
+        return itemsLoading[id];
+      }
+
+      function makeCard(item, index) {
+        var card = document.createElement('article');
+        card.className = 'qa-card';
+
+        var head = document.createElement('div');
+        head.className = 'qa-head';
+        var num = document.createElement('span');
+        num.className = 'qa-num';
+        num.textContent = item.label || String(index + 1);
+        var q = document.createElement('div');
+        q.className = 'qa-q';
+        q.textContent = (cleanDisplay(item.q) || '（题目略）').replace(/\n{2,}/g, '\n');
+        head.appendChild(num);
+        head.appendChild(q);
+        card.appendChild(head);
+
+        var hasAnswer = Boolean((item.a || '').trim());
+        var ans = null;
+        if (hasAnswer) {
+          var actions = document.createElement('div');
+          actions.className = 'qa-actions';
+          var toggle = document.createElement('button');
+          toggle.type = 'button';
+          toggle.className = 'qa-toggle';
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.innerHTML = '显示答案 <span aria-hidden="true">↓</span>';
+          actions.appendChild(toggle);
+          card.appendChild(actions);
+
+          ans = document.createElement('div');
+          ans.className = 'qa-a';
+          ans.hidden = true;
+          var tag = document.createElement('div');
+          tag.className = 'qa-a-tag';
+          tag.textContent = '参考答案';
+          var body = document.createElement('div');
+          body.className = 'qa-a-body';
+          ans.appendChild(tag);
+          ans.appendChild(body);
+          card.appendChild(ans);
+
+          toggle.addEventListener('click', function () {
+            var open = ans.hidden;
+            ans.hidden = !open;
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            toggle.innerHTML = open
+              ? '收起答案 <span aria-hidden="true">↑</span>'
+              : '显示答案 <span aria-hidden="true">↓</span>';
+            if (open && !ans.dataset.rendered) {
+              body.textContent = cleanAnswer(item.a);
+              typeset(body);
+              ans.dataset.rendered = '1';
+            }
+          });
+        }
+
+        return card;
+      }
+
+      function renderQa() {
+        var token = ++renderToken;
+        var sec = flat[current].sec;
+        qaCount.textContent = '正在加载题目…';
+        qaList.innerHTML = '';
+        qaIntro.hidden = true;
+        var skeleton = document.createElement('div');
+        skeleton.className = 'qa-empty';
+        skeleton.textContent = '正在整理这一节的题目…';
+        qaList.appendChild(skeleton);
+
+        loadItems(sec.id).then(function (block) {
+          if (token !== renderToken) return;
+          if (!block) {
+            qaList.innerHTML = '';
+            qaCount.textContent = '题目加载失败';
+            var failed = document.createElement('div');
+            failed.className = 'qa-empty';
+            failed.textContent = '这一节的题目没能加载，可以刷新页面，或切到 LaTeX / 排版页查看。';
+            qaList.appendChild(failed);
+            return;
+          }
+          qaList.innerHTML = '';
+          qaCount.innerHTML = '共 <b>' + block.items.length + '</b> 题 · 先做题，再展开答案';
+          if (block.intro) {
+            qaIntro.hidden = false;
+            qaIntro.textContent = cleanDisplay(block.intro);
+            typeset(qaIntro);
+          }
+          if (!block.items.length) {
+            var empty = document.createElement('div');
+            empty.className = 'qa-empty';
+            empty.textContent = '这一节暂时没有可拆分的题目，可以切到 LaTeX 或排版页查看。';
+            qaList.appendChild(empty);
+            return;
+          }
+          var frag = document.createDocumentFragment();
+          var cards = [];
+          block.items.forEach(function (item, i) {
+            var card = makeCard(item, i);
+            cards.push(card);
+            frag.appendChild(card);
+          });
+          qaList.appendChild(frag);
+          cards.forEach(function (card) { typeset(card.querySelector('.qa-q')); });
+        });
       }
 
       function renderLatex() {
@@ -236,16 +467,8 @@
           latexPreview.textContent = '本节的 LaTeX 源码还在转换中，稍后刷新。';
           return;
         }
-        latexPreview.textContent = latexForDisplay(src);
-        if (window.renderMathInElement) {
-          window.renderMathInElement(latexPreview, {
-            delimiters: [
-              { left: '\\[', right: '\\]', display: true },
-              { left: '\\(', right: '\\)', display: false }
-            ],
-            throwOnError: false
-          });
-        }
+        latexPreview.textContent = cleanDisplay(src);
+        typeset(latexPreview);
       }
 
       function copyText(t) {
@@ -302,6 +525,7 @@
         pages.textContent = '第 ' + s.start + '–' + s.end + ' 页';
         pdf.href = 'advanced-math.pdf#page=' + s.start;
         text.textContent = s.text || '（本节暂无文字）';
+
         var html = '';
         for (var n = s.start; n <= s.end; n++) {
           var num = ('00' + n).slice(-3);
@@ -311,7 +535,11 @@
         pageImages.hidden = viewMode !== 'pages';
         text.hidden = viewMode !== 'text';
         latexView.hidden = viewMode !== 'latex';
-        renderLatex();
+        qaView.hidden = viewMode !== 'qa';
+
+        if (viewMode === 'qa') renderQa();
+        if (viewMode === 'latex') renderLatex();
+
         count.textContent = (i + 1) + ' / ' + flat.length;
         prev.disabled = i === 0;
         next.disabled = i === flat.length - 1;
@@ -322,17 +550,33 @@
 
       function setView(mode) {
         viewMode = mode;
+        qaView.hidden = mode !== 'qa';
         pageImages.hidden = mode !== 'pages';
         text.hidden = mode !== 'text';
         latexView.hidden = mode !== 'latex';
+        viewQa.classList.toggle('active', mode === 'qa');
         viewPages.classList.toggle('active', mode === 'pages');
         viewLatex.classList.toggle('active', mode === 'latex');
         viewText.classList.toggle('active', mode === 'text');
+        if (mode === 'qa') renderQa();
         if (mode === 'latex') renderLatex();
       }
+
+      viewQa.addEventListener('click', function () { setView('qa'); });
       viewPages.addEventListener('click', function () { setView('pages'); });
       viewLatex.addEventListener('click', function () { setView('latex'); });
       viewText.addEventListener('click', function () { setView('text'); });
+
+      document.getElementById('qa-expand').addEventListener('click', function () {
+        Array.prototype.forEach.call(qaList.querySelectorAll('.qa-toggle'), function (b) {
+          if (b.getAttribute('aria-expanded') !== 'true') b.click();
+        });
+      });
+      document.getElementById('qa-collapse').addEventListener('click', function () {
+        Array.prototype.forEach.call(qaList.querySelectorAll('.qa-toggle'), function (b) {
+          if (b.getAttribute('aria-expanded') === 'true') b.click();
+        });
+      });
 
       document.getElementById('latex-copy').addEventListener('click', function () {
         copyText(latexSource.value);
@@ -352,16 +596,8 @@
         latexPreview.hidden = showSource;
         this.textContent = showSource ? '渲染预览' : '源码 / 编辑';
         if (!showSource) {
-          latexPreview.textContent = latexForDisplay(latexSource.value);
-          if (window.renderMathInElement) {
-            window.renderMathInElement(latexPreview, {
-              delimiters: [
-                { left: '\\[', right: '\\]', display: true },
-                { left: '\\(', right: '\\)', display: false }
-              ],
-              throwOnError: false
-            });
-          }
+          latexPreview.textContent = cleanDisplay(latexSource.value);
+          typeset(latexPreview);
         }
       });
 
@@ -382,12 +618,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
