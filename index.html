@@ -244,6 +244,23 @@
     .link:hover { color: var(--accent); border-color: var(--accent); }
     .link span { color: var(--faint); font-size: 13px; }
 
+    .entry {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 38px;
+      padding: 20px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      transition: color .25s, padding-left .3s var(--ease);
+    }
+    .entry:hover { color: var(--accent); padding-left: 6px; }
+    .entry-text { display: grid; gap: 4px; }
+    .entry-kicker { color: var(--faint); font-size: 9px; letter-spacing: .2em; }
+    .entry strong { font-family: var(--serif); font-size: 1.5rem; font-weight: 500; letter-spacing: -.01em; }
+    .entry-arrow { color: var(--accent); font-size: 1.4rem; line-height: 1; }
+
     footer {
       width: min(760px, calc(100% - 48px));
       margin: 0 auto;
@@ -310,6 +327,14 @@
         <a class="link" href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         <a class="link" href="https://github.com/hefulong1017?tab=repositories" target="_blank" rel="noreferrer">Repositories <span aria-hidden="true">↗</span></a>
       </div>
+
+      <a class="entry" href="gaokao.html" aria-label="进入高考题型分类">
+        <span class="entry-text">
+          <span class="entry-kicker">GAOKAO / 2016—2026</span>
+          <strong>高考题型分类</strong>
+        </span>
+        <span class="entry-arrow" aria-hidden="true">↗</span>
+      </a>
     </main>
   </div>
 
