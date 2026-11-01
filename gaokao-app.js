@@ -6,6 +6,7 @@
   const root = document.documentElement;
   const $ = (id) => document.getElementById(id);
   const state = { cat: null, year: "", region: "", query: "", visible: 20 };
+  let katexReady = false;
   const PAGE = window.matchMedia("(max-width: 640px)").matches ? 8 : 20;
   const KATEX_BASE = document.documentElement.hasAttribute("data-katex-base")
     ? document.documentElement.dataset.katexBase
@@ -15,7 +16,7 @@
   let katexPromise = null;
 
   function loadKatex() {
-    if (typeof renderMathInElement === "function") return Promise.resolve();
+    if (typeof renderMathInElement === "function") { katexReady = true; return Promise.resolve(); }
     if (katexPromise) return katexPromise;
     katexPromise = new Promise((resolve) => {
       const css = document.createElement("link");
@@ -27,7 +28,7 @@
       core.onload = () => {
         const render = document.createElement("script");
         render.src = KATEX_AUTO + "?v=2";
-        render.onload = resolve;
+        render.onload = () => { katexReady = true; resolve(); };
         render.onerror = resolve;
         document.head.appendChild(render);
       };
@@ -153,8 +154,14 @@
     if (!opts || opts.scroll !== false) {
       browserEl.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    await Promise.all([loadKatex(), loadCategory(id)]);
+    const katexPromise = loadKatex();
+    await loadCategory(id);
+    if (state.cat !== id) return;
     renderBrowser();
+    katexPromise.then(() => {
+      katexReady = true;
+      if (state.cat === id) renderQuestions(true);
+    });
   }
 
   function closeCategory() {
@@ -218,7 +225,7 @@
         <div class="answer" hidden></div>` : "";
       return `<article class="q-card">
         <div class="q-meta">${meta}<span class="num">${q.number ? "第 " + q.number + " 题" : ""}</span></div>
-        <div class="q-text">${q.html}</div>
+        <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="公式加载中"></span>')}</div>
         ${answer}
         <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
       </article>`;
@@ -394,6 +401,9 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+
+
+
 
 
 
