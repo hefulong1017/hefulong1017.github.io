@@ -223,6 +223,11 @@
       const answer = q.answer ? `
         <button class="ans-toggle" type="button" aria-expanded="false" data-ans="${esc(q.id)}" data-cat="${esc(cat.id)}">显示答案 <span aria-hidden="true">↓</span></button>
         <div class="answer" hidden></div>` : "";
+      const figures = Array.isArray(q.figures) && q.figures.length
+        ? `<div class="q-figure">${q.figures.map((f) =>
+            `<img src="${esc(typeof f === "string" ? f : f.path)}" alt="题目示意图" loading="lazy">`
+          ).join("")}</div>`
+        : "";
       const options = Array.isArray(q.optionImages) && q.optionImages.length
         ? `<div class="q-option-grid">${q.optionImages.map((src, i) =>
             `<figure><img src="${esc(src)}" alt="选项 ${"ABCD"[i] || i + 1}" loading="lazy"></figure>`
@@ -231,6 +236,7 @@
       return `<article class="q-card">
         <div class="q-meta">${meta}<span class="num"${q.paperNo ? ' title="按原卷题目顺序匹配"' : ''}>${q.paperNo ? "卷面第 " + q.paperNo + " 题" : ""}</span></div>
         <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="公式加载中"></span>')}</div>
+        ${figures}
         ${options}
         ${answer}
         <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
