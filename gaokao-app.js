@@ -1,11 +1,13 @@
 (function () {
   "use strict";
 
-  const DATA = window.GAOKAO;
+  const FULL = window.GAOKAO || null;
+  const INDEX = FULL || window.GAOKAO_INDEX;
   const root = document.documentElement;
   const $ = (id) => document.getElementById(id);
   const state = { cat: null, year: "", region: "", query: "", visible: 20 };
   const PAGE = 20;
+  const catPromises = {};
 
   const themeToggle = $("theme-toggle");
   const themeLabel = $("theme-label");
@@ -42,7 +44,21 @@
   }
 
   function catById(id) {
-    return DATA.categories.find((c) => c.id === id) || null;
+    if (FULL) return FULL.categories.find((c) => c.id === id) || null;
+    return (window.GAOKAO_CATEGORIES || {})[id] || null;
+  }
+
+  function loadCategory(id) {
+    if (FULL || catById(id)) return Promise.resolve();
+    if (catPromises[id]) return catPromises[id];
+    catPromises[id] = new Promise((resolve) => {
+      const s = document.createElement("script");
+      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js";
+      s.onload = resolve;
+      s.onerror = resolve;
+      document.head.appendChild(s);
+    });
+    return catPromises[id];
   }
 
   function yearLabel(years) {
@@ -51,9 +67,9 @@
   }
 
   function renderCats() {
-    $("stat-total").textContent = DATA.total.toLocaleString("zh-CN");
-    $("stat-cats").textContent = String(DATA.categories.length);
-    catsEl.innerHTML = DATA.categories.map((cat, i) => `
+    $("stat-total").textContent = INDEX.total.toLocaleString("zh-CN");
+    $("stat-cats").textContent = String(INDEX.categories.length);
+    catsEl.innerHTML = INDEX.categories.map((cat, i) => `
       <button class="cat" type="button" data-cat="${esc(cat.id)}" aria-label="打开${esc(cat.name)}">
         <span class="arrow" aria-hidden="true">↗</span>
         <span class="idx">${String(i + 1).padStart(2, "0")}</span>
@@ -83,9 +99,9 @@
     };
   }
 
-  function openCategory(id, opts) {
-    const cat = catById(id);
-    if (!cat) return;
+  async function openCategory(id, opts) {
+    const meta = INDEX.categories.find((c) => c.id === id);
+    if (!meta) return;
     state.cat = id;
     if (!opts || !opts.keepFilters) {
       state.year = "";
@@ -96,11 +112,16 @@
     searchEl.value = state.query;
     $("categories").hidden = true;
     browserEl.classList.add("open");
-    renderBrowser();
+    crumbName.textContent = meta.name;
+    catTitle.textContent = meta.name;
+    catSub.textContent = `${yearLabel(meta.years)} · 共 ${meta.count} 道题`;
+    catTotal.textContent = "加载中…";
     setHash();
     if (!opts || opts.scroll !== false) {
       browserEl.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+    await loadCategory(id);
+    renderBrowser();
   }
 
   function closeCategory() {
@@ -193,7 +214,10 @@
 
   function renderBrowser() {
     const cat = catById(state.cat);
-    if (!cat) return;
+    if (!cat) {
+      catTotal.textContent = "加载失败";
+      return;
+    }
     crumbName.textContent = cat.name;
     catTitle.textContent = cat.name;
     catSub.textContent = `${yearLabel(cat.years)} · 共 ${cat.count} 道题`;
