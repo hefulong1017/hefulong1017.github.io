@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
+  <script>try{if(sessionStorage.getItem("introSeen")==="1")document.documentElement.classList.add("no-intro");var t=localStorage.getItem("theme");if(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>何富龙</title>
   <meta name="description" content="何富龙，安徽大学数学硕士在读。关注数学表达、教学工具与可复用的代码。">
@@ -12,7 +13,7 @@
   <meta property="og:description" content="数学 · 教学工具 · 独立开发">
   <meta property="og:locale" content="zh_CN">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231d1d1f'/%3E%3Ctext x='32' y='43' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif' font-size='30' fill='%23fff' text-anchor='middle'%3E何%3C/text%3E%3C/svg%3E">
-  <noscript><style>.reveal { opacity: 1 !important; transform: none !important; filter: none !important; }</style></noscript>
+  <noscript><style>.reveal, .section-head h2, .education h2 { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; } .intro { display: none !important; }</style></noscript>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -613,6 +614,108 @@
       footer { flex-direction: column; gap: 6px; }
       footer span { text-align: center; }
     }
+
+    /* ==== 2026 motion layer ==== */
+    body { overflow-x: hidden; }
+    body.intro-lock { overflow: hidden; }
+    .aurora {
+      position: fixed; inset: -28%; z-index: 0; pointer-events: none;
+      background:
+        conic-gradient(from 130deg at 32% 28%, rgba(0,113,227,.20), transparent 24%, rgba(90,200,250,.14) 42%, transparent 58%, rgba(255,159,10,.11) 76%, transparent 92%);
+      filter: blur(90px) saturate(1.1);
+      opacity: .62;
+      animation: auroraTurn 34s linear infinite;
+    }
+    [data-theme="dark"] .aurora { opacity: .42; }
+    @keyframes auroraTurn { to { transform: rotate(360deg) scale(1.12); } }
+
+    .intro {
+      position: fixed; inset: 0; z-index: 200;
+      display: grid; place-items: center;
+      background:
+        radial-gradient(900px circle at 50% 42%, rgba(0,113,227,.10), transparent 64%),
+        var(--bg);
+      color: var(--ink);
+      transition: transform 1s cubic-bezier(.76, 0, .24, 1), opacity .7s var(--ease);
+      will-change: transform;
+    }
+    .no-intro .intro, .intro-seen .intro { display: none; }
+    body.intro-done .intro { transform: translateY(-101%); opacity: .98; }
+    .intro-inner { display: grid; justify-items: center; gap: 16px; transform: translateY(-2vh); }
+    .intro-mark {
+      display: grid; place-items: center; width: 54px; height: 54px; border-radius: 16px;
+      background: linear-gradient(145deg, #1d1d1f, #3a3a3c); color: #fff;
+      font-size: 24px; font-weight: 600; box-shadow: 0 18px 40px rgba(0,0,0,.22);
+      animation: introPop .8s .1s var(--ease) both;
+    }
+    .intro-name { display: flex; gap: .04em; font-size: clamp(34px, 6vw, 56px); font-weight: 700; letter-spacing: -.06em; line-height: 1; overflow: hidden; }
+    .intro-name span { display: inline-block; animation: introChar .95s .28s var(--ease) both; }
+    .intro-name span:nth-child(2) { animation-delay: .36s; }
+    .intro-name span:nth-child(3) { animation-delay: .44s; }
+    .intro-line { width: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); animation: introLine 1.1s .55s var(--ease) forwards; }
+    .intro small { color: var(--faint); font-size: 9px; letter-spacing: .36em; text-indent: .36em; animation: introFade .9s .8s var(--ease) both; }
+    @keyframes introPop { from { opacity: 0; transform: scale(.72) rotate(-8deg); } to { opacity: 1; transform: none; } }
+    @keyframes introChar { from { opacity: 0; transform: translateY(110%) rotate(4deg); } to { opacity: 1; transform: none; } }
+    @keyframes introLine { to { width: 128px; } }
+    @keyframes introFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    .cursor-dot, .cursor-ring {
+      position: fixed; left: 0; top: 0; z-index: 120; pointer-events: none;
+      border-radius: 50%; opacity: 0; transform: translate(-50%, -50%);
+      will-change: transform, width, height;
+    }
+    .cursor-dot { width: 5px; height: 5px; background: var(--accent); transition: opacity .25s, width .25s, height .25s; }
+    .cursor-ring {
+      width: 34px; height: 34px; border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
+      transition: opacity .3s, width .35s var(--ease), height .35s var(--ease), background .35s, border-color .35s;
+    }
+    .cursor-ring.is-hover { width: 56px; height: 56px; background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 58%, transparent); }
+    .cursor-dot.is-hover { width: 7px; height: 7px; }
+
+    .nav { transition: padding .35s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease), transform .55s var(--ease); }
+    .nav.nav-hidden { transform: translateY(-108%); box-shadow: none; }
+    .nav-links a.active { color: var(--ink); }
+    .nav-links a.active::after { width: 100%; }
+
+    .hero-title span { transition: transform .55s var(--ease), filter .55s var(--ease); }
+    .hero-title:hover span:nth-child(1) { transform: translateY(-5px) rotate(-2deg); }
+    .hero-title:hover span:nth-child(2) { transform: translateY(-8px); }
+    .hero-title:hover span:nth-child(3) { transform: translateY(-5px) rotate(2deg); }
+    .portrait { translate: 0 var(--portrait-shift, 0px); }
+
+    .section-head h2, .education h2 {
+      opacity: 0; transform: translateY(18px); clip-path: inset(0 0 100% 0);
+    }
+    .section-head.head-in h2, .education.head-in h2 {
+      animation: headReveal 1s var(--ease) forwards;
+    }
+    @keyframes headReveal {
+      from { opacity: 0; transform: translateY(18px); clip-path: inset(0 0 100% 0); }
+      to { opacity: 1; transform: none; clip-path: inset(-8% 0 -8% 0); }
+    }
+
+    .tilt { transform-style: preserve-3d; backface-visibility: hidden; }
+    .tilt.is-tilting {
+      transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-5px);
+      transition: transform .1s linear, box-shadow .5s var(--ease), border-color .35s var(--ease);
+    }
+    .magnetic { transition: translate .35s var(--ease); }
+    .magnetic.is-magnet { transition: translate .12s ease-out; }
+
+    .section-head h2::after, .education h2::after { animation: none; transform: scaleX(0); }
+    .section-head.head-in h2::after, .education.head-in h2::after { animation: lineIn .9s .28s var(--ease) forwards; }
+
+    @media (max-width: 760px) {
+      .aurora { filter: blur(60px); opacity: .5; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .intro, .aurora, .cursor-dot, .cursor-ring { display: none !important; }
+      .section-head h2, .education h2 { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+      .portrait { translate: none !important; }
+      .nav { transform: none !important; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
@@ -621,9 +724,29 @@
       .cursor-glow { display: none; }
       .reveal { opacity: 1; transform: none; filter: none; }
     }
+
+    ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+    ::view-transition-new(root) {
+      animation: themeWipe .66s cubic-bezier(.76, 0, .24, 1);
+    }
+    @keyframes themeWipe {
+      from { clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 50%)); }
+      to { clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 50%)); }
+    }
   </style>
 </head>
 <body>
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-inner">
+      <span class="intro-mark" aria-hidden="true">何</span>
+      <div class="intro-name" aria-hidden="true"><span>何</span><span>富</span><span>龙</span></div>
+      <div class="intro-line" aria-hidden="true"></div>
+      <small>HE FULONG</small>
+    </div>
+  </div>
+  <div class="aurora" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
   <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
   <div class="bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span></div>
@@ -876,10 +999,14 @@
         toggle.setAttribute('aria-label', t === 'dark' ? '切换到浅色' : '切换到深色');
       }
       apply(theme);
-      toggle.addEventListener('click', function () {
+      toggle.addEventListener('click', function (e) {
         theme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        apply(theme);
-        localStorage.setItem('theme', theme);
+        var commit = function () { apply(theme); localStorage.setItem('theme', theme); };
+        if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          root.style.setProperty('--vt-x', (e.clientX || window.innerWidth / 2) + 'px');
+          root.style.setProperty('--vt-y', (e.clientY || window.innerHeight / 2) + 'px');
+          document.startViewTransition(commit);
+        } else { commit(); }
       });
       var items = document.querySelectorAll('.reveal');
       if ('IntersectionObserver' in window) {
@@ -1031,6 +1158,159 @@
       }
 
 
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      var intro = document.getElementById('intro');
+      if (intro) {
+        var seen = false;
+        try { seen = sessionStorage.getItem('introSeen') === '1'; } catch (e) {}
+        if (reduce || seen || root.classList.contains('no-intro')) {
+          intro.remove();
+        } else {
+          document.body.classList.add('intro-lock');
+          setTimeout(function () {
+            document.body.classList.add('intro-done');
+            try { sessionStorage.setItem('introSeen', '1'); } catch (e) {}
+          }, 1250);
+          setTimeout(function () {
+            intro.remove();
+            document.body.classList.remove('intro-lock', 'intro-done');
+          }, 2200);
+        }
+      }
+
+      var dot = document.getElementById('cursor-dot');
+      var ring = document.getElementById('cursor-ring');
+      if (fine && !reduce && dot && ring) {
+        var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+        var rx = mx, ry = my, shown = false;
+        window.addEventListener('pointermove', function (e) {
+          mx = e.clientX; my = e.clientY;
+          if (!shown) { dot.style.opacity = '1'; ring.style.opacity = '1'; shown = true; }
+          dot.style.transform = 'translate3d(' + (mx - 2.5) + 'px,' + (my - 2.5) + 'px,0) translate(-50%,-50%)';
+        }, { passive: true });
+        (function loop() {
+          rx += (mx - rx) * .16; ry += (my - ry) * .16;
+          ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) translate(-50%,-50%)';
+          if (shown) requestAnimationFrame(loop);
+        })();
+        document.addEventListener('pointerover', function (e) {
+          var hit = e.target.closest && e.target.closest('a, button, .feature, .product, .app-card');
+          dot.classList.toggle('is-hover', !!hit);
+          ring.classList.toggle('is-hover', !!hit);
+        });
+        document.addEventListener('mouseleave', function () {
+          dot.style.opacity = '0'; ring.style.opacity = '0'; shown = false;
+        });
+      }
+
+      var nav = document.querySelector('.nav');
+      var lastY = window.scrollY;
+      var progress = document.getElementById('progress-bar');
+      var productImgs = Array.prototype.slice.call(document.querySelectorAll('.product-media img'));
+      var portrait = document.querySelector('.portrait');
+      var ticking = false;
+      function paint() {
+        var y = window.scrollY;
+        if (nav) {
+          nav.classList.toggle('scrolled', y > 18);
+          if (y > 420 && y > lastY + 3) nav.classList.add('nav-hidden');
+          if (y < lastY - 3 || y < 160) nav.classList.remove('nav-hidden');
+        }
+        if (progress) {
+          var max = document.documentElement.scrollHeight - window.innerHeight;
+          progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, Math.max(0, y / max)) : 0) + ')';
+        }
+        if (!reduce && window.innerWidth > 760) {
+          if (portrait) portrait.style.setProperty('--portrait-shift', (-Math.min(60, y * .035)).toFixed(1) + 'px');
+          productImgs.forEach(function (img) {
+            var r = img.parentElement.getBoundingClientRect();
+            var off = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
+            img.style.translate = '0 ' + (off * -14).toFixed(1) + 'px';
+          });
+        }
+        lastY = y; ticking = false;
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+      }, { passive: true });
+      paint();
+
+      setTimeout(function () {
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          if (!el.classList.contains('in') && el.getBoundingClientRect().top < window.innerHeight * 1.08) {
+            el.classList.add('in');
+          }
+        });
+        document.querySelectorAll('.section-head, .education').forEach(function (el) {
+          if (el.getBoundingClientRect().top < window.innerHeight * 1.08) el.classList.add('head-in');
+        });
+      }, 2400);
+
+      var heads = document.querySelectorAll('.section-head, .education');
+      if ('IntersectionObserver' in window) {
+        var hio = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { en.target.classList.add('head-in'); hio.unobserve(en.target); }
+          });
+        }, { threshold: .18 });
+        heads.forEach(function (el) { hio.observe(el); });
+      } else {
+        heads.forEach(function (el) { el.classList.add('head-in'); });
+      }
+
+      if (fine && !reduce) {
+        document.querySelectorAll('.feature, .product, .app-card').forEach(function (card) {
+          card.classList.add('tilt');
+          card.addEventListener('pointermove', function (e) {
+            var r = card.getBoundingClientRect();
+            var x = (e.clientX - r.left) / r.width;
+            var y = (e.clientY - r.top) / r.height;
+            card.style.setProperty('--tilt-y', ((x - .5) * 3.4).toFixed(2) + 'deg');
+            card.style.setProperty('--tilt-x', ((.5 - y) * 3.0).toFixed(2) + 'deg');
+            card.classList.add('is-tilting');
+          });
+          card.addEventListener('pointerleave', function () {
+            card.classList.remove('is-tilting');
+            card.style.setProperty('--tilt-x', '0deg');
+            card.style.setProperty('--tilt-y', '0deg');
+          });
+        });
+
+        document.querySelectorAll('.button, .feature-arrow, .links a, .nav-links a, .logo').forEach(function (el) {
+          el.classList.add('magnetic');
+          el.addEventListener('pointermove', function (e) {
+            var r = el.getBoundingClientRect();
+            var dx = e.clientX - (r.left + r.width / 2);
+            var dy = e.clientY - (r.top + r.height / 2);
+            el.style.translate = (dx * .16).toFixed(1) + 'px ' + (dy * .16).toFixed(1) + 'px';
+            el.classList.add('is-magnet');
+          });
+          el.addEventListener('pointerleave', function () {
+            el.style.translate = '0 0';
+            el.classList.remove('is-magnet');
+          });
+        });
+      }
+
+      var anchors = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
+      var sections = anchors.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+      if ('IntersectionObserver' in window && sections.length) {
+        var nio = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            anchors.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
+          });
+        }, { rootMargin: '-34% 0px -52% 0px', threshold: 0 });
+        sections.forEach(function (s) { nio.observe(s); });
+      }
     })();
   </script>
 </body>
