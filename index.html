@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>何富龙 · 高中数学教师</title>
-  <meta name="description" content="何富龙，安徽大学数学硕士在读，求职高中数学教师。关注高考数学、课堂教学与教学工具。">
+  <title>何富龙 · 数学与工具</title>
+  <meta name="description" content="何富龙，安徽大学数学硕士在读。关注数学表达、教学工具与可复用的代码。">
   <meta name="author" content="何富龙">
   <meta name="theme-color" content="#f5f5f7">
   <meta property="og:type" content="website">
   <meta property="og:title" content="何富龙 · 数学教育">
-  <meta property="og:description" content="安徽大学数学硕士在读 · 求职高中数学教师">
+  <meta property="og:description" content="数学 · 教学工具 · 独立开发">
   <meta property="og:locale" content="zh_CN">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231d1d1f'/%3E%3Ctext x='32' y='43' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif' font-size='30' fill='%23fff' text-anchor='middle'%3E何%3C/text%3E%3C/svg%3E">
   <style>
@@ -168,6 +168,27 @@
     .year { color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: .08em; padding-top: 3px; }
     .item h3 { margin: 0 0 3px; font-size: 17px; letter-spacing: -.01em; }
     .item p { margin: 0; color: var(--faint); font-size: 12px; }
+
+    .product-media.mathtype-media {
+      background: linear-gradient(145deg, #eef4ff 0%, #f8fbff 50%, #e8eef7 100%);
+    }
+    [data-theme="dark"] .product-media.mathtype-media {
+      background: linear-gradient(145deg, #0b1730 0%, #101a2a 55%, #0b0c10 100%);
+    }
+    .math-cover {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      min-height: 260px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #1d1d1f 0%, #333 55%, #0b0b0d 100%);
+      color: #fff;
+      text-align: center;
+      box-shadow: 0 18px 36px rgba(0,0,0,.2);
+    }
+    .math-cover span { font-size: 42px; font-weight: 700; letter-spacing: -.04em; }
+    .math-cover strong { display: block; margin-top: 6px; font-size: 15px; font-weight: 500; color: rgba(255,255,255,.75); }
+    .math-cover small { display: block; margin-top: 14px; color: rgba(255,255,255,.45); font-size: 10px; letter-spacing: .12em; }
 
     .product {
       display: grid; grid-template-columns: 1.08fr .92fr; overflow: hidden;
@@ -340,6 +361,11 @@
       padding: 10px;
       border-right: 1px solid var(--line);
     }
+    .code-topic { padding: 10px 8px 4px; }
+    .code-topic + .code-topic { border-top: 1px solid var(--line); margin-top: 6px; }
+    .code-topic h4 { margin: 0 0 4px; font-size: 11px; color: var(--ink); letter-spacing: .02em; }
+    .code-topic p { margin: 0 0 6px; color: var(--faint); font-size: 10px; line-height: 1.6; }
+    .code-topic-files { display: grid; gap: 2px; }
     .code-file {
       display: flex;
       align-items: center;
@@ -434,7 +460,6 @@
     <a class="logo" href="/" aria-label="何富龙">何</a>
     <div class="nav-links">
       <a class="nav-keep" href="#about">关于</a>
-      <a class="nav-keep" href="#teaching">教学</a>
       <a class="nav-keep" href="#share">分享</a>
       <a href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub</a>
       <button class="theme" id="theme-toggle" type="button" aria-label="切换深浅色"><span class="theme-dot" aria-hidden="true"></span></button>
@@ -444,9 +469,9 @@
   <main>
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">HE FULONG · 高中数学教师</p>
+        <p class="eyebrow">HE FULONG · 数学与工具</p>
         <h1>何富龙</h1>
-        <p class="sub">安徽大学数学硕士在读 · 求职高中数学教师</p>
+        <p class="sub">数学 · 教学工具 · 独立开发</p>
         <p class="intro">把数学讲清楚，也把工具做简单。</p>
       </div>
       <aside class="portrait reveal" aria-label="个人信息卡">
@@ -459,11 +484,11 @@
         </div>
         <div class="quick">
           <div class="quick-row"><span>身份</span><b>安徽大学 数学硕士在读</b></div>
-          <div class="quick-row"><span>求职</span><b>高中数学教师</b></div>
-          <div class="quick-row"><span>关注</span><b>高考数学 · 课堂教学</b></div>
-          <div class="quick-row"><span>证书</span><b>高中数学教资 · 普通话二甲</b></div>
+          <div class="quick-row"><span>方向</span><b>数学 · 教学工具</b></div>
+          <div class="quick-row"><span>在做</span><b>题库 · 代码 · 软件</b></div>
+          <div class="quick-row"><span>分享</span><b>全部免费</b></div>
         </div>
-        <div class="portrait-foot"><a href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub ↗</a> · <a href="resume.pdf" download>下载简历</a></div>
+        <div class="portrait-foot"><a href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub ↗</a></div>
       </aside>
     </section>
 
@@ -477,8 +502,8 @@
     <section class="about reveal" id="about">
       <h2>关于</h2>
       <div>
-        <p>安徽大学数学专业本硕连读，研究方向在高中数学课堂、题目研究与教学表达。2025 年参与安徽省高考数学评卷，熟悉评分细则、分步给分和常见扣分点。</p>
-        <p>兼职授课覆盖高一到高三，新授课、一轮复习、二轮专题都独立承担过；平时做题库、讲义和教学工具，放在下面免费分享。</p>
+        <p>安徽大学数学专业本硕连读，关注数学表达、教学工具和可复用的代码。</p>
+        <p>喜欢把复杂的东西讲清楚，也把工具做简单。平时整理题库、写代码、做小软件，放在下面免费分享。</p>
       </div>
     </section>
 
@@ -487,50 +512,13 @@
       <div class="timeline">
         <div class="item">
           <span class="year">2024.09–2027.06</span>
-          <div><h3>安徽大学 · 数学 · 硕士研究生</h3><p>主修分析学、代数学、几何学；2027 年 6 月毕业，可提前进校实习</p></div>
+          <div><h3>安徽大学 · 数学 · 硕士研究生</h3><p>主修分析学、代数学、几何学</p></div>
         </div>
         <div class="item">
           <span class="year">2020.09–2024.06</span>
           <div><h3>安徽大学 · 数学与应用数学 · 本科</h3><p>主修数学分析、高等代数、解析几何、概率论与数理统计、常微分方程、复变函数</p></div>
         </div>
       </div>
-      <div class="chips">
-        <span>高级中学教师资格证（数学）</span>
-        <span>普通话二级甲等</span>
-        <span>共青团员</span>
-        <span>籍贯：安徽无为</span>
-      </div>
-    </section>
-
-    <section class="section reveal" id="teaching">
-      <div class="section-head"><h2>教学与评卷</h2><p>高中数学 · 2025 安徽高考评卷</p></div>
-      <div class="teach-grid">
-        <article class="teach-card">
-          <h3>高考评卷</h3>
-          <p>2025 年参与安徽省高考数学评卷，按评分细则分步给分，清楚给分节点与常见扣分点。</p>
-        </article>
-        <article class="teach-card">
-          <h3>授课经历</h3>
-          <p>高一到高三均带过：新授课、一轮复习、二轮专题都独立承担，备课、讲课、批改答疑可独立完成。</p>
-        </article>
-        <article class="teach-card">
-          <h3>高频考点</h3>
-          <p>导数抓单调性与恒成立，数列抓通项与求和，圆锥曲线抓定点定值与弦长，立体几何抓证明与建系，概率统计抓分布列与期望。</p>
-        </article>
-        <article class="teach-card">
-          <h3>学情分析</h3>
-          <p>用 Excel 透视表与 Python 统计每题得分率、按错因归类，作业分三层布置，讲评只讲错得多的题。</p>
-        </article>
-        <article class="teach-card">
-          <h3>技术工具</h3>
-          <p>几何画板、GeoGebra 做函数与立体几何动态演示；DeepSeek、豆包辅助出题、批改与生成分层练习；Word / PPT 出讲义课件。</p>
-        </article>
-        <article class="teach-card">
-          <h3>AI 题库</h3>
-          <p>把历年真题与自编讲义建成可检索的知识库，按考点快速出变式题、拼专题讲义。</p>
-        </article>
-      </div>
-      <blockquote class="quote">数学专业本硕连读，已取得高级中学教师资格证（数学）与普通话二级甲等，分析、代数、几何三条主线训练完整。兼职授课与高考评卷的经历，让我对学生常见错误和阅卷尺度都比较熟；校内完整带班经验尚缺，期望入职后在教研组指导下补齐。</blockquote>
     </section>
 
     <section class="section" id="share">
@@ -579,6 +567,26 @@
           <div class="meta">87 KB · 免安装 · IXHY 609</div>
           <a class="button" href="software/pc-optimizer.exe" download>下载 <span aria-hidden="true">↓</span></a>
           <div class="fine">SHA-256 · c43abf3eca01af6b679ff5ec1d69a2e9757c99d49eebbfb647da738b05f6af11</div>
+        </div>
+      </article>
+
+      <article class="product reveal" style="margin-top:18px">
+        <div class="product-media mathtype-media">
+          <div class="math-cover">
+            <div>
+              <span>MathType</span>
+              <strong>一键部署 · 授权版本</strong>
+              <small>WINDOWS · OFFLINE</small>
+            </div>
+          </div>
+        </div>
+        <div class="product-body">
+          <span class="tag">Windows · 授权</span>
+          <h3>MathType 一键部署</h3>
+          <p>离线部署 MathType 7，包含安装与配置步骤。适合 Windows 10/11，按说明运行即可，不需要联网下载组件。</p>
+          <div class="meta">40 MB · 离线部署 · IXHY 609</div>
+          <a class="button" href="software/mathtype-setup.exe" download>下载 <span aria-hidden="true">↓</span></a>
+          <div class="fine">SHA-256 · 4cd77ba86ab8a614dbc6cb63f6c762d90275369b57fcdb32722537789f88d5b8</div>
         </div>
       </article>
     </section>
@@ -655,15 +663,9 @@
       <a href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub ↗</a>
       <a href="https://github.com/hefulong1017?tab=repositories" target="_blank" rel="noreferrer">Repositories ↗</a>
     </div>
-
-    <div class="contact-row reveal">
-      <a href="tel:18949201925">电话 18949201925</a>
-      <a href="mailto:3374690846@qq.com">3374690846@qq.com</a>
-      <a href="resume.pdf" download>下载简历 PDF</a>
-    </div>
   </main>
 
-  <footer><span>© 2026 何富龙</span><span>高中数学教师 · 安徽大学</span></footer>
+  <footer><span>© 2026 何富龙</span><span>数学 · 工具 · 分享</span></footer>
 
   <script src="code/code-data.js"></script>
   <script>
@@ -719,19 +721,40 @@
         }
         function drawList() {
           list.innerHTML = '';
-          code.chapters[ci].files.forEach(function (f, i) {
-            var b = document.createElement('button');
-            b.type = 'button';
-            b.className = 'code-file' + (i === fi ? ' active' : '');
-            b.textContent = f.name;
-            if (f.page) {
-              var p = document.createElement('span');
-              p.className = 'p';
-              p.textContent = 'P.' + f.page;
-              b.appendChild(p);
+          var chapter = code.chapters[ci];
+          var topics = chapter.topics || [{ name: '全部代码', desc: '', files: chapter.files.map(function (f) { return f.name; }) }];
+          topics.forEach(function (topic) {
+            var group = document.createElement('div');
+            group.className = 'code-topic';
+            var h = document.createElement('h4');
+            h.textContent = topic.name;
+            group.appendChild(h);
+            if (topic.desc) {
+              var p = document.createElement('p');
+              p.textContent = topic.desc;
+              group.appendChild(p);
             }
-            b.addEventListener('click', function () { fi = i; drawList(); drawCode(); });
-            list.appendChild(b);
+            var box = document.createElement('div');
+            box.className = 'code-topic-files';
+            topic.files.forEach(function (name) {
+              var i = chapter.files.findIndex(function (f) { return f.name === name; });
+              if (i < 0) return;
+              var f = chapter.files[i];
+              var b = document.createElement('button');
+              b.type = 'button';
+              b.className = 'code-file' + (i === fi ? ' active' : '');
+              b.textContent = f.name;
+              if (f.page) {
+                var pg = document.createElement('span');
+                pg.className = 'p';
+                pg.textContent = 'P.' + f.page;
+                b.appendChild(pg);
+              }
+              b.addEventListener('click', function () { fi = i; drawList(); drawCode(); });
+              box.appendChild(b);
+            });
+            group.appendChild(box);
+            list.appendChild(group);
           });
         }
         function drawCode() {
@@ -762,6 +785,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 
