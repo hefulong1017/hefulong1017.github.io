@@ -469,6 +469,7 @@
       display: flex; justify-content: space-between; gap: 14px; width: min(1120px, calc(100% - 44px));
       margin: 0 auto; padding: 24px 0 32px; border-top: 1px solid var(--line); color: var(--faint); font-size: 11px;
     }
+    footer .made { text-align: center; }
     .reveal { opacity: 0; transform: translateY(26px) scale(.985); filter: blur(6px); transition: opacity .8s var(--ease), transform .8s var(--ease), filter .8s var(--ease); }
     .reveal.in { opacity: 1; transform: none; filter: none; }
 
@@ -487,6 +488,7 @@
       .nav-links a:not(.nav-keep) { display: none; }
       .nav-links { gap: 14px; }
       footer { flex-direction: column; gap: 6px; }
+      footer span { text-align: center; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -545,7 +547,7 @@
     </section>
 
     <section class="section" id="share">
-      <div class="section-head"><h2>分享</h2><p>自己做的，免费。</p></div>
+      <div class="section-head"><h2>分享</h2><p>均为本人制作 · 欢迎体验 · 免费使用</p></div>
 
       <a class="feature reveal" href="gaokao.html" aria-label="进入高考题型分类" style="margin-bottom:18px">
         <div>
@@ -617,7 +619,7 @@
     <section class="section" id="apps">
       <div class="section-head">
         <h2>网页应用</h2>
-        <p>两个自己做的练习工具</p>
+        <p>本人制作的练习工具 · 欢迎体验 · 免费使用</p>
       </div>
       <div class="apps">
         <article class="app-card reveal">
@@ -703,7 +705,7 @@
     </div>
   </main>
 
-  <footer><span>© 2026 何富龙</span><span>数学 · 工具 · 分享</span></footer>
+  <footer><span>© 2026 何富龙</span><span class="made">本站内容均为本人制作或整理，欢迎体验，免费使用。</span><span>数学 · 工具 · 分享</span></footer>
 
   <script src="code/code-data.js"></script>
   <script>
