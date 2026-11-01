@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MWORKS 与 MATLAB · 实验报告</title>
-  <meta name="description" content="MWORKS 与 MATLAB 科学计算实验：抛物方程紧差分格式、常微分方程数值解，含代码、表格与结果。">
+  <title>数值实验例子 · MATLAB 与 MWORKS</title>
+  <meta name="description" content="MATLAB 与 MWORKS 数值实验例子：抛物方程紧差分格式、线性方程组解法、Euler 与 Runge-Kutta。">
   <meta name="theme-color" content="#f5f5f7">
   <link rel="stylesheet" href="../katex.min.css">
   <style>
@@ -25,84 +25,100 @@
     html { scroll-behavior: smooth; }
     body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; }
-    button { font: inherit; color: inherit; }
 
     .top {
       position: sticky; top: 0; z-index: 20; display: flex; align-items: center;
-      justify-content: space-between; gap: 18px; padding: 12px max(18px, calc((100vw - 1180px)/2));
+      justify-content: space-between; gap: 18px; padding: 12px max(18px, calc((100vw - 960px)/2));
       background: color-mix(in srgb, var(--bg) 82%, transparent);
       border-bottom: 1px solid var(--line); backdrop-filter: blur(18px);
     }
     .brand { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; }
     .back { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--ink); color: var(--bg); }
     .top-actions { display: flex; gap: 10px; align-items: center; }
-    .top-actions a, .top-actions button {
+    .top-actions a {
       border: 1px solid var(--line); background: var(--surface); border-radius: 999px;
-      padding: 8px 13px; font-size: 12px; color: var(--muted); cursor: pointer;
+      padding: 8px 13px; font-size: 12px; color: var(--muted);
     }
-    .top-actions a:hover, .top-actions button:hover { color: var(--ink); border-color: var(--muted); }
+    .top-actions a:hover { color: var(--ink); border-color: var(--muted); }
 
-    .hero { width: min(1180px, calc(100% - 36px)); margin: 0 auto; padding: 52px 0 28px; }
+    .hero { width: min(960px, calc(100% - 36px)); margin: 0 auto; padding: 52px 0 24px; }
     .eyebrow { margin: 0 0 10px; color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: .14em; }
-    h1 { margin: 0; font-size: clamp(34px, 5vw, 54px); letter-spacing: -.045em; line-height: 1.06; }
+    h1 { margin: 0; font-size: clamp(34px, 5vw, 52px); letter-spacing: -.045em; line-height: 1.06; }
     .sub { margin: 14px 0 0; color: var(--muted); font-size: 15px; }
-    .note { margin: 16px 0 0; color: var(--faint); font-size: 12px; max-width: 58em; line-height: 1.85; }
+    .note { margin: 14px 0 0; color: var(--faint); font-size: 12px; max-width: 58em; line-height: 1.85; }
     .note a { color: var(--accent); }
+    .jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .jump a {
+      padding: 7px 12px; border: 1px solid var(--line); border-radius: 999px;
+      background: var(--surface); color: var(--muted); font-size: 12px;
+    }
+    .jump a:hover { color: var(--ink); border-color: var(--muted); }
 
-    .wrap { width: min(1180px, calc(100% - 36px)); margin: 0 auto 70px; display: grid; grid-template-columns: 250px minmax(0,1fr); gap: 22px; align-items: start; }
-    .side {
-      position: sticky; top: 78px; max-height: calc(100vh - 100px); overflow: auto;
+    .doc { width: min(960px, calc(100% - 36px)); margin: 0 auto 70px; }
+    .example {
       border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius);
-      padding: 14px 12px; box-shadow: 0 12px 40px rgba(0,0,0,.05);
+      box-shadow: 0 12px 40px rgba(0,0,0,.06); margin-bottom: 18px; overflow: hidden;
+      scroll-margin-top: 82px;
     }
-    .side-label { margin: 4px 8px 10px; color: var(--faint); font-size: 10px; font-weight: 700; letter-spacing: .12em; }
-    .toc-group { margin-top: 14px; }
-    .toc-group b { display: block; margin: 0 8px 6px; color: var(--ink); font-size: 11px; font-weight: 600; }
-    .toc a {
-      display: block; padding: 7px 9px; border-radius: 9px; color: var(--muted);
-      font-size: 12px; line-height: 1.45;
+    .ex-head { display: grid; grid-template-columns: 46px minmax(0,1fr); gap: 14px; padding: 24px 28px 18px; border-bottom: 1px solid var(--line); }
+    .ex-no {
+      display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px;
+      background: var(--accent-soft); color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: .04em;
     }
-    .toc a:hover { background: var(--accent-soft); color: var(--ink); }
-    .toc a.active { background: var(--ink); color: var(--bg); }
+    .ex-head h2 { margin: 1px 0 5px; font-size: clamp(22px, 3vw, 28px); letter-spacing: -.03em; line-height: 1.2; }
+    .ex-head p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .ex-body { padding: 22px 28px 28px; }
+    .ex-body > p { margin: 0 0 13px; font: 15px/1.95 var(--serif); overflow-wrap: anywhere; }
+    .ex-body > p:last-child { margin-bottom: 0; }
 
-    .doc { min-width: 0; }
-    .report { border: 1px solid var(--line); background: var(--surface); border-radius: var(--radius); box-shadow: 0 12px 40px rgba(0,0,0,.06); overflow: hidden; margin-bottom: 22px; }
-    .report-head { padding: 24px 28px 18px; border-bottom: 1px solid var(--line); }
-    .report-head .kicker { color: var(--faint); font-size: 10px; letter-spacing: .12em; }
-    .report-head h2 { margin: 8px 0 6px; font-size: clamp(24px, 3vw, 32px); letter-spacing: -.03em; }
-    .report-head p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
-    .chapter { padding: 26px 28px 30px; border-top: 1px solid var(--line); scroll-margin-top: 78px; }
-    .chapter:first-of-type { border-top: 0; }
-    .chapter h3 { margin: 0 0 14px; font-size: 20px; letter-spacing: -.02em; }
-    .chapter p { margin: 0 0 13px; font: 15px/1.95 var(--serif); overflow-wrap: anywhere; }
-    .chapter p:last-child { margin-bottom: 0; }
-    .formula { margin: 14px 0 18px; padding: 6px 0; overflow-x: auto; overflow-y: hidden; }
+    .formula { margin: 12px 0 18px; padding: 4px 0; overflow-x: auto; overflow-y: hidden; }
     .formula .katex-display { margin: 0; }
-    .code {
-      margin: 14px 0 18px; padding: 15px 16px; border: 1px solid var(--line); border-radius: 12px;
-      background: #0f1115; color: #e8e8ed; overflow-x: auto;
-      font: 12px/1.65 var(--mono); tab-size: 2; white-space: pre;
-    }
-    [data-theme="dark"] .code { background: #0a0a0c; border-color: rgba(255,255,255,.12); }
-    .code code { font: inherit; white-space: inherit; }
+
     .table-wrap { margin: 14px 0 20px; overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
     table { border-collapse: collapse; width: 100%; min-width: 460px; font-size: 13px; }
     th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
     th { background: color-mix(in srgb, var(--bg) 70%, var(--surface)); color: var(--muted); font-weight: 600; }
     tr:last-child td { border-bottom: 0; }
-    .empty { padding: 18px 0; color: var(--faint); font-size: 13px; }
 
-    footer { width: min(1180px, calc(100% - 36px)); margin: 0 auto; padding: 26px 0 50px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; color: var(--faint); font-size: 11px; }
+    details.code-box, details.method, details.table-box {
+      margin: 14px 0 18px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--bg) 55%, var(--surface));
+    }
+    details.code-box > summary, details.method > summary, details.table-box > summary {
+      cursor: pointer; padding: 12px 15px; color: var(--muted); font-size: 12px;
+      display: flex; align-items: center; gap: 9px; list-style: none;
+    }
+    details.code-box > summary::-webkit-details-marker, details.method > summary::-webkit-details-marker, details.table-box > summary::-webkit-details-marker { display: none; }
+    details.code-box > summary::before, details.method > summary::before, details.table-box > summary::before {
+      content: "+"; display: grid; place-items: center; width: 18px; height: 18px;
+      border-radius: 6px; background: var(--surface); border: 1px solid var(--line); font-size: 12px; color: var(--faint);
+    }
+    details[open].code-box > summary::before, details[open].method > summary::before, details[open].table-box > summary::before { content: "−"; }
+    details.code-box summary em { margin-left: auto; color: var(--faint); font-style: normal; font-size: 11px; }
+    details.method > summary, details.table-box > summary { font-size: 13px; font-weight: 600; color: var(--ink); }
+    .table-body { padding: 0 15px 4px; }
+    .table-body p { margin: 10px 0 6px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .table-body .table-wrap { margin: 8px 0 12px; }
+    .method-body { padding: 0 15px 6px; }
+    .method-body > p { margin: 6px 0 12px; font: 14px/1.9 var(--serif); }
+    .method-body .code-box { background: #0f1115; border-color: transparent; }
+    .method-body .code-box summary { color: #a1a1a6; }
+    .method-body .code-box summary::before { background: #1c1c1e; border-color: rgba(255,255,255,.15); color: #a1a1a6; }
+
+    pre.code { margin: 0; padding: 15px 16px; border-radius: 0 0 12px 12px; background: #0f1115; color: #e8e8ed; overflow-x: auto; font: 12px/1.65 var(--mono); tab-size: 2; white-space: pre; }
+    pre.code code { font: inherit; white-space: inherit; }
+    [data-theme="dark"] pre.code { background: #0a0a0c; }
+
+    .empty { padding: 16px 0; color: var(--faint); font-size: 13px; }
+    footer { width: min(960px, calc(100% - 36px)); margin: 0 auto; padding: 24px 0 50px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; color: var(--faint); font-size: 11px; }
     footer a { color: var(--muted); }
     footer a:hover { color: var(--ink); }
 
-    @media (max-width: 860px) {
-      .wrap { grid-template-columns: minmax(0,1fr); }
-      .side { position: static; max-height: 230px; }
-      .doc { min-width: 0; }
-      .hero { padding-top: 38px; }
-      .report-head, .chapter { padding-left: 18px; padding-right: 18px; }
-      .chapter p { font-size: 14px; }
+    @media (max-width: 760px) {
+      .hero { padding-top: 36px; }
+      .ex-head { grid-template-columns: 38px minmax(0,1fr); gap: 12px; padding: 20px 18px 15px; }
+      .ex-no { width: 38px; height: 38px; border-radius: 12px; font-size: 11px; }
+      .ex-body { padding: 18px 18px 22px; }
+      .ex-body > p { font-size: 14px; }
       .top-actions a:first-child { display: none; }
       footer { flex-direction: column; }
     }
@@ -119,22 +135,22 @@
   </header>
 
   <section class="hero">
-    <p class="eyebrow">MWORKS · MATLAB · NUMERICAL EXPERIMENTS</p>
-    <h1>科学计算实验报告</h1>
-    <p class="sub">抛物方程紧差分格式 · 常微分方程数值解 · 线性方程组迭代法</p>
-    <p class="note">两份课程报告的正文、代码和结果表，已去掉截图与公式图片；公式用 LaTeX 重排。MWORKS 官网：<a href="https://www.tongyuan.cc/" target="_blank" rel="noreferrer">tongyuan.cc</a></p>
+    <p class="eyebrow">MWORKS · MATLAB · NUMERICAL EXAMPLES</p>
+    <h1>数值实验例子</h1>
+    <p class="sub">抛物方程紧差分格式 · 线性方程组解法 · 常微分方程</p>
+    <p class="note">从两份课程作业里整理出的几个例子，只保留题目、结果表和代码；没有截图，公式用 LaTeX 重排。MWORKS 官网：<a href="https://www.tongyuan.cc/" target="_blank" rel="noreferrer">tongyuan.cc</a></p>
+    <nav class="jump" aria-label="例子目录">
+      <a href="#ex1">01 紧差分格式</a>
+      <a href="#ex2">02 线性方程组的解法</a>
+      <a href="#ex3">03 Euler 与 RK4</a>
+      <a href="#ex4">04 第二个初值问题</a>
+    </nav>
   </section>
 
-  <div class="wrap">
-    <aside class="side" aria-label="报告目录">
-      <div class="side-label">CONTENTS</div>
-      <div class="toc" id="toc"></div>
-    </aside>
-    <main class="doc" id="doc"></main>
-  </div>
+  <main class="doc" id="doc"></main>
 
   <footer>
-    <span>内容来自课程实验报告，仅作学习记录。</span>
+    <span>内容来自课程作业，只作学习记录。</span>
     <span><a href="https://www.tongyuan.cc/" target="_blank" rel="noreferrer">MWORKS 官网 ↗</a></span>
   </footer>
 
@@ -145,7 +161,6 @@
     (function () {
       var data = window.MWORKS_DATA;
       var doc = document.getElementById('doc');
-      var toc = document.getElementById('toc');
 
       function typeset(el) {
         if (!window.renderMathInElement) return;
@@ -176,108 +191,198 @@
         parent.appendChild(wrap);
       }
 
-      if (!data || !data.reports) {
-        doc.innerHTML = '<div class="empty">报告内容没有加载成功，请刷新页面。</div>';
+      function addCode(parent, html) {
+        var lines = html ? html.split('\n').length : 0;
+        var box = document.createElement('details');
+        box.className = 'code-box';
+        var summary = document.createElement('summary');
+        summary.textContent = '代码';
+        var count = document.createElement('em');
+        count.textContent = lines + ' 行';
+        summary.appendChild(count);
+        var pre = document.createElement('pre');
+        pre.className = 'code';
+        var code = document.createElement('code');
+        code.textContent = html || '';
+        pre.appendChild(code);
+        box.appendChild(summary);
+        box.appendChild(pre);
+        parent.appendChild(box);
+      }
+
+      function addBlocks(parent, blocks, collapseTables) {
+        var tableItems = [];
+        var pendingCaption = null;
+
+        function renderOne(b) {
+          if (b.type === 'code') {
+            addCode(parent, b.html);
+          } else if (b.type === 'formula') {
+            var f = document.createElement('div');
+            f.className = 'formula';
+            f.textContent = '\\[' + b.latex + '\\]';
+            parent.appendChild(f);
+          } else if (b.type === 'p') {
+            if (/^图\s*\d/.test(b.html.trim())) return;
+            var p = document.createElement('p');
+            p.textContent = b.html;
+            parent.appendChild(p);
+          }
+        }
+
+        blocks.forEach(function (b) {
+          if (b.type === 'p' && /^\s*表\s*\d/.test(b.html)) {
+            pendingCaption = b;
+            return;
+          }
+          if (b.type === 'table') {
+            tableItems.push({ caption: pendingCaption, rows: b.rows });
+            pendingCaption = null;
+            return;
+          }
+          if (pendingCaption) {
+            renderOne(pendingCaption);
+            pendingCaption = null;
+          }
+          renderOne(b);
+        });
+        if (pendingCaption) renderOne(pendingCaption);
+
+        if (!tableItems.length) return;
+
+        if (!collapseTables) {
+          tableItems.forEach(function (item) {
+            if (item.caption) renderOne(item.caption);
+            addTable(parent, item.rows);
+          });
+          return;
+        }
+
+        var box = document.createElement('details');
+        box.className = 'table-box';
+        var summary = document.createElement('summary');
+        summary.textContent = '结果表 · ' + tableItems.length + ' 张';
+        var body = document.createElement('div');
+        body.className = 'table-body';
+        tableItems.forEach(function (item) {
+          if (item.caption) {
+            var cap = document.createElement('p');
+            cap.textContent = item.caption.html;
+            body.appendChild(cap);
+          }
+          addTable(body, item.rows);
+        });
+        box.appendChild(summary);
+        box.appendChild(body);
+        parent.appendChild(box);
+      }
+
+      function curateFirst(blocks) {
+        var out = [];
+        var usedCode = false;
+        blocks.forEach(function (b) {
+          if (b.type === 'code') {
+            if (usedCode) return;
+            usedCode = true;
+          }
+          if (b.type === 'p' && /^(输出结果|最大误差|收敛阶|CPU时间)\s*[：:]?$/.test(b.html.trim())) return;
+          if (b.type === 'p' && /^ii\s*[:：]/.test(b.html.trim())) return;
+          out.push(b);
+        });
+        return out;
+      }
+
+      function methodName(title) {
+        return title.replace(/^第[一二三四五六七八九十]+章\s*·\s*/, '');
+      }
+
+      if (!data || !data.reports || data.reports.length < 2) {
+        doc.innerHTML = '<div class="empty">例子内容没有加载成功，请刷新页面。</div>';
         return;
       }
 
-      data.reports.forEach(function (report, ri) {
-        var shell = document.createElement('section');
-        shell.className = 'report';
-        shell.id = report.id;
+      var r1 = data.reports[0].sections;
+      var r2 = data.reports[1].sections;
+
+      var examples = [
+        {
+          id: 'ex1',
+          no: '01',
+          title: '抛物方程紧差分格式',
+          desc: 'Dirichlet 初边值问题，紧差分格式达到四阶收敛。',
+          blocks: r1[0] ? curateFirst(r1[0].blocks) : []
+        },
+        {
+          id: 'ex2',
+          no: '02',
+          title: '线性方程组的几种解法',
+          desc: '同一组紧差分方程，分别用 QR、SSOR/HSS/PHSS、CG/MINRES/LSQR、矩阵分裂和 LU/Cholesky 求解。',
+          sections: r1.slice(1)
+        },
+        {
+          id: 'ex3',
+          no: '03',
+          title: 'Euler 法与 Runge–Kutta 法',
+          desc: '一阶常微分方程初值问题，比较向前/向后 Euler、改进 Euler 与四阶 RK 的误差和收敛阶。',
+          blocks: r2[0] ? r2[0].blocks : [],
+          collapseTables: true
+        },
+        {
+          id: 'ex4',
+          no: '04',
+          title: '第二个初值问题',
+          desc: '另一组初值问题，用同一组方法比较数值解与精确解。',
+          blocks: r2[1] ? r2[1].blocks : [],
+          collapseTables: true
+        }
+      ];
+
+      examples.forEach(function (ex) {
+        var card = document.createElement('article');
+        card.className = 'example';
+        card.id = ex.id;
 
         var head = document.createElement('div');
-        head.className = 'report-head';
-        var kicker = document.createElement('div');
-        kicker.className = 'kicker';
-        kicker.textContent = 'REPORT ' + String(ri + 1).padStart(2, '0');
+        head.className = 'ex-head';
+        var no = document.createElement('span');
+        no.className = 'ex-no';
+        no.textContent = ex.no;
+        var text = document.createElement('div');
         var h2 = document.createElement('h2');
-        h2.textContent = report.title;
+        h2.textContent = ex.title;
         var p = document.createElement('p');
-        p.textContent = report.subtitle;
-        head.appendChild(kicker);
-        head.appendChild(h2);
-        head.appendChild(p);
-        shell.appendChild(head);
+        p.textContent = ex.desc;
+        text.appendChild(h2);
+        text.appendChild(p);
+        head.appendChild(no);
+        head.appendChild(text);
+        card.appendChild(head);
 
-        var group = document.createElement('div');
-        group.className = 'toc-group';
-        var gb = document.createElement('b');
-        gb.textContent = report.title;
-        group.appendChild(gb);
+        var body = document.createElement('div');
+        body.className = 'ex-body';
 
-        report.sections.forEach(function (sec, si) {
-          var id = report.id + '-' + (si + 1);
-          var chapter = document.createElement('article');
-          chapter.className = 'chapter';
-          chapter.id = id;
-          var h3 = document.createElement('h3');
-          h3.textContent = sec.title;
-          chapter.appendChild(h3);
-
-          if (!sec.blocks.length) {
-            var empty = document.createElement('div');
-            empty.className = 'empty';
-            empty.textContent = '这一节没有正文。';
-            chapter.appendChild(empty);
-          }
-
-          sec.blocks.forEach(function (b) {
-            if (b.type === 'code') {
-              var pre = document.createElement('pre');
-              pre.className = 'code';
-              var code = document.createElement('code');
-              code.textContent = b.html;
-              pre.appendChild(code);
-              chapter.appendChild(pre);
-            } else if (b.type === 'table') {
-              addTable(chapter, b.rows);
-            } else if (b.type === 'formula') {
-              var f = document.createElement('div');
-              f.className = 'formula';
-              f.textContent = '\\[' + b.latex + '\\]';
-              chapter.appendChild(f);
-            } else {
-              var para = document.createElement('p');
-              para.textContent = b.html;
-              chapter.appendChild(para);
-            }
+        if (ex.blocks) {
+          addBlocks(body, ex.blocks, ex.collapseTables);
+        } else {
+          ex.sections.forEach(function (sec) {
+            var d = document.createElement('details');
+            d.className = 'method';
+            var s = document.createElement('summary');
+            s.textContent = methodName(sec.title);
+            var inner = document.createElement('div');
+            inner.className = 'method-body';
+            addBlocks(inner, sec.blocks);
+            d.appendChild(s);
+            d.appendChild(inner);
+            body.appendChild(d);
           });
+        }
 
-          shell.appendChild(chapter);
-
-          var link = document.createElement('a');
-          link.href = '#' + id;
-          link.textContent = sec.title;
-          link.dataset.id = id;
-          group.appendChild(link);
-        });
-
-        doc.appendChild(shell);
-        toc.appendChild(group);
+        card.appendChild(body);
+        doc.appendChild(card);
       });
 
       typeset(doc);
-
-      var links = Array.prototype.slice.call(toc.querySelectorAll('a'));
-      links.forEach(function (a) {
-        a.addEventListener('click', function () {
-          links.forEach(function (x) { x.classList.remove('active'); });
-          a.classList.add('active');
-        });
-      });
-
-      var hash = location.hash.replace('#', '');
-      if (hash) {
-        var target = document.getElementById(hash);
-        if (target) {
-          var active = toc.querySelector('a[href="#' + hash + '"]');
-          if (active) active.classList.add('active');
-          requestAnimationFrame(function () {
-            target.scrollIntoView({ block: 'start' });
-          });
-        }
-      }
     })();
   </script>
 </body>
