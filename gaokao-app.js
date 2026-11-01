@@ -381,9 +381,9 @@
     if (card && card.dataset.cat) loadCategory(card.dataset.cat);
   }, { passive: true });
   if ("requestIdleCallback" in window) {
-    requestIdleCallback(() => loadKatex(), { timeout: 2500 });
+    setTimeout(() => loadKatex(), 400);
   } else {
-    setTimeout(() => loadKatex(), 1500);
+    setTimeout(() => loadKatex(), 400);
   }
   renderCats();
   const initial = readHash();
@@ -394,6 +394,7 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+
 
 
 
