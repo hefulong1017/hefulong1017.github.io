@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>立体几何大题 · 何富龙</title>
+<link rel="stylesheet" href="../katex.min.css">
+<style>
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e6e8eb;--bg:#f7f8fa;--blue:#2563eb;--soft:#eef4ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:rgba(247,248,250,.82);backdrop-filter:saturate(180%) blur(16px);border-bottom:1px solid rgba(0,0,0,.05)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px}
+.brand i{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#111;color:#fff;font-style:normal;font-family:Georgia,serif}
+.links{display:flex;gap:18px;font-size:13px;color:#4b5563}
+.links a:hover{color:var(--blue)}
+.wrap{max-width:980px;margin:0 auto;padding:54px 22px 80px}
+.kicker{font:600 11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.22em;color:var(--blue);margin:0 0 18px}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:0 0 14px;font-weight:800}
+.lede{max-width:620px;color:#5b6472;font-size:15px;line-height:1.8;margin:0}
+.stats{display:flex;gap:34px;margin:30px 0 26px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats b{display:block;font-size:22px;letter-spacing:-.02em}
+.stats span{font-size:11px;color:var(--muted)}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.chip{border:1px solid var(--line);background:#fff;color:#4b5563;border-radius:999px;padding:7px 13px;font-size:12px;cursor:pointer;transition:.18s}
+.chip:hover{border-color:#c7d2e2}
+.chip.on{background:#111;border-color:#111;color:#fff}
+.count{margin-left:auto;color:var(--muted);font-size:12px}
+.list{display:grid;gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px 18px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.card[hidden]{display:none}
+.head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;font-size:11px;color:#6b7280}
+.tags span{background:#f3f4f6;border-radius:999px;padding:4px 8px}
+.no{font-size:11px;color:#98a2b3;white-space:nowrap}
+.q{font-family:"Songti SC","Noto Serif CJK SC",Georgia,serif;font-size:15px;line-height:2;white-space:pre-wrap;overflow-wrap:anywhere}
+.figure{margin:14px 0 4px;background:#fcfcfd;border:1px solid #eef0f3;border-radius:12px;overflow:hidden}
+.figure{display:grid;place-items:center;padding:10px}
+.figure img{display:block;width:auto;height:auto;max-width:100%;max-height:380px;object-fit:contain}
+.toggle{margin-top:12px;border:1px solid #d7e2f5;background:var(--soft);color:#1d4ed8;border-radius:9px;padding:8px 12px;font-size:12px;cursor:pointer}
+.toggle:hover{background:#e3edff}
+.answer{display:none;margin-top:14px;padding:14px 16px;border-left:3px solid #93b4f5;background:#f8faff;border-radius:0 10px 10px 0}
+.answer.open{display:block}
+.alabel{font-size:10px;letter-spacing:.16em;color:#6b8fd8;margin-bottom:8px;font-weight:700}
+.abody{font-family:"Songti SC","Noto Serif CJK SC",Georgia,serif;font-size:14px;line-height:1.95;white-space:pre-wrap;overflow-wrap:anywhere}
+.empty{padding:40px;text-align:center;color:var(--muted);font-size:13px}
+.foot{margin-top:42px;font-size:12px;color:#98a2b3;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.katex{font-size:1.02em}
+@media(max-width:640px){
+ .nav{padding:12px 16px}.links{gap:12px;font-size:12px}
+ .wrap{padding:38px 14px 60px}
+ .card{padding:16px;border-radius:13px}
+ .q{font-size:14px;line-height:1.9}
+ .figure img{max-height:290px}
+ .stats{gap:22px}.stats b{font-size:19px}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="../"><i>何</i>何富龙</a>
+  <div class="links"><a href="../">主页</a><a href="../gaokao.html">高考题库</a><a href="../math/">高等数学</a><a href="../mworks/">数值实验</a></div>
+</nav>
+<main class="wrap">
+  <p class="kicker">SOLID GEOMETRY / 2016—2026</p>
+  <h1>立体几何大题</h1>
+  <p class="lede">全国卷与新高考 40 道立体几何大题。原图多已散失，这里按题意用 GeoGebra 重绘，保留关键点、辅助线与空间关系；题面与答案分开排布。</p>
+  <div class="stats">
+    <div><b>40</b><span>题目数量</span></div>
+    <div><b>2016—2026</b><span>年份范围</span></div>
+    <div><b>GeoGebra</b><span>图像重绘</span></div>
+  </div>
+  <div class="toolbar" id="years"><button class="chip on" data-year="all">全部</button><span class="count" id="count">40 题</span></div>
+  <div class="list" id="list"><div class="empty">正在载入题目…</div></div>
+  <div class="foot"><span>2016—2026 高考数学 · 立体几何</span><span>图形为示意图，按题意重绘</span></div>
+</main>
+<script defer src="../katex.min.js"></script>
+<script defer src="../auto-render.min.js"></script>
+<script defer src="data.js"></script>
+<script>
+(function(){
+  var list=document.getElementById('list'), count=document.getElementById('count'), years=document.getElementById('years');
+  function typeset(el){
+    if(window.renderMathInElement){renderMathInElement(el,{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false});}
+  }
+  function clean(s){
+    return String(s||'').replace(/\\section\*?\{[^}]*\}/g,'').replace(/\\subsection\*?\{[^}]*\}/g,'')
+      .replace(/\\textbf\{([^{}]*)\}/g,'$1').replace(/\\emph\{([^{}]*)\}/g,'$1').replace(/\\text\{([^{}]*)\}/g,'$1')
+      .replace(/\\quad|\\qquad/g,' ').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+  }
+  function card(q){
+    var el=document.createElement('article'); el.className='card'; el.dataset.year=q.year;
+    var tags=[q.year,q.region,q.subject].filter(Boolean).map(function(x){return '<span>'+x+'</span>';}).join('');
+    var no=q.no?('第 '+q.no+' 题'):'';
+    el.innerHTML='<div class="head"><div class="tags">'+tags+'</div><div class="no">'+no+'</div></div>'+
+      '<div class="q"></div>'+
+      '<div class="figure"><img loading="lazy" alt="'+(q.year||'')+' 立体几何图" src="'+q.image+'"></div>'+
+      '<button class="toggle" type="button">显示答案 ↓</button>'+
+      '<div class="answer"><div class="alabel">参考答案</div><div class="abody"></div></div>';
+    el.querySelector('.q').textContent=clean(q.question);
+    var ans=el.querySelector('.answer'), body=el.querySelector('.abody'), btn=el.querySelector('.toggle');
+    btn.addEventListener('click',function(){
+      if(!ans.classList.contains('open')){
+        if(!ans.dataset.rendered){body.textContent=clean(q.answer);typeset(body);ans.dataset.rendered='1';}
+        ans.classList.add('open'); btn.textContent='收起答案 ↑';
+      }else{ans.classList.remove('open');btn.textContent='显示答案 ↓';}
+    });
+    return el;
+  }
+  function build(){
+    var data=window.SOLID_DATA||[];
+    if(!data.length){list.innerHTML='<div class="empty">题目数据没有载入，请刷新重试。</div>';return;}
+    list.innerHTML='';
+    data.forEach(function(q){list.appendChild(card(q));});
+    typeset(list);
+    var ys=[]; data.forEach(function(q){if(q.year&&ys.indexOf(q.year)<0)ys.push(q.year);}); ys.sort();
+    ys.forEach(function(y){var b=document.createElement('button');b.className='chip';b.dataset.year=y;b.textContent=y;years.insertBefore(b,count);});
+    years.addEventListener('click',function(e){
+      var b=e.target.closest('.chip'); if(!b)return;
+      years.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');}); b.classList.add('on');
+      var y=b.dataset.year, n=0;
+      list.querySelectorAll('.card').forEach(function(c){var ok=y==='all'||c.dataset.year===y;c.hidden=!ok;if(ok)n++;});
+      count.textContent=n+' 题';
+    });
+    count.textContent=data.length+' 题';
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
+})();
+</script>
+</body>
+</html>
