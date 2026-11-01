@@ -1,0 +1,35 @@
+for ii=1:5
+M=10*(2^(ii-1));
+xa=0;xb=pi;
+h=(xb-xa)/M;
+x=xa:h:xb;x=x';
+u=zeros(M+1,1);
+A=zeros(M+1,M+1);
+row1=zeros(M+1,1);
+row1(1,1)=2+h^2;row1(2,1)=-1;
+A=toeplitz(row1);
+A(1,1)=1+(3*h^2)/2;
+A(M+1,M+1)=1+(3*h^2)/2;
+H=zeros(M+1,1);
+H(1,1) = -h*(1+h);
+H(2:M,1) = h^2*F1(x(2:M));
+H(M+1,1) = h*(h-1)*exp(pi);
+u=A\H;
+F=zeros(M,1);
+for j=1:M+1
+    F(j)=exp(x(j))*sin(x(j));
+end
+error=abs(u-F);
+MaxErr(ii) = max((error()));
+disp(['最大误差: ', num2str(MaxErr(ii))]);
+figure(1)
+plot(x,u,'o')
+hold on
+figure(2)
+plot(x,error,'-')
+hold on
+end
+for j=2:5
+    ord=MaxErr(j-1)/MaxErr(j);
+    disp(ord)
+end

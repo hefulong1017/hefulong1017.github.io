@@ -144,7 +144,9 @@
     catTitle.textContent = meta.name;
     catSub.textContent = `${yearLabel(meta.years)} · 共 ${meta.count} 道题`;
     catTotal.textContent = "加载中…";
-    qList.innerHTML = '<div class="qs-loading">正在加载题目…</div>';
+    qList.innerHTML = Array.from({ length: 4 }, () =>
+      '<div class="sk-card"><div class="sk-line w40"></div><div class="sk-line"></div><div class="sk-line w90"></div><div class="sk-line w70"></div></div>'
+    ).join("");
     emptyEl.hidden = true;
     moreWrap.hidden = true;
     setHash();
@@ -373,7 +375,11 @@
     }
   });
 
-  catsEl.addEventListener("pointerdown", () => loadKatex(), { once: true, passive: true });
+  catsEl.addEventListener("pointerdown", (e) => {
+    loadKatex();
+    const card = e.target.closest(".cat");
+    if (card && card.dataset.cat) loadCategory(card.dataset.cat);
+  }, { passive: true });
   if ("requestIdleCallback" in window) {
     requestIdleCallback(() => loadKatex(), { timeout: 2500 });
   } else {
@@ -388,6 +394,8 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+
+
 
 
 

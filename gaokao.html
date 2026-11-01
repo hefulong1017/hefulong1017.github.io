@@ -150,6 +150,13 @@
 
     .q-list { display: grid; gap: 12px; padding-top: 20px; }
     .qs-loading { padding: 34px 0; color: var(--muted); font-size: 12px; letter-spacing: .08em; }
+    .sk-card { padding: 20px 22px 18px; border: 1px solid var(--line); background: var(--card); border-radius: 2px; }
+    .sk-line { height: 11px; border-radius: 6px; background: linear-gradient(90deg, var(--line) 25%, var(--accent-soft) 37%, var(--line) 63%); background-size: 400% 100%; animation: sk 1.3s ease infinite; }
+    .sk-line + .sk-line { margin-top: 11px; }
+    .sk-line.w40 { width: 40%; }
+    .sk-line.w70 { width: 70%; }
+    .sk-line.w90 { width: 90%; }
+    @keyframes sk { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
     .q-card {
       padding: 20px 22px 18px; border: 1px solid var(--line); background: var(--card);
       transition: border-color .25s, background .25s;
@@ -288,9 +295,10 @@
   </div>
 
   <script src="gaokao-index.js?v=2"></script>
-  <script src="gaokao-app.js?v=15"></script>
+  <script src="gaokao-app.js?v=16"></script>
 </body>
 </html>
+
 
 
 

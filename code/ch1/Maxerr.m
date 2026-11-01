@@ -1,0 +1,18 @@
+function [u,F,MaxErr]=Maxerr(M)
+xa=0;xb=pi;
+h=(xb-xa)/M;
+x=xa:h:xb;x=x';
+u=zeros(M+1,1);
+u(1,1)=0;
+u(M+1,1)=0;
+row1=zeros(M-1,1);
+row1(1,1)=2+h^2;row1(2,1)=-1;
+A=toeplitz(row1);
+H=zeros(M-1,1);
+H(1) = h^2*F1(x(2));
+H(M-1) = h^2*F1(x(M));
+H(2:M-2,1) = h^2*F1(x(3:M-1));
+u(2:M,1)=A\H;
+F=exp(x).*sin(x); 
+error=abs(u-F);
+MaxErr = max((error()));
