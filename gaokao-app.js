@@ -374,6 +374,11 @@
   });
 
   catsEl.addEventListener("pointerdown", () => loadKatex(), { once: true, passive: true });
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(() => loadKatex(), { timeout: 2500 });
+  } else {
+    setTimeout(() => loadKatex(), 1500);
+  }
   renderCats();
   const initial = readHash();
   if (initial.cat) {
@@ -383,6 +388,7 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+
 
 
 
