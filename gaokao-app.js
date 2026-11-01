@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   "use strict";
 
   const FULL = window.GAOKAO || null;
@@ -6,7 +6,7 @@
   const root = document.documentElement;
   const $ = (id) => document.getElementById(id);
   const state = { cat: null, year: "", region: "", query: "", visible: 20 };
-  const PAGE = 20;
+  const PAGE = window.matchMedia("(max-width: 640px)").matches ? 8 : 20;
   const catPromises = {};
 
   const themeToggle = $("theme-toggle");
@@ -210,6 +210,7 @@
       renderMathInElement(el, {
         delimiters: [{ left: "\\(", right: "\\)", display: false }],
         throwOnError: false,
+        output: "html",
         errorColor: "#b64a32",
         strict: "ignore",
         ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code", "option"],
@@ -386,3 +387,4 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+

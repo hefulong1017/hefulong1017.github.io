@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
@@ -153,6 +153,8 @@
     .q-card {
       padding: 20px 22px 18px; border: 1px solid var(--line); background: var(--card);
       transition: border-color .25s, background .25s;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 420px;
     }
     .q-card:hover { border-color: var(--line-strong); background: var(--bg-soft); }
     .q-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; color: var(--faint); font-size: 10px; letter-spacing: .06em; }
@@ -280,7 +282,7 @@
   <script src="katex.min.js"></script>
   <script src="auto-render.min.js"></script>
   <script src="gaokao-index.js?v=2"></script>
-  <script src="gaokao-app.js?v=5"></script>
+  <script src="gaokao-app.js?v=6"></script>
 </body>
 </html>
 
