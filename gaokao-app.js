@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   "use strict";
 
   const FULL = window.GAOKAO || null;
@@ -304,7 +304,7 @@
     if (answerPromises[catId]) return answerPromises[catId];
     answerPromises[catId] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-answers-" + encodeURIComponent(catId) + ".js";
+      s.src = "gaokao-answers-" + encodeURIComponent(catId) + ".js?v=2";
       s.onload = () => {
         window.GAOKAO_ANSWERS = window.GAOKAO_ANSWERS || {};
         window.GAOKAO_ANSWERS.__cats = window.GAOKAO_ANSWERS.__cats || {};
@@ -382,4 +382,5 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+
 
