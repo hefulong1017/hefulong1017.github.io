@@ -351,7 +351,7 @@
         latexSource.hidden = !showSource;
         latexPreview.hidden = showSource;
         this.textContent = showSource ? '渲染预览' : '源码 / 编辑';
-        if (showSource) {
+        if (!showSource) {
           latexPreview.textContent = latexForDisplay(latexSource.value);
           if (window.renderMathInElement) {
             window.renderMathInElement(latexPreview, {
