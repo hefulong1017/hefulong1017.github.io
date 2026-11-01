@@ -82,7 +82,7 @@
     if (catPromises[id]) return catPromises[id];
     catPromises[id] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=5";
+      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=6";
       s.onload = resolve;
       s.onerror = resolve;
       document.head.appendChild(s);
@@ -223,9 +223,15 @@
       const answer = q.answer ? `
         <button class="ans-toggle" type="button" aria-expanded="false" data-ans="${esc(q.id)}" data-cat="${esc(cat.id)}">显示答案 <span aria-hidden="true">↓</span></button>
         <div class="answer" hidden></div>` : "";
+      const options = Array.isArray(q.optionImages) && q.optionImages.length
+        ? `<div class="q-option-grid">${q.optionImages.map((src, i) =>
+            `<figure><img src="${esc(src)}" alt="选项 ${"ABCD"[i] || i + 1}" loading="lazy"></figure>`
+          ).join("")}</div>`
+        : "";
       return `<article class="q-card">
         <div class="q-meta">${meta}<span class="num"${q.paperNo ? ' title="按原卷题目顺序匹配"' : ''}>${q.paperNo ? "卷面第 " + q.paperNo + " 题" : ""}</span></div>
         <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="公式加载中"></span>')}</div>
+        ${options}
         ${answer}
         <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
       </article>`;
@@ -313,7 +319,7 @@
     if (answerPromises[catId]) return answerPromises[catId];
     answerPromises[catId] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-answers-" + encodeURIComponent(catId) + ".js?v=3";
+      s.src = "gaokao-answers-" + encodeURIComponent(catId) + ".js?v=4";
       s.onload = () => {
         window.GAOKAO_ANSWERS = window.GAOKAO_ANSWERS || {};
         window.GAOKAO_ANSWERS.__cats = window.GAOKAO_ANSWERS.__cats || {};
