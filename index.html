@@ -222,6 +222,12 @@
     @keyframes titleSheen { 0%, 68% { background-position: 100% 0; } 100% { background-position: -30% 0; } }
     .sub { margin: 16px 0 0; color: var(--muted); font-size: clamp(17px, 2.3vw, 22px); letter-spacing: -.01em; }
     .intro { margin: 14px 0 0; color: var(--faint); font-size: 15px; }
+    .hero-intro {
+      max-width: 31em; margin: 24px 0 0; color: var(--muted);
+      font-size: 15.5px; line-height: 1.95; letter-spacing: .005em;
+      animation: heroIn 1s .28s var(--ease) both;
+    }
+    .hero-intro b { color: var(--ink); font-weight: 600; }
 
     .section { padding: 30px 0; }
     section[id] { scroll-margin-top: 92px; }
@@ -637,6 +643,7 @@
       <div class="hero-copy">
         <p class="eyebrow">HE FULONG · 数学与工具</p>
         <h1 class="hero-title" aria-label="何富龙"><span>何</span><span>富</span><span>龙</span></h1>
+        <p class="hero-intro">我目前在<b>安徽大学读数学硕士</b>。平时整理高考真题和高等数学答案，也写 MATLAB 数值实验、做一些自己会用的小工具。喜欢把复杂的东西讲清楚，做成打开就能用的页面。</p>
       </div>
       <aside class="portrait reveal" aria-label="个人信息卡">
         <div class="portrait-top">
