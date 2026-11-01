@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>何富龙 | 数学教育 · 教学设计与表达</title>
+  <meta name="description" content="何富龙的个人主页。关注数学教育、课堂表达与教学工具，记录思考、作品和正在做的事。">
+  <meta name="author" content="何富龙">
+  <meta name="theme-color" content="#f3eee4">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="何富龙 | 个人主页">
+  <meta property="og:description" content="数学教育 · 教学设计 · 表达。把复杂的问题讲清楚，把日常的思考留下来。">
+  <meta property="og:locale" content="zh_CN">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b64a32'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='36' fill='%23faf6ee' text-anchor='middle'%3E何%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #f3eee4;
+      --bg-soft: #faf6ee;
+      --ink: #1d1c19;
+      --muted: #6f6a60;
+      --faint: #9b9488;
+      --line: rgba(29, 28, 25, .14);
+      --line-strong: rgba(29, 28, 25, .28);
+      --accent: #b64a32;
+      --accent-soft: rgba(182, 74, 50, .1);
+      --card: rgba(250, 246, 238, .72);
+      --shadow: 0 24px 80px rgba(44, 37, 26, .08);
+      --serif: "Iowan Old Style", "Palatino Linotype", "Noto Serif SC", "Songti SC", "SimSun", serif;
+      --sans: "Inter", "SF Pro Text", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      --max: 1180px;
+      --ease: cubic-bezier(.22, .61, .36, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #141412;
+      --bg-soft: #1a1916;
+      --ink: #f2ece1;
+      --muted: #a8a094;
+      --faint: #777166;
+      --line: rgba(242, 236, 225, .15);
+      --line-strong: rgba(242, 236, 225, .3);
+      --accent: #e08363;
+      --accent-soft: rgba(224, 131, 99, .12);
+      --card: rgba(26, 25, 22, .72);
+      --shadow: 0 24px 80px rgba(0, 0, 0, .28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      transition: background .5s var(--ease), color .5s var(--ease);
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .22;
+      background-image: radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 0);
+      background-size: 22px 22px;
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
+    }
+    ::selection { background: var(--accent); color: var(--bg-soft); }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+
+    .skip {
+      position: fixed;
+      top: -100px;
+      left: 16px;
+      z-index: 100;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 10px 14px;
+      border-radius: 6px;
+      transition: top .2s;
+    }
+    .skip:focus { top: 16px; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+      background: color-mix(in srgb, var(--bg) 78%, transparent);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: .18em;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      font-family: var(--serif);
+      font-size: 17px;
+      letter-spacing: 0;
+      transition: background .3s, color .3s;
+    }
+    .brand:hover .brand-mark { background: var(--ink); color: var(--bg); }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      font-size: 12px;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+    .nav a { position: relative; padding: 4px 0; transition: color .25s; }
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width .3s var(--ease);
+    }
+    .nav a:hover, .nav a.active { color: var(--ink); }
+    .nav a:hover::after, .nav a.active::after { width: 100%; }
+
+    .theme {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--line-strong);
+      background: transparent;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 11px;
+      letter-spacing: .08em;
+      cursor: pointer;
+      transition: border-color .25s, background .25s;
+    }
+    .theme:hover { border-color: var(--ink); background: var(--accent-soft); }
+    .theme-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    main { position: relative; z-index: 1; }
+    .wrap { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap: 40px;
+      min-height: calc(100vh - 72px);
+      padding: 76px 0 64px;
+      align-items: center;
+      position: relative;
+    }
+    .hero-side {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      justify-self: center;
+      align-self: start;
+      margin-top: 8px;
+      font-size: 10px;
+      letter-spacing: .34em;
+      color: var(--faint);
+      text-transform: uppercase;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 26px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .2em;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--accent);
+    }
+    h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(4.4rem, 11vw, 9.4rem);
+      font-weight: 500;
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+    h1 .dot { color: var(--accent); }
+    .lede {
+      margin: 28px 0 0;
+      font-family: var(--serif);
+      font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+      line-height: 1.55;
+      letter-spacing: -.01em;
+      color: var(--ink);
+    }
+    .intro {
+      max-width: 33em;
+      margin: 22px 0 0;
+      color: var(--muted);
+      font-size: 14.5px;
+      line-height: 1.9;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 0 20px;
+      border: 1px solid var(--line-strong);
+      border-radius: 3px;
+      font-size: 12px;
+      letter-spacing: .1em;
+      transition: transform .25s var(--ease), background .25s, color .25s, border-color .25s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+    .btn.primary:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn.ghost:hover { border-color: var(--ink); background: var(--accent-soft); }
+
+    .hero-card {
+      position: relative;
+      justify-self: end;
+      width: min(100%, 340px);
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .portrait {
+      position: relative;
+      display: grid;
+      place-items: center;
+      aspect-ratio: 1 / 1;
+      border: 1px solid var(--line-strong);
+      background:
+        radial-gradient(circle at 30% 25%, var(--accent-soft), transparent 55%),
+        repeating-linear-gradient(135deg, transparent 0 10px, var(--line) 10px 11px);
+      overflow: hidden;
+    }
+    .portrait::before {
+      content: "";
+      position: absolute;
+      width: 72%;
+      height: 72%;
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+    }
+    .portrait span {
+      position: relative;
+      font-family: var(--serif);
+      font-size: clamp(4rem, 8vw, 6.4rem);
+      color: var(--accent);
+      line-height: 1;
+    }
+    .card-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+    .card-meta div { display: grid; gap: 2px; }
+    .label {
+      font-size: 9px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+    .card-meta strong { font-size: 11px; font-weight: 600; letter-spacing: .03em; }
+    .seal {
+      position: absolute;
+      right: -14px;
+      bottom: 58px;
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--serif);
+      font-size: 13px;
+      letter-spacing: .12em;
+      background: var(--bg);
+      transform: rotate(-6deg);
+    }
+    .hero-index {
+      position: absolute;
+      right: 0;
+      bottom: 52px;
+      font-family: var(--serif);
+      font-size: 12px;
+      color: var(--faint);
+      letter-spacing: .2em;
+    }
+
+    section { scroll-margin-top: 92px; }
+    .section { padding: 96px 0; border-top: 1px solid var(--line); }
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .section-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--faint);
+      font-size: 10px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+    .section-kicker span { color: var(--accent); }
+    h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 500;
+      letter-spacing: -.03em;
+      line-height: 1.2;
+    }
+    .section-note { max-width: 24em; color: var(--muted); font-size: 13px; }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: clamp(32px, 7vw, 96px);
+      align-items: start;
+    }
+    .about-lead {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+      line-height: 1.55;
+      letter-spacing: -.01em;
+      margin: 0;
+    }
+    .about-lead em { color: var(--accent); font-style: normal; }
+    .about-body { display: grid; gap: 20px; color: var(--muted); font-size: 14.5px; }
+    .about-body p { margin: 0; }
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .facts div { display: grid; gap: 3px; }
+    .facts strong { font-family: var(--serif); font-size: 1.1rem; font-weight: 500; }
+    .facts small { color: var(--faint); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .focus-card {
+      position: relative;
+      min-height: 250px;
+      padding: 28px;
+      background: var(--bg);
+      overflow: hidden;
+      transition: background .35s;
+    }
+    .focus-card:hover { background: var(--bg-soft); }
+    .focus-card .num {
+      font-family: var(--serif);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: .16em;
+    }
+    .focus-card h3 {
+      margin: 46px 0 12px;
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-weight: 500;
+      letter-spacing: -.01em;
+    }
+    .focus-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .focus-card .arrow {
+      position: absolute;
+      right: 24px;
+      bottom: 22px;
+      color: var(--faint);
+      font-size: 18px;
+      transition: transform .3s var(--ease), color .3s;
+    }
+    .focus-card:hover .arrow { transform: translate(3px, -3px); color: var(--accent); }
+
+    .now-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
+      gap: clamp(32px, 7vw, 96px);
+    }
+    .now-intro { color: var(--muted); font-size: 14px; max-width: 22em; }
+    .now-list { display: grid; }
+    .now-item {
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: baseline;
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+    }
+    .now-item:last-child { border-bottom: 1px solid var(--line); }
+    .now-item time { color: var(--faint); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+    .now-item p { margin: 0; font-family: var(--serif); font-size: 1.25rem; line-height: 1.5; }
+    .now-item span { color: var(--faint); font-size: 11px; white-space: nowrap; }
+
+    .contact {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+      gap: 40px;
+      align-items: end;
+      padding: 104px 0 88px;
+    }
+    .contact h2 { font-size: clamp(2.6rem, 6vw, 5rem); line-height: 1.08; }
+    .contact h2 em { color: var(--accent); font-style: normal; }
+    .contact-copy { color: var(--muted); font-size: 14px; max-width: 30em; margin: 22px 0 0; }
+    .contact-links { display: grid; gap: 10px; justify-items: start; }
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 220px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      transition: color .25s, border-color .25s;
+    }
+    .contact-link:hover { color: var(--accent); border-color: var(--accent); }
+    .contact-link span:first-child { color: var(--faint); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; width: 64px; }
+    .contact-link span:last-child { margin-left: auto; }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: min(var(--max), calc(100% - 48px));
+      margin: 0 auto;
+      padding: 24px 0 32px;
+      border-top: 1px solid var(--line);
+      color: var(--faint);
+      font-size: 10px;
+      letter-spacing: .1em;
+    }
+    footer .foot-mark { color: var(--accent); }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    .hero-copy > * { animation: rise .9s var(--ease) both; }
+    .hero-copy > *:nth-child(2) { animation-delay: .08s; }
+    .hero-copy > *:nth-child(3) { animation-delay: .16s; }
+    .hero-copy > *:nth-child(4) { animation-delay: .24s; }
+    .hero-copy > *:nth-child(5) { animation-delay: .32s; }
+    .hero-card { animation: rise 1s .2s var(--ease) both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 32px minmax(0, 1fr); gap: 24px; padding-top: 56px; }
+      .hero-card { grid-column: 2; justify-self: start; width: min(100%, 300px); margin-top: 24px; }
+      .hero-index { display: none; }
+      .about-grid, .now-grid, .contact { grid-template-columns: 1fr; }
+      .contact { align-items: start; padding: 80px 0 64px; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .focus-card { min-height: 200px; }
+      .focus-card h3 { margin-top: 28px; }
+    }
+    @media (max-width: 640px) {
+      .topbar, .wrap, footer { width: calc(100% - 32px); }
+      .nav { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; padding: 44px 0 56px; }
+      .hero-side { display: none; }
+      h1 { font-size: clamp(3.8rem, 19vw, 5.6rem); }
+      .lede { font-size: 1.25rem; }
+      .hero-card { grid-column: 1; width: 100%; max-width: none; }
+      .portrait { aspect-ratio: 16 / 10; }
+      .portrait span { font-size: 4rem; }
+      .seal { right: 14px; bottom: 92px; }
+      .section { padding: 68px 0; }
+      .section-head { display: block; margin-bottom: 32px; }
+      .section-note { margin-top: 12px; }
+      .facts { grid-template-columns: 1fr 1fr; }
+      .now-item { grid-template-columns: 1fr; gap: 4px; }
+      .now-item span { display: none; }
+      .contact h2 { font-size: clamp(2.4rem, 13vw, 3.4rem); }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">跳到主要内容</a>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="回到首页">
+      <span class="brand-mark">何</span>
+      <span>HE FULONG</span>
+    </a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#about">关于</a>
+      <a href="#focus">专注</a>
+      <a href="#now">现在</a>
+      <a href="#contact">联系</a>
+    </nav>
+    <button class="theme" id="theme-toggle" type="button" aria-label="切换深浅色主题">
+      <span class="theme-dot" aria-hidden="true"></span>
+      <span id="theme-label">LIGHT</span>
+    </button>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" id="top" aria-labelledby="hero-title">
+      <div class="hero-side" aria-hidden="true">Personal Index / 2026</div>
+
+      <div class="hero-copy">
+        <p class="eyebrow">数学教育 · 教学设计 · 表达</p>
+        <h1 id="hero-title">何富龙<span class="dot">.</span></h1>
+        <p class="lede">把复杂的问题讲清楚，<br>把日常的思考留下来。</p>
+        <p class="intro">我关注数学教育、课堂表达与教学工具。这里记录我的思考、作品，以及正在做的事。</p>
+        <div class="actions">
+          <a class="btn primary" href="#about">了解更多 <span aria-hidden="true">↓</span></a>
+          <a class="btn ghost" href="https://github.com/hefulong0912" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="个人信息卡片">
+        <div class="portrait"><span>何</span></div>
+        <div class="card-meta">
+          <div>
+            <span class="label">Based in</span>
+            <strong>中国</strong>
+          </div>
+          <div>
+            <span class="label">Focus</span>
+            <strong>Math Education</strong>
+          </div>
+        </div>
+        <div class="seal" aria-hidden="true">富龙</div>
+      </aside>
+
+      <div class="hero-index" aria-hidden="true">01 / 04</div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-kicker"><span>01</span> About</div>
+          <h2 id="about-title">关于我</h2>
+          <p class="section-note">一个把数学、表达和工具放在一起思考的人。</p>
+        </div>
+
+        <div class="about-grid">
+          <p class="about-lead reveal">我相信，好的讲解不是把答案说出口，而是让听的人<em>看见问题本来的样子</em>。</p>
+          <div class="about-body reveal">
+            <p>我是何富龙，关注数学教育与教学设计。比起堆叠技巧，我更在意一个概念如何被理解、一个课堂如何被组织，以及一句话能不能说得更准确。</p>
+            <p>在教学之外，我也喜欢做一些轻量的工具和页面，把重复的事情变简单，把值得留下的思考整理出来。这个主页，就是这些事情的入口。</p>
+            <div class="facts">
+              <div><small>Focus</small><strong>数学教育</strong></div>
+              <div><small>Approach</small><strong>清晰 · 克制</strong></div>
+              <div><small>Currently</small><strong>打磨教学设计</strong></div>
+              <div><small>Open to</small><strong>交流与合作</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="focus" aria-labelledby="focus-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-kicker"><span>02</span> Focus</div>
+          <h2 id="focus-title">我在做什么</h2>
+          <p class="section-note">三件长期投入、也愿意持续分享的事。</p>
+        </div>
+
+        <div class="focus-grid">
+          <article class="focus-card reveal">
+            <div class="num">01</div>
+            <h3>数学教学</h3>
+            <p>研究概念的理解路径，打磨例题与讲解顺序，让课堂既有逻辑，也有节奏。</p>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </article>
+          <article class="focus-card reveal">
+            <div class="num">02</div>
+            <h3>教学设计</h3>
+            <p>把一节课拆成目标、问题、活动和反馈，关注学生在每一个环节里真正发生了什么。</p>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </article>
+          <article class="focus-card reveal">
+            <div class="num">03</div>
+            <h3>教学工具</h3>
+            <p>用简单的网页和小工具解决具体问题，让准备、表达和复盘都更轻一点。</p>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="now" aria-labelledby="now-title">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-kicker"><span>03</span> Now</div>
+          <h2 id="now-title">最近</h2>
+          <p class="section-note">一些正在进行中的事。</p>
+        </div>
+
+        <div class="now-grid">
+          <p class="now-intro reveal">不追求把每件事都做完，先把手上的这一件做清楚。以下是此刻占据我注意力的事情。</p>
+          <div class="now-list">
+            <div class="now-item reveal">
+              <time datetime="2026">2026</time>
+              <p>准备高中数学试讲，反复打磨课堂表达与板书节奏。</p>
+              <span>进行中</span>
+            </div>
+            <div class="now-item reveal">
+              <time datetime="2026">2026</time>
+              <p>整理教学设计的方法与案例，形成可以复用的结构。</p>
+              <span>持续</span>
+            </div>
+            <div class="now-item reveal">
+              <time datetime="2026">2026</time>
+              <p>探索 AI 与教学工具的结合，让技术真正服务于理解。</p>
+              <span>探索</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="contact">
+          <div class="reveal">
+            <div class="section-kicker"><span>04</span> Contact</div>
+            <h2 id="contact-title" style="margin-top:18px">保持<em>联系</em>。</h2>
+            <p class="contact-copy">如果你也在思考数学、课堂或教学工具，欢迎来信交流。我更愿意聊具体的问题，而不是客套的问候。</p>
+          </div>
+          <div class="contact-links reveal">
+            <a class="contact-link" href="https://github.com/hefulong0912" target="_blank" rel="noreferrer">
+              <span>GitHub</span><span>@hefulong0912</span><span aria-hidden="true">↗</span>
+            </a>
+            <a class="contact-link" href="https://github.com/hefulong0912?tab=repositories" target="_blank" rel="noreferrer">
+              <span>Projects</span><span>查看仓库</span><span aria-hidden="true">↗</span>
+            </a>
+            <div class="contact-link" style="cursor:default">
+              <span>Location</span><span>中国</span><span aria-hidden="true">·</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 何富龙 <span class="foot-mark">·</span> 保留所有权利</span>
+    <span>DESIGNED WITH CARE <span class="foot-mark">/</span> 2026</span>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const toggle = document.getElementById('theme-toggle');
+      const label = document.getElementById('theme-label');
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = saved || (prefersDark ? 'dark' : 'light');
+
+      function apply(theme) {
+        root.setAttribute('data-theme', theme);
+        label.textContent = theme === 'dark' ? 'DARK' : 'LIGHT';
+        toggle.setAttribute('aria-label', theme === 'dark' ? '切换到浅色主题' : '切换到深色主题');
+      }
+
+      apply(initial);
+      toggle.addEventListener('click', function () {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        apply(next);
+        localStorage.setItem('theme', next);
+      });
+
+      const reveals = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        reveals.forEach(function (el) { observer.observe(el); });
+      } else {
+        reveals.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+
+      const links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+      const sections = links.map(function (link) { return document.querySelector(link.getAttribute('href')); });
+      if ('IntersectionObserver' in window) {
+        const navObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              links.forEach(function (link) { link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id); });
+            }
+          });
+        }, { rootMargin: '-35% 0px -55% 0px' });
+        sections.forEach(function (section) { if (section) navObserver.observe(section); });
+      }
+    })();
+  </script>
+</body>
+</html>
