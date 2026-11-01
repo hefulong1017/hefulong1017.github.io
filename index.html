@@ -1,15 +1,15 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>何富龙 · 数学教育</title>
-  <meta name="description" content="何富龙，数学教育研究生。关注高中数学课堂、题目研究与教学工具。">
+  <title>何富龙 · 高中数学教师</title>
+  <meta name="description" content="何富龙，安徽大学数学硕士在读，求职高中数学教师。关注高考数学、课堂教学与教学工具。">
   <meta name="author" content="何富龙">
   <meta name="theme-color" content="#f5f5f7">
   <meta property="og:type" content="website">
   <meta property="og:title" content="何富龙 · 数学教育">
-  <meta property="og:description" content="数学教育研究生 · 教学工具开发者">
+  <meta property="og:description" content="安徽大学数学硕士在读 · 求职高中数学教师">
   <meta property="og:locale" content="zh_CN">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231d1d1f'/%3E%3Ctext x='32' y='43' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif' font-size='30' fill='%23fff' text-anchor='middle'%3E何%3C/text%3E%3C/svg%3E">
   <style>
@@ -216,6 +216,49 @@
     }
     .feature:hover .feature-arrow { transform: translate(3px, -3px); background: var(--accent); color: #fff; }
 
+    .teach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .teach-card {
+      padding: 18px 18px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+      transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+    }
+    .teach-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .teach-card h3 { margin: 0 0 6px; font-size: 14px; letter-spacing: -.01em; }
+    .teach-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .chips span {
+      padding: 6px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .quote {
+      margin: 18px 0 0;
+      padding: 18px 20px;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      background: var(--accent-soft);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+    .contact-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .contact-row a {
+      padding: 8px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 11px;
+      transition: .2s;
+    }
+    .contact-row a:hover { color: var(--ink); border-color: var(--muted); transform: translateY(-2px); }
+    @media (max-width: 760px) {
+      .teach-grid { grid-template-columns: 1fr; }
+    }
+
     .apps { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     .app-card {
       overflow: hidden;
@@ -400,9 +443,9 @@
   <main>
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">HE FULONG · 数学教育</p>
+        <p class="eyebrow">HE FULONG · 高中数学教师</p>
         <h1>何富龙</h1>
-        <p class="sub">数学教育研究生 · 教学工具开发者</p>
+        <p class="sub">安徽大学数学硕士在读 · 求职高中数学教师</p>
         <p class="intro">把数学讲清楚，也把工具做简单。</p>
       </div>
       <aside class="portrait reveal" aria-label="个人信息卡">
@@ -414,12 +457,12 @@
           </div>
         </div>
         <div class="quick">
-          <div class="quick-row"><span>身份</span><b>数学教育研究生</b></div>
-          <div class="quick-row"><span>关注</span><b>高中数学 · 教学表达</b></div>
-          <div class="quick-row"><span>在做</span><b>题库 · 工具 · 课程资料</b></div>
-          <div class="quick-row"><span>分享</span><b>全部免费</b></div>
+          <div class="quick-row"><span>身份</span><b>安徽大学 数学硕士在读</b></div>
+          <div class="quick-row"><span>求职</span><b>高中数学教师</b></div>
+          <div class="quick-row"><span>关注</span><b>高考数学 · 课堂教学</b></div>
+          <div class="quick-row"><span>证书</span><b>高中数学教资 · 普通话二甲</b></div>
         </div>
-        <div class="portrait-foot"><a href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+        <div class="portrait-foot"><a href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub ↗</a> · <a href="resume.pdf" download>下载简历</a></div>
       </aside>
     </section>
 
@@ -433,8 +476,8 @@
     <section class="about reveal" id="about">
       <h2>关于</h2>
       <div>
-        <p>本科阶段学习数学，研究生阶段专注数学教育。关注高中数学课堂、题目研究与教学表达。</p>
-        <p>平时做一些教学工具和资源，放在下面，免费分享。</p>
+        <p>安徽大学数学专业本硕连读，研究方向在高中数学课堂、题目研究与教学表达。2025 年参与安徽省高考数学评卷，熟悉评分细则、分步给分和常见扣分点。</p>
+        <p>兼职授课覆盖高一到高三，新授课、一轮复习、二轮专题都独立承担过；平时做题库、讲义和教学工具，放在下面免费分享。</p>
       </div>
     </section>
 
@@ -442,14 +485,51 @@
       <h2>教育</h2>
       <div class="timeline">
         <div class="item">
-          <span class="year">本科</span>
-          <div><h3>数学与应用数学</h3><p>数学基础 · 解题研究 · 教学表达</p></div>
+          <span class="year">2024.09–2027.06</span>
+          <div><h3>安徽大学 · 数学 · 硕士研究生</h3><p>主修分析学、代数学、几何学；2027 年 6 月毕业，可提前进校实习</p></div>
         </div>
         <div class="item">
-          <span class="year">研究生</span>
-          <div><h3>数学教育</h3><p>课堂教学 · 教学设计 · 教学工具</p></div>
+          <span class="year">2020.09–2024.06</span>
+          <div><h3>安徽大学 · 数学与应用数学 · 本科</h3><p>主修数学分析、高等代数、解析几何、概率论与数理统计、常微分方程、复变函数</p></div>
         </div>
       </div>
+      <div class="chips">
+        <span>高级中学教师资格证（数学）</span>
+        <span>普通话二级甲等</span>
+        <span>共青团员</span>
+        <span>籍贯：安徽无为</span>
+      </div>
+    </section>
+
+    <section class="section reveal" id="teaching">
+      <div class="section-head"><h2>教学与评卷</h2><p>高中数学 · 2025 安徽高考评卷</p></div>
+      <div class="teach-grid">
+        <article class="teach-card">
+          <h3>高考评卷</h3>
+          <p>2025 年参与安徽省高考数学评卷，按评分细则分步给分，清楚给分节点与常见扣分点。</p>
+        </article>
+        <article class="teach-card">
+          <h3>授课经历</h3>
+          <p>高一到高三均带过：新授课、一轮复习、二轮专题都独立承担，备课、讲课、批改答疑可独立完成。</p>
+        </article>
+        <article class="teach-card">
+          <h3>高频考点</h3>
+          <p>导数抓单调性与恒成立，数列抓通项与求和，圆锥曲线抓定点定值与弦长，立体几何抓证明与建系，概率统计抓分布列与期望。</p>
+        </article>
+        <article class="teach-card">
+          <h3>学情分析</h3>
+          <p>用 Excel 透视表与 Python 统计每题得分率、按错因归类，作业分三层布置，讲评只讲错得多的题。</p>
+        </article>
+        <article class="teach-card">
+          <h3>技术工具</h3>
+          <p>几何画板、GeoGebra 做函数与立体几何动态演示；DeepSeek、豆包辅助出题、批改与生成分层练习；Word / PPT 出讲义课件。</p>
+        </article>
+        <article class="teach-card">
+          <h3>AI 题库</h3>
+          <p>把历年真题与自编讲义建成可检索的知识库，按考点快速出变式题、拼专题讲义。</p>
+        </article>
+      </div>
+      <blockquote class="quote">数学专业本硕连读，已取得高级中学教师资格证（数学）与普通话二级甲等，分析、代数、几何三条主线训练完整。兼职授课与高考评卷的经历，让我对学生常见错误和阅卷尺度都比较熟；校内完整带班经验尚缺，期望入职后在教研组指导下补齐。</blockquote>
     </section>
 
     <section class="section" id="share">
@@ -574,9 +654,15 @@
       <a href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub ↗</a>
       <a href="https://github.com/hefulong1017?tab=repositories" target="_blank" rel="noreferrer">Repositories ↗</a>
     </div>
+
+    <div class="contact-row reveal">
+      <a href="tel:18949201925">电话 18949201925</a>
+      <a href="mailto:3374690846@qq.com">3374690846@qq.com</a>
+      <a href="resume.pdf" download>下载简历 PDF</a>
+    </div>
   </main>
 
-  <footer><span>© 2026 何富龙</span><span>数学教育 · 教学工具</span></footer>
+  <footer><span>© 2026 何富龙</span><span>高中数学教师 · 安徽大学</span></footer>
 
   <script src="code/code-data.js"></script>
   <script>
@@ -675,4 +761,5 @@
   </script>
 </body>
 </html>
+
 
