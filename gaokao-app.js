@@ -161,7 +161,7 @@
         q.figure ? `<span class="fig-badge">含图</span>` : "",
       ].join("");
       const figure = q.figure ? `
-        <button class="fig-toggle" type="button" aria-expanded="false" data-fig="${esc(q.figure.id)}" data-src="${esc(q.figure.path || "")}">查看原题配图 <span aria-hidden="true">↓</span></button>
+        <button class="fig-toggle" type="button" aria-expanded="false" data-fig="${esc(q.figure.id)}" data-cat="${esc(cat.id)}" data-src="${esc(q.figure.path || "")}">查看原题配图 <span aria-hidden="true">↓</span></button>
         <div class="q-figure" hidden><img alt="原题配图" loading="lazy"></div>` : "";
       return `<article class="q-card">
         <div class="q-meta">${meta}<span class="num">${q.number ? "第 " + q.number + " 题" : ""}</span></div>
@@ -250,7 +250,7 @@
     if (img && !img.getAttribute("src")) {
       let src = btn.dataset.src;
       if (!src) {
-        await loadFigureData();
+        await loadFigureData(btn.dataset.cat);
         src = (window.GAOKAO_FIGURES || {})[btn.dataset.fig] || "";
       }
       if (src) img.src = src;
@@ -261,18 +261,25 @@
     btn.innerHTML = open ? '收起原题配图 <span aria-hidden="true">↑</span>' : '查看原题配图 <span aria-hidden="true">↓</span>';
   });
 
-  let figurePromise = null;
-  function loadFigureData() {
-    if (window.GAOKAO_FIGURES) return Promise.resolve();
-    if (figurePromise) return figurePromise;
-    figurePromise = new Promise((resolve) => {
+  const figurePromises = {};
+  function loadFigureData(catId) {
+    if (window.GAOKAO_FIGURES && window.GAOKAO_FIGURES.__cats && window.GAOKAO_FIGURES.__cats[catId]) {
+      return Promise.resolve();
+    }
+    if (figurePromises[catId]) return figurePromises[catId];
+    figurePromises[catId] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-figures.js";
-      s.onload = resolve;
+      s.src = "gaokao-figures-" + encodeURIComponent(catId) + ".js";
+      s.onload = () => {
+        window.GAOKAO_FIGURES = window.GAOKAO_FIGURES || {};
+        window.GAOKAO_FIGURES.__cats = window.GAOKAO_FIGURES.__cats || {};
+        window.GAOKAO_FIGURES.__cats[catId] = true;
+        resolve();
+      };
       s.onerror = resolve;
       document.head.appendChild(s);
     });
-    return figurePromise;
+    return figurePromises[catId];
   }
 
   window.addEventListener("hashchange", () => {
