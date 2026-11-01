@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   "use strict";
 
   const FULL = window.GAOKAO || null;
@@ -7,7 +7,35 @@
   const $ = (id) => document.getElementById(id);
   const state = { cat: null, year: "", region: "", query: "", visible: 20 };
   const PAGE = window.matchMedia("(max-width: 640px)").matches ? 8 : 20;
+  const KATEX_BASE = document.documentElement.hasAttribute("data-katex-base")
+    ? document.documentElement.dataset.katexBase
+    : "vendor/katex/";
+  const KATEX_AUTO = KATEX_BASE ? KATEX_BASE + "contrib/auto-render.min.js" : "auto-render.min.js";
   const catPromises = {};
+  let katexPromise = null;
+
+  function loadKatex() {
+    if (typeof renderMathInElement === "function") return Promise.resolve();
+    if (katexPromise) return katexPromise;
+    katexPromise = new Promise((resolve) => {
+      const css = document.createElement("link");
+      css.rel = "stylesheet";
+      css.href = KATEX_BASE + "katex.min.css";
+      document.head.appendChild(css);
+      const core = document.createElement("script");
+      core.src = KATEX_BASE + "katex.min.js";
+      core.onload = () => {
+        const render = document.createElement("script");
+        render.src = KATEX_AUTO;
+        render.onload = resolve;
+        render.onerror = resolve;
+        document.head.appendChild(render);
+      };
+      core.onerror = resolve;
+      document.head.appendChild(core);
+    });
+    return katexPromise;
+  }
 
   const themeToggle = $("theme-toggle");
   const themeLabel = $("theme-label");
@@ -123,7 +151,7 @@
     if (!opts || opts.scroll !== false) {
       browserEl.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    await loadCategory(id);
+    await Promise.all([loadKatex(), loadCategory(id)]);
     renderBrowser();
   }
 
