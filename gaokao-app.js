@@ -53,7 +53,7 @@
     if (catPromises[id]) return catPromises[id];
     catPromises[id] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js";
+      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=2";
       s.onload = resolve;
       s.onerror = resolve;
       document.head.appendChild(s);
@@ -187,10 +187,14 @@
       const figure = q.figure ? `
         <button class="fig-toggle" type="button" aria-expanded="false" data-fig="${esc(q.figure.id)}" data-cat="${esc(cat.id)}" data-src="${esc(q.figure.path || "")}">查看原题配图 <span aria-hidden="true">↓</span></button>
         <div class="q-figure" hidden><img alt="原题配图" loading="lazy"></div>` : "";
+      const answer = q.answer ? `
+        <button class="ans-toggle" type="button" aria-expanded="false" data-ans="${esc(q.id)}" data-cat="${esc(cat.id)}">显示答案 <span aria-hidden="true">↓</span></button>
+        <div class="answer" hidden></div>` : "";
       return `<article class="q-card">
         <div class="q-meta">${meta}<span class="num">${q.number ? "第 " + q.number + " 题" : ""}</span></div>
         <div class="q-text">${q.html}</div>
         ${figure}
+        ${answer}
         <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
       </article>`;
     }).join("");
@@ -308,6 +312,62 @@
     });
     return figurePromises[catId];
   }
+
+  const answerPromises = {};
+  function loadAnswerData(catId) {
+    if (window.GAOKAO_ANSWERS && window.GAOKAO_ANSWERS.__cats && window.GAOKAO_ANSWERS.__cats[catId]) {
+      return Promise.resolve();
+    }
+    if (answerPromises[catId]) return answerPromises[catId];
+    answerPromises[catId] = new Promise((resolve) => {
+      const s = document.createElement("script");
+      s.src = "gaokao-answers-" + encodeURIComponent(catId) + ".js";
+      s.onload = () => {
+        window.GAOKAO_ANSWERS = window.GAOKAO_ANSWERS || {};
+        window.GAOKAO_ANSWERS.__cats = window.GAOKAO_ANSWERS.__cats || {};
+        window.GAOKAO_ANSWERS.__cats[catId] = true;
+        resolve();
+      };
+      s.onerror = resolve;
+      document.head.appendChild(s);
+    });
+    return answerPromises[catId];
+  }
+
+  function answerHtml(a) {
+    if (!a) return '<div class="ans-empty">这道题的答案还在整理中。</div>';
+    let html = "";
+    if (a.final) html += `<div class="ans-final">答案：${a.final}</div>`;
+    if (a.solution) html += `<div class="ans-solution">${a.solution}</div>`;
+    if (Array.isArray(a.scoring) && a.scoring.length) {
+      const total = a.scoring.reduce((s, x) => s + (Number(x.points) || 0), 0);
+      html += `<div class="scoring"><div class="scoring-title">给分点 <span>共 ${total} 分</span></div>`;
+      html += '<div class="score-row score-head"><span>步骤</span><span>分值</span></div>';
+      for (const row of a.scoring) {
+        html += `<div class="score-row"><span>${row.text || ""}</span><span>${row.points != null ? row.points + " 分" : ""}</span></div>`;
+      }
+      html += "</div>";
+    }
+    return html;
+  }
+
+  qList.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".ans-toggle");
+    if (!btn) return;
+    const box = btn.nextElementSibling;
+    if (!box) return;
+    if (box.hidden && !box.dataset.loaded) {
+      await loadAnswerData(btn.dataset.cat);
+      const a = (window.GAOKAO_ANSWERS || {})[btn.dataset.ans];
+      box.innerHTML = answerHtml(a);
+      box.dataset.loaded = "1";
+      renderMath(box);
+    }
+    const open = box.hidden;
+    box.hidden = !open;
+    btn.setAttribute("aria-expanded", String(open));
+    btn.innerHTML = open ? '收起答案 <span aria-hidden="true">↑</span>' : '显示答案 <span aria-hidden="true">↓</span>';
+  });
 
   window.addEventListener("hashchange", () => {
     const h = readHash();
