@@ -210,18 +210,13 @@
         `<span class="sep">·</span><span>${esc(q.region)}</span>`,
         q.subject && q.subject !== "不分" ? `<span class="sep">·</span><span>${esc(q.subject)}</span>` : "",
         q.score ? `<span class="sep">·</span><span>${q.score} 分</span>` : "",
-        q.figure ? `<span class="fig-badge">含图</span>` : "",
       ].join("");
-      const figure = q.figure ? `
-        <button class="fig-toggle" type="button" aria-expanded="false" data-fig="${esc(q.figure.id)}" data-cat="${esc(cat.id)}" data-src="${esc(q.figure.path || "")}">查看原题配图 <span aria-hidden="true">↓</span></button>
-        <div class="q-figure" hidden><img alt="原题配图" loading="lazy"></div>` : "";
       const answer = q.answer ? `
         <button class="ans-toggle" type="button" aria-expanded="false" data-ans="${esc(q.id)}" data-cat="${esc(cat.id)}">显示答案 <span aria-hidden="true">↓</span></button>
         <div class="answer" hidden></div>` : "";
       return `<article class="q-card">
         <div class="q-meta">${meta}<span class="num">${q.number ? "第 " + q.number + " 题" : ""}</span></div>
         <div class="q-text">${q.html}</div>
-        ${figure}
         ${answer}
         <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
       </article>`;
@@ -301,47 +296,6 @@
     renderQuestions(false);
   });
 
-  qList.addEventListener("click", async (e) => {
-    const btn = e.target.closest(".fig-toggle");
-    if (!btn) return;
-    const box = btn.nextElementSibling;
-    if (!box) return;
-    const img = box.querySelector("img");
-    if (img && !img.getAttribute("src")) {
-      let src = btn.dataset.src;
-      if (!src) {
-        await loadFigureData(btn.dataset.cat);
-        src = (window.GAOKAO_FIGURES || {})[btn.dataset.fig] || "";
-      }
-      if (src) img.src = src;
-    }
-    const open = box.hidden;
-    box.hidden = !open;
-    btn.setAttribute("aria-expanded", String(open));
-    btn.innerHTML = open ? '收起原题配图 <span aria-hidden="true">↑</span>' : '查看原题配图 <span aria-hidden="true">↓</span>';
-  });
-
-  const figurePromises = {};
-  function loadFigureData(catId) {
-    if (window.GAOKAO_FIGURES && window.GAOKAO_FIGURES.__cats && window.GAOKAO_FIGURES.__cats[catId]) {
-      return Promise.resolve();
-    }
-    if (figurePromises[catId]) return figurePromises[catId];
-    figurePromises[catId] = new Promise((resolve) => {
-      const s = document.createElement("script");
-      s.src = "gaokao-figures-" + encodeURIComponent(catId) + ".js";
-      s.onload = () => {
-        window.GAOKAO_FIGURES = window.GAOKAO_FIGURES || {};
-        window.GAOKAO_FIGURES.__cats = window.GAOKAO_FIGURES.__cats || {};
-        window.GAOKAO_FIGURES.__cats[catId] = true;
-        resolve();
-      };
-      s.onerror = resolve;
-      document.head.appendChild(s);
-    });
-    return figurePromises[catId];
-  }
-
   const answerPromises = {};
   function loadAnswerData(catId) {
     if (window.GAOKAO_ANSWERS && window.GAOKAO_ANSWERS.__cats && window.GAOKAO_ANSWERS.__cats[catId]) {
@@ -363,11 +317,24 @@
     return answerPromises[catId];
   }
 
+  function formatSolution(s) {
+    s = String(s || "").replace(/第[一二三四五六七八九十]+步\s*[:：]?\s*/g, "").trim();
+    let parts = s.split(/\n+/).map((x) => x.trim()).filter(Boolean);
+    if (parts.length === 1 && s.length > 160) {
+      const sentences = s.split(/(?<=。)/).map((x) => x.trim()).filter(Boolean);
+      parts = [];
+      for (let i = 0; i < sentences.length; i += 2) {
+        parts.push(sentences.slice(i, i + 2).join(""));
+      }
+    }
+    return parts.map((p) => `<p>${p}</p>`).join("");
+  }
+
   function answerHtml(a) {
     if (!a) return '<div class="ans-empty">这道题的答案还在整理中。</div>';
     let html = "";
     if (a.final) html += `<div class="ans-final">答案：${a.final}</div>`;
-    if (a.solution) html += `<div class="ans-solution">${a.solution}</div>`;
+    if (a.solution) html += `<div class="ans-solution">${formatSolution(a.solution)}</div>`;
     if (Array.isArray(a.scoring) && a.scoring.length) {
       const total = a.scoring.reduce((s, x) => s + (Number(x.points) || 0), 0);
       html += `<div class="scoring"><div class="scoring-title">给分点 <span>共 ${total} 分</span></div>`;

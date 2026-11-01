@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN" data-katex-base="">
 <head>
   <meta charset="utf-8">
@@ -163,18 +163,26 @@
     .q-text { font-size: 14.5px; line-height: 1.95; white-space: normal; overflow-wrap: anywhere; }
     .q-text .katex { font-size: 1.02em; }
     .q-text .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
-    .fig-badge {
-      padding: 2px 7px; border: 1px solid var(--accent); border-radius: 999px;
-      color: var(--accent); font-size: 9px; letter-spacing: .08em;
+    .ans-toggle {
+      display: inline-flex; align-items: center; gap: 7px; margin-top: 12px;
+      border: 1px solid var(--accent); background: transparent; color: var(--accent);
+      padding: 5px 12px; font-size: 10px; letter-spacing: .06em; cursor: pointer;
     }
-    .fig-toggle {
-      display: inline-flex; align-items: center; gap: 7px; margin-top: 10px;
-      border: 1px dashed var(--line-strong); background: transparent; color: var(--muted);
-      padding: 5px 10px; font-size: 10px; letter-spacing: .06em; cursor: pointer;
+    .ans-toggle:hover { background: var(--accent); color: var(--bg-soft); }
+    .answer {
+      margin-top: 12px; padding: 16px 18px; border-left: 2px solid var(--accent);
+      background: var(--accent-soft); font-size: 14px; line-height: 1.95;
     }
-    .fig-toggle:hover { color: var(--accent); border-color: var(--accent); }
-    .q-figure { margin-top: 12px; padding: 10px; border: 1px solid var(--line); background: #fff; overflow-x: auto; }
-    .q-figure img { display: block; width: 100%; max-width: 860px; height: auto; margin: 0 auto; }
+    .ans-final { font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+    .ans-solution { color: var(--ink); }
+    .ans-solution p { margin: 0 0 10px; }
+    .ans-solution p:last-child { margin-bottom: 0; }
+    .ans-empty { color: var(--muted); }
+    .scoring { margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--line-strong); }
+    .scoring-title { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 6px; font-size: 11px; letter-spacing: .06em; color: var(--muted); }
+    .score-row { display: grid; grid-template-columns: minmax(0, 1fr) 64px; gap: 12px; padding: 6px 0; border-top: 1px solid var(--line); font-size: 12.5px; }
+    .score-row span:last-child { text-align: right; color: var(--accent); white-space: nowrap; }
+    .score-head { color: var(--faint); font-size: 9px; letter-spacing: .12em; border-top: 0; }
     .q-card .source { margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line); color: var(--faint); font-size: 9px; letter-spacing: .08em; display: flex; justify-content: space-between; gap: 12px; }
     .q-card .source span:last-child { color: var(--accent); }
 
@@ -268,7 +276,7 @@
       </section>
 
       <section class="note">
-        <p>题目来自本人整理的 PDF 汇编，使用 LaTeX 重新排版，参考解答按高中方法整理，仅供对照；部分配图、表格和公式在原 PDF 中为图片或特殊排版，自动转换后可能有细微偏差。如发现明显问题，欢迎通过主页的 GitHub 告诉我。</p>
+        <p>题目来自本人整理的 PDF 汇编，使用 LaTeX 重新排版，参考解答按高中方法整理，仅供对照；部分表格和公式在原 PDF 中为特殊排版，自动转换后可能有细微偏差。如发现明显问题，欢迎通过主页的 GitHub 告诉我。</p>
       </section>
     </main>
 
@@ -279,9 +287,11 @@
   </div>
 
   <script src="gaokao-index.js?v=2"></script>
-  <script src="gaokao-app.js?v=9"></script>
+  <script src="gaokao-app.js?v=10"></script>
 </body>
 </html>
+
+
 
 
 
