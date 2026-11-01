@@ -81,7 +81,7 @@
     if (catPromises[id]) return catPromises[id];
     catPromises[id] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=2";
+      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=3";
       s.onload = resolve;
       s.onerror = resolve;
       document.head.appendChild(s);
@@ -388,6 +388,7 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+
 
 
 
