@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   "use strict";
 
   const FULL = window.GAOKAO || null;
@@ -144,7 +144,7 @@
     catTitle.textContent = meta.name;
     catSub.textContent = `${yearLabel(meta.years)} · 共 ${meta.count} 道题`;
     catTotal.textContent = "加载中…";
-    qList.innerHTML = "";
+    qList.innerHTML = '<div class="qs-loading">正在加载题目…</div>';
     emptyEl.hidden = true;
     moreWrap.hidden = true;
     setHash();
@@ -373,6 +373,7 @@
     }
   });
 
+  catsEl.addEventListener("pointerdown", () => loadKatex(), { once: true, passive: true });
   renderCats();
   const initial = readHash();
   if (initial.cat) {
@@ -382,5 +383,6 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+
 
 
