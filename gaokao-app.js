@@ -82,7 +82,7 @@
     if (catPromises[id]) return catPromises[id];
     catPromises[id] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=3";
+      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=4";
       s.onload = resolve;
       s.onerror = resolve;
       document.head.appendChild(s);
@@ -313,7 +313,7 @@
     if (answerPromises[catId]) return answerPromises[catId];
     answerPromises[catId] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-answers-" + encodeURIComponent(catId) + ".js?v=2";
+      s.src = "gaokao-answers-" + encodeURIComponent(catId) + ".js?v=3";
       s.onload = () => {
         window.GAOKAO_ANSWERS = window.GAOKAO_ANSWERS || {};
         window.GAOKAO_ANSWERS.__cats = window.GAOKAO_ANSWERS.__cats || {};
@@ -336,20 +336,20 @@
         parts.push(sentences.slice(i, i + 2).join(""));
       }
     }
-    return parts.map((p) => `<p>${p}</p>`).join("");
+    return parts.map((p) => `<p>${esc(p)}</p>`).join("");
   }
 
   function answerHtml(a) {
     if (!a) return '<div class="ans-empty">这道题的答案还在整理中。</div>';
     let html = "";
-    if (a.final) html += `<div class="ans-final">答案：${a.final}</div>`;
+    if (a.final) html += `<div class="ans-final">答案：${esc(a.final)}</div>`;
     if (a.solution) html += `<div class="ans-solution">${formatSolution(a.solution)}</div>`;
     if (Array.isArray(a.scoring) && a.scoring.length) {
       const total = a.scoring.reduce((s, x) => s + (Number(x.points) || 0), 0);
       html += `<div class="scoring"><div class="scoring-title">给分点 <span>共 ${total} 分</span></div>`;
       html += '<div class="score-row score-head"><span>步骤</span><span>分值</span></div>';
       for (const row of a.scoring) {
-        html += `<div class="score-row"><span>${row.text || ""}</span><span>${row.points != null ? row.points + " 分" : ""}</span></div>`;
+        html += `<div class="score-row"><span>${esc(row.text || "")}</span><span>${row.points != null ? row.points + " 分" : ""}</span></div>`;
       }
       html += "</div>";
     }
@@ -401,6 +401,8 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+
+
 
 
 
