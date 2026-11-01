@@ -530,8 +530,8 @@
     <a class="logo" href="/" aria-label="何富龙">何</a>
     <div class="nav-links">
       <a class="nav-keep" href="#education">教育</a>
-      <a class="nav-keep" href="#mworks">MWORKS</a>
       <a class="nav-keep" href="#share">分享</a>
+      <a class="nav-keep" href="#mworks">MWORKS</a>
       <a href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub</a>
       <button class="theme" id="theme-toggle" type="button" aria-label="切换深浅色"><span class="theme-dot" aria-hidden="true"></span></button>
     </div>
@@ -572,30 +572,6 @@
       </div>
     </section>
 
-    <section class="section reveal" id="mworks">
-      <div class="section-head"><h2>MATLAB 与 MWORKS</h2><p>同一道数值题，两种工具。</p></div>
-      <div class="compare">
-        <div class="compare-top">
-          <p>MATLAB 是成熟的商业数值计算平台，矩阵运算、工具箱和 Simulink 框图仿真积累很深；MWORKS 是苏州同元软控的新一代科学计算与系统建模仿真平台，把 Syslab 科学计算和 Sysplorer 系统建模放在同一个环境里。</p>
-          <p>两份课程作业里的几个例子，把 MATLAB 和 MWORKS / Julia 放在一起：同一个抛物方程、同一组 Euler / Runge–Kutta 算例，比较格式、误差阶和运行时间。</p>
-        </div>
-        <table>
-          <thead><tr><th scope="col">维度</th><th scope="col">MATLAB</th><th scope="col">MWORKS</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">定位</th><td data-label="MATLAB">数值计算 + Simulink 系统仿真，工程界长期标准工具。</td><td data-label="MWORKS">科学计算 + 系统建模一体化，面向国产化与复杂系统。</td></tr>
-            <tr><th scope="row">语言</th><td data-label="MATLAB">自有的 MATLAB 语言，矩阵语法直接、资料多。</td><td data-label="MWORKS">Syslab 以 Julia 为科学计算语言，开放、可调用包。</td></tr>
-            <tr><th scope="row">建模</th><td data-label="MATLAB">Simulink 框图建模，控制系统 / 信号处理工具箱成熟。</td><td data-label="MWORKS">Sysplorer 基于 Modelica 做多领域统一建模，支持 FMI / FMU。</td></tr>
-            <tr><th scope="row">生态</th><td data-label="MATLAB">商业工具箱和社区资料最完整，学习成本低。</td><td data-label="MWORKS">国产自主、适配国产软硬件，生态仍在成长。</td></tr>
-            <tr><th scope="row">许可</th><td data-label="MATLAB">商业授权，按工具箱和部署方式计费。</td><td data-label="MWORKS">商业授权，提供试用与教育合作渠道。</td></tr>
-          </tbody>
-        </table>
-        <div class="compare-foot">
-          <span>简单说：MATLAB 胜在工具箱和资料积累，MWORKS 胜在开放语言、系统建模和国产化部署。</span>
-          <span><a href="mworks/">看几个数值例子 ↗</a> · <a href="https://www.tongyuan.cc/" target="_blank" rel="noreferrer">MWORKS 官网 ↗</a></span>
-        </div>
-      </div>
-    </section>
-
     <section class="section" id="share">
       <div class="section-head"><h2>分享</h2><p>自己做的，免费。</p></div>
 
@@ -613,15 +589,6 @@
           <span class="tag">ADVANCED MATH</span>
           <h2>高等数学上册 答案</h2>
           <p>安徽大学版 · 230 页 · 按习题分类</p>
-        </div>
-        <span class="feature-arrow" aria-hidden="true">↗</span>
-      </a>
-
-      <a class="feature reveal" href="mworks/" aria-label="进入数值实验例子" style="margin-bottom:18px">
-        <div>
-          <span class="tag">MWORKS · MATLAB</span>
-          <h2>数值实验例子</h2>
-          <p>紧差分格式 · Euler / RK4 · 代码与结果表</p>
         </div>
         <span class="feature-arrow" aria-hidden="true">↗</span>
       </a>
@@ -673,6 +640,15 @@
           <div class="fine">SHA-256 · 4cd77ba86ab8a614dbc6cb63f6c762d90275369b57fcdb32722537789f88d5b8</div>
         </div>
       </article>
+      <a class="feature reveal" href="mworks/" aria-label="进入数值实验例子" style="margin-bottom:18px">
+        <div>
+          <span class="tag">MWORKS · MATLAB</span>
+          <h2>数值实验例子</h2>
+          <p>紧差分格式 · Euler / RK4 · 代码与结果表</p>
+        </div>
+        <span class="feature-arrow" aria-hidden="true">↗</span>
+      </a>
+
     </section>
 
     <section class="section" id="apps">
@@ -743,6 +719,30 @@
             </div>
             <pre class="code-body"><code id="code-body"></code></pre>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="mworks">
+      <div class="section-head"><h2>MATLAB 与 MWORKS</h2><p>同一道数值题，两种工具。</p></div>
+      <div class="compare">
+        <div class="compare-top">
+          <p>MATLAB 是成熟的商业数值计算平台，矩阵运算、工具箱和 Simulink 框图仿真积累很深；MWORKS 是苏州同元软控的新一代科学计算与系统建模仿真平台，把 Syslab 科学计算和 Sysplorer 系统建模放在同一个环境里。</p>
+          <p>两份课程作业里的几个例子，把 MATLAB 和 MWORKS / Julia 放在一起：同一个抛物方程、同一组 Euler / Runge–Kutta 算例，比较格式、误差阶和运行时间。</p>
+        </div>
+        <table>
+          <thead><tr><th scope="col">维度</th><th scope="col">MATLAB</th><th scope="col">MWORKS</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">定位</th><td data-label="MATLAB">数值计算 + Simulink 系统仿真，工程界长期标准工具。</td><td data-label="MWORKS">科学计算 + 系统建模一体化，面向国产化与复杂系统。</td></tr>
+            <tr><th scope="row">语言</th><td data-label="MATLAB">自有的 MATLAB 语言，矩阵语法直接、资料多。</td><td data-label="MWORKS">Syslab 以 Julia 为科学计算语言，开放、可调用包。</td></tr>
+            <tr><th scope="row">建模</th><td data-label="MATLAB">Simulink 框图建模，控制系统 / 信号处理工具箱成熟。</td><td data-label="MWORKS">Sysplorer 基于 Modelica 做多领域统一建模，支持 FMI / FMU。</td></tr>
+            <tr><th scope="row">生态</th><td data-label="MATLAB">商业工具箱和社区资料最完整，学习成本低。</td><td data-label="MWORKS">国产自主、适配国产软硬件，生态仍在成长。</td></tr>
+            <tr><th scope="row">许可</th><td data-label="MATLAB">商业授权，按工具箱和部署方式计费。</td><td data-label="MWORKS">商业授权，提供试用与教育合作渠道。</td></tr>
+          </tbody>
+        </table>
+        <div class="compare-foot">
+          <span>简单说：MATLAB 胜在工具箱和资料积累，MWORKS 胜在开放语言、系统建模和国产化部署。</span>
+          <span><a href="mworks/">看几个数值例子 ↗</a> · <a href="https://www.tongyuan.cc/" target="_blank" rel="noreferrer">MWORKS 官网 ↗</a></span>
         </div>
       </div>
     </section>

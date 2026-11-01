@@ -65,6 +65,7 @@
       display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px;
       background: var(--accent-soft); color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: .04em;
     }
+    .ex-src { display: inline-block; margin-bottom: 7px; color: var(--faint); font-size: 10px; letter-spacing: .08em; }
     .ex-head h2 { margin: 1px 0 5px; font-size: clamp(22px, 3vw, 28px); letter-spacing: -.03em; line-height: 1.2; }
     .ex-head p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
     .ex-body { padding: 22px 28px 28px; }
@@ -104,6 +105,17 @@
     .method-body .code-box summary { color: #a1a1a6; }
     .method-body .code-box summary::before { background: #1c1c1e; border-color: rgba(255,255,255,.15); color: #a1a1a6; }
 
+    details.gallery-box { margin: 20px 0 4px; border: 1px solid var(--line); border-radius: 12px; background: color-mix(in srgb, var(--bg) 55%, var(--surface)); }
+    details.gallery-box > summary { cursor: pointer; padding: 12px 15px; color: var(--ink); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 9px; list-style: none; }
+    details.gallery-box > summary::-webkit-details-marker { display: none; }
+    details.gallery-box > summary::before { content: "+"; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 6px; background: var(--surface); border: 1px solid var(--line); font-size: 12px; color: var(--faint); }
+    details[open].gallery-box > summary::before { content: "−"; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 0 15px 16px; }
+    .gallery-grid figure { margin: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface); }
+    .gallery-grid a { display: block; background: #fff; }
+    .gallery-grid img { display: block; width: 100%; height: auto; }
+    .gallery-grid figcaption { padding: 9px 11px 10px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+
     pre.code { margin: 0; padding: 15px 16px; border-radius: 0 0 12px 12px; background: #0f1115; color: #e8e8ed; overflow-x: auto; font: 12px/1.65 var(--mono); tab-size: 2; white-space: pre; }
     pre.code code { font: inherit; white-space: inherit; }
     [data-theme="dark"] pre.code { background: #0a0a0c; }
@@ -120,6 +132,7 @@
       .ex-body { padding: 18px 18px 22px; }
       .ex-body > p { font-size: 14px; }
       .top-actions a:first-child { display: none; }
+      .gallery-grid { grid-template-columns: 1fr; padding: 0 12px 14px; }
       footer { flex-direction: column; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -157,6 +170,7 @@
   <script src="../katex.min.js"></script>
   <script src="../auto-render.min.js"></script>
   <script src="data.js"></script>
+  <script src="images.js"></script>
   <script>
     (function () {
       var data = window.MWORKS_DATA;
@@ -303,11 +317,50 @@
 
       var r1 = data.reports[0].sections;
       var r2 = data.reports[1].sections;
+      var allImages = window.MWORKS_IMAGES || { doc1: [], doc2: [] };
+
+      function imagesFor(doc, names) {
+        return (allImages[doc] || []).filter(function (im) {
+          if (!names) return true;
+          return names.some(function (n) { return im.src.indexOf(n) >= 0; });
+        });
+      }
+
+      function addGallery(parent, images) {
+        if (!images || !images.length) return;
+        var box = document.createElement('details');
+        box.className = 'gallery-box';
+        var summary = document.createElement('summary');
+        summary.textContent = '文中图片 · ' + images.length + ' 张';
+        var grid = document.createElement('div');
+        grid.className = 'gallery-grid';
+        images.forEach(function (im) {
+          var fig = document.createElement('figure');
+          var a = document.createElement('a');
+          a.href = im.src;
+          a.target = '_blank';
+          a.rel = 'noreferrer';
+          var img = document.createElement('img');
+          img.src = im.src;
+          img.alt = im.cap;
+          img.loading = 'lazy';
+          a.appendChild(img);
+          var cap = document.createElement('figcaption');
+          cap.textContent = im.cap;
+          fig.appendChild(a);
+          fig.appendChild(cap);
+          grid.appendChild(fig);
+        });
+        box.appendChild(summary);
+        box.appendChild(grid);
+        parent.appendChild(box);
+      }
 
       var examples = [
         {
           id: 'ex1',
           no: '01',
+          source: '文档一 · 抛物方程',
           title: '抛物方程紧差分格式',
           desc: 'Dirichlet 初边值问题，紧差分格式达到四阶收敛。',
           blocks: r1[0] ? curateFirst(r1[0].blocks) : []
@@ -315,25 +368,31 @@
         {
           id: 'ex2',
           no: '02',
+          source: '文档一 · 线性解法',
           title: '线性方程组的几种解法',
           desc: '同一组紧差分方程，分别用 QR、SSOR/HSS/PHSS、CG/MINRES/LSQR、矩阵分裂和 LU/Cholesky 求解。',
-          sections: r1.slice(1)
+          sections: r1.slice(1),
+          images: imagesFor('doc1')
         },
         {
           id: 'ex3',
           no: '03',
+          source: '文档二 · Euler / Runge–Kutta',
           title: 'Euler 法与 Runge–Kutta 法',
           desc: '一阶常微分方程初值问题，比较向前/向后 Euler、改进 Euler 与四阶 RK 的误差和收敛阶。',
           blocks: r2[0] ? r2[0].blocks : [],
-          collapseTables: true
+          collapseTables: true,
+          images: imagesFor('doc2', ['doc2-01', 'doc2-10', 'doc2-11'])
         },
         {
           id: 'ex4',
           no: '04',
+          source: '文档二 · 第二个初值问题',
           title: '第二个初值问题',
           desc: '另一组初值问题，用同一组方法比较数值解与精确解。',
           blocks: r2[1] ? r2[1].blocks : [],
-          collapseTables: true
+          collapseTables: true,
+          images: imagesFor('doc2', ['doc2-02', 'doc2-03', 'doc2-04'])
         }
       ];
 
@@ -348,10 +407,14 @@
         no.className = 'ex-no';
         no.textContent = ex.no;
         var text = document.createElement('div');
+        var src = document.createElement('span');
+        src.className = 'ex-src';
+        src.textContent = ex.source;
         var h2 = document.createElement('h2');
         h2.textContent = ex.title;
         var p = document.createElement('p');
         p.textContent = ex.desc;
+        text.appendChild(src);
         text.appendChild(h2);
         text.appendChild(p);
         head.appendChild(no);
@@ -377,6 +440,8 @@
             body.appendChild(d);
           });
         }
+
+        if (ex.images) addGallery(body, ex.images);
 
         card.appendChild(body);
         doc.appendChild(card);
