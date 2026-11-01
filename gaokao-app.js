@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   "use strict";
 
   const FULL = window.GAOKAO || null;
@@ -20,13 +20,13 @@
     katexPromise = new Promise((resolve) => {
       const css = document.createElement("link");
       css.rel = "stylesheet";
-      css.href = KATEX_BASE + "katex.min.css";
+      css.href = KATEX_BASE + "katex.min.css?v=2";
       document.head.appendChild(css);
       const core = document.createElement("script");
-      core.src = KATEX_BASE + "katex.min.js";
+      core.src = KATEX_BASE + "katex.min.js?v=2";
       core.onload = () => {
         const render = document.createElement("script");
-        render.src = KATEX_AUTO;
+        render.src = KATEX_AUTO + "?v=2";
         render.onload = resolve;
         render.onerror = resolve;
         document.head.appendChild(render);
@@ -383,6 +383,7 @@
     openCategory(initial.cat, { keepFilters: true, scroll: false });
   }
 })();
+
 
 
 
