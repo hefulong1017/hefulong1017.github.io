@@ -448,6 +448,12 @@
     .apps-acc.open .app-card:nth-child(1) { transition-delay: .12s; }
     .apps-acc.open .app-card:nth-child(2) { transition-delay: .20s; }
 
+    .code-acc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+    .code-acc .acc-head { background: linear-gradient(135deg, var(--accent-soft), transparent 62%); }
+    .code-acc .code-card { border: 0; border-radius: 0; box-shadow: none; opacity: 0; translate: 0 18px; transition: opacity .65s var(--ease), translate .65s var(--ease); }
+    .code-acc.open .code-card { opacity: 1; translate: 0 0; transition-delay: .10s; }
+    .code-acc .acc-panel { background: var(--surface); }
+
     .feature {
       position: relative; overflow: hidden; isolation: isolate;
       display: flex; align-items: center; justify-content: space-between; gap: 28px;
@@ -1085,20 +1091,30 @@
     </section>
 
     <section class="section" id="code">
-      <div class="section-head">
-        <h2>MATLAB 代码</h2>
-        <p>偏微分方程数值解 · 孙志忠</p>
-      </div>
-      <div class="code-card reveal">
-        <div class="code-tabs" id="code-tabs" role="tablist" aria-label="章节目录"></div>
-        <div class="code-layout">
-          <div class="code-list" id="code-list"></div>
-          <div class="code-view">
-            <div class="code-head">
-              <span id="code-title">选择一个文件</span>
-              <a class="code-dl" id="code-download" download>下载 .m</a>
+      <div class="acc-block code-acc reveal" id="code-acc">
+        <button class="acc-head" type="button" aria-expanded="false" aria-controls="code-panel">
+          <span class="acc-head-main">
+            <span class="tag">MATLAB · 5 章</span>
+            <span class="acc-title">MATLAB 代码</span>
+            <span class="acc-desc">偏微分方程数值解 · 孙志忠</span>
+          </span>
+          <span class="acc-side"><span class="acc-count">5 章</span><span class="acc-plus" aria-hidden="true"></span></span>
+        </button>
+        <div class="acc-panel" id="code-panel" aria-hidden="true">
+          <div class="acc-inner">
+            <div class="code-card">
+              <div class="code-tabs" id="code-tabs" role="tablist" aria-label="章节目录"></div>
+              <div class="code-layout">
+                <div class="code-list" id="code-list"></div>
+                <div class="code-view">
+                  <div class="code-head">
+                    <span id="code-title">选择一个文件</span>
+                    <a class="code-dl" id="code-download" download>下载 .m</a>
+                  </div>
+                  <pre class="code-body"><code id="code-body"></code></pre>
+                </div>
+              </div>
             </div>
-            <pre class="code-body"><code id="code-body"></code></pre>
           </div>
         </div>
       </div>
