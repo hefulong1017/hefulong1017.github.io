@@ -82,7 +82,7 @@
     if (catPromises[id]) return catPromises[id];
     catPromises[id] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=7";
+      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=8";
       s.onload = resolve;
       s.onerror = resolve;
       document.head.appendChild(s);
@@ -233,7 +233,7 @@
             `<figure><img src="${esc(src)}" alt="选项 ${"ABCD"[i] || i + 1}" loading="lazy"></figure>`
           ).join("")}</div>`
         : "";
-      return `<article class="q-card">
+      return `<article class="q-card${q.figureOnly ? " figure-only" : ""}">
         <div class="q-meta">${meta}<span class="num"${q.paperNo ? ' title="按原卷题目顺序匹配"' : ''}>${q.paperNo ? "卷面第 " + q.paperNo + " 题" : ""}</span></div>
         <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="公式加载中"></span>')}</div>
         ${figures}
