@@ -249,8 +249,22 @@
     renderMath(qList);
   }
 
+  function normalizeMathIn(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => {
+      let text = node.nodeValue;
+      if (!text || (text.indexOf("\\(") < 0 && text.indexOf("\\[") < 0)) return;
+      text = text.replace(/\\\(([\s\S]*?)\\\)/g, (_, body) => "\\(" + body.replace(/<br\s*\/?>/gi, " ").replace(/\s+/g, " ").trim() + "\\)");
+      text = text.replace(/\\\[([\s\S]*?)\\\]/g, (_, body) => "\\[" + body.replace(/<br\s*\/?>/gi, " ").replace(/\s+/g, " ").trim() + "\\]");
+      node.nodeValue = text;
+    });
+  }
+
   function renderMath(el) {
     if (typeof renderMathInElement !== "function") return;
+    normalizeMathIn(el);
     try {
       renderMathInElement(el, {
         delimiters: [{ left: "\\(", right: "\\)", display: false }],

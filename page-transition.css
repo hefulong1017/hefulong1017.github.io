@@ -86,3 +86,34 @@ html[data-theme="dark"] :is(.feature,.product,.app-card,.acc-block,.code-card,.t
 html[data-theme="dark"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature)::after {
   opacity: .9;
 }
+html.pt-hide body { opacity: 0 !important; transition: none !important; }
+#pt.pt-shot { transition: none; }
+#pt.pt-shot .pt-glow, #pt.pt-shot .pt-bar { display: none !important; }
+#pt.pt-shot .pt-canvas { opacity: 1; }
+html.pt-leave body {
+  animation: ptPageOut .62s cubic-bezier(.55,0,.9,.45) forwards, ptMaskOut .62s cubic-bezier(.55,0,.9,.45) forwards;
+  transform-origin: 50% 42%;
+  -webkit-mask-image: radial-gradient(circle at center, #000 0 54%, transparent 56%);
+  mask-image: radial-gradient(circle at center, #000 0 54%, transparent 56%);
+  -webkit-mask-size: 6px 6px;
+  mask-size: 6px 6px;
+}
+@keyframes ptMaskOut { to { -webkit-mask-size: 26px 26px; mask-size: 26px 26px; } }
+@keyframes ptPageOut {
+  0% { opacity: 1; filter: blur(0); transform: scale(1); }
+  38% { opacity: .82; filter: blur(3px); transform: scale(1.018); }
+  100% { opacity: 0; filter: blur(12px); transform: scale(1.045); }
+}
+html.pt-enter body {
+  opacity: 0; filter: blur(10px); transform: scale(.985);
+  -webkit-mask-image: radial-gradient(circle at center, #000 0 54%, transparent 56%);
+  mask-image: radial-gradient(circle at center, #000 0 54%, transparent 56%);
+  -webkit-mask-size: 24px 24px;
+  mask-size: 24px 24px;
+}
+html.pt-enter.pt-reveal body {
+  opacity: 1; filter: none; transform: none;
+  transition: opacity .44s cubic-bezier(.2,.7,.2,1), filter .44s cubic-bezier(.2,.7,.2,1), transform .5s cubic-bezier(.2,.7,.2,1), -webkit-mask-size .5s cubic-bezier(.2,.7,.2,1), mask-size .5s cubic-bezier(.2,.7,.2,1);
+  -webkit-mask-size: 6px 6px;
+  mask-size: 6px 6px;
+}
