@@ -113,8 +113,8 @@
           ctx.fillRect(p.x, p.y, p.r, p.r);
           continue;
         }
-        var px = p.tx + p.vx * ease * w * .62;
-        var py = p.ty + p.vy * ease * h * .62;
+        var px = p.tx + p.vx * ease * w * .30;
+        var py = p.ty + p.vy * ease * h * .30;
         ctx.globalAlpha = Math.max(0, p.a * (1 - t * 1.08));
         ctx.font = p.font;
         ctx.fillText(p.ch, px, py);

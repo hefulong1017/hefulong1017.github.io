@@ -91,12 +91,12 @@ html.pt-hide body { opacity: 0 !important; transition: none !important; }
 #pt.pt-shot .pt-glow, #pt.pt-shot .pt-bar { display: none !important; }
 #pt.pt-shot .pt-canvas { opacity: 1; }
 html.pt-leave body {
-  animation: ptPageOut .46s cubic-bezier(.55,0,.9,.45) forwards;
+  animation: ptPageOut .58s cubic-bezier(.55,0,.9,.45) forwards;
   transform-origin: 50% 42%;
 }
 @keyframes ptPageOut {
   0% { opacity: 1; filter: blur(0); transform: scale(1); }
-  20% { opacity: .45; filter: blur(2px); transform: scale(1.012); }
+  32% { opacity: .78; filter: blur(2px); transform: scale(1.012); }
   100% { opacity: 0; filter: blur(10px); transform: scale(1.04); }
 }
 html.pt-enter body { opacity: 0; filter: blur(10px); transform: scale(.985); }
