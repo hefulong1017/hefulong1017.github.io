@@ -1,4 +1,4 @@
-@view-transition { navigation: auto; }
+@view-transition { navigation: none; }
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
@@ -32,8 +32,71 @@
   }
 }
 
+#pt {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  background: #08080a;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .44s cubic-bezier(.4, 0, .2, 1), visibility .44s;
+}
+
+#pt.pt-boot,
+#pt.pt-out {
+  opacity: 1;
+  visibility: visible;
+}
+
+#pt.pt-out {
+  pointer-events: auto;
+}
+
+#pt .pt-bar {
+  display: block;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #0071e3, #66d4ff);
+  box-shadow: 0 0 24px rgba(0, 113, 227, .55);
+  transition: width .58s cubic-bezier(.22, 1, .36, 1);
+}
+
+#pt.pt-boot .pt-bar {
+  width: min(36vw, 320px);
+}
+
+#pt.pt-out .pt-bar {
+  width: min(62vw, 560px);
+}
+
+#pt .pt-glow {
+  position: absolute;
+  width: 42vw;
+  height: 42vw;
+  max-width: 520px;
+  max-height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 113, 227, .22), transparent 68%);
+  filter: blur(20px);
+  animation: pt-breathe 2.8s ease-in-out infinite;
+}
+
+@keyframes pt-breathe {
+  0%, 100% { transform: scale(.9); opacity: .65; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  @view-transition { navigation: none; }
+  #pt,
+  #pt .pt-bar,
+  #pt .pt-glow {
+    transition-duration: .001ms !important;
+    animation: none !important;
+  }
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation-duration: .001ms !important;

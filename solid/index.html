@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>try{var d=localStorage.getItem("darkDefault");if(d!=="1"){localStorage.setItem("theme","dark");localStorage.setItem("darkDefault","1");}var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+
 <title>立体几何大题 · 何富龙</title>
 <link rel="stylesheet" href="../katex.min.css">
 <style>
@@ -56,11 +58,33 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
  .figure img{max-height:290px}
  .stats{gap:22px}.stats b{font-size:19px}
 }
+
+[data-theme="dark"]{--ink:#f5f5f7;--muted:#a1a1a6;--line:#2c2c2e;--bg:#0b0b0d;--blue:#66aaff;--soft:#12243b}
+[data-theme="dark"] body{background:#0b0b0d;color:var(--ink)}
+[data-theme="dark"] .nav{background:rgba(11,11,13,.82);border-bottom-color:#242426}
+[data-theme="dark"] .brand i{background:#f5f5f7;color:#0b0b0d}
+[data-theme="dark"] .links{color:#b6b6bb}
+[data-theme="dark"] .lede{color:#a1a1a6}
+[data-theme="dark"] .stats{border-color:var(--line)}
+[data-theme="dark"] .chip{background:#1c1c1e;color:#c7c7cc;border-color:#333}
+[data-theme="dark"] .chip:hover{border-color:#4b4b50}
+[data-theme="dark"] .chip.on{background:#f5f5f7;border-color:#f5f5f7;color:#0b0b0d}
+[data-theme="dark"] .card{background:#161618;border-color:#2c2c2e;box-shadow:none}
+[data-theme="dark"] .tags{color:#a1a1a6}
+[data-theme="dark"] .tags span{background:#242426}
+[data-theme="dark"] .no{color:#8e8e93}
+[data-theme="dark"] .figure{background:#0f0f11;border-color:#2a2a2d}
+[data-theme="dark"] .toggle{background:#12243b;border-color:#24456e;color:#8ec5ff}
+[data-theme="dark"] .toggle:hover{background:#17345a}
+[data-theme="dark"] .answer{background:#101b2b;border-left-color:#3b82f6;color:#e5e5e7}
+[data-theme="dark"] .answer .tag{background:#1d3557;color:#9ecbff}
 </style>
   <link rel="stylesheet" href="../page-transition.css">
   <script src="../page-transition.js" defer></script>
 </head>
 <body>
+<div id="pt" class="pt-boot" aria-hidden="true"><span class="pt-glow"></span><span class="pt-bar"></span></div>
+
 <nav class="nav">
   <a class="brand" href="../"><i>何</i>何富龙</a>
   <div class="links"><a href="../">主页</a><a href="../gaokao.html">高考题库</a><a href="../math/">高等数学</a><a href="../mworks/">数值实验</a></div>
