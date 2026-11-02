@@ -745,6 +745,30 @@
       footer span { text-align: center; }
     }
 
+
+    .cursor-ring {
+      position: fixed; left: 0; top: 0; z-index: 120; width: 30px; height: 30px;
+      border: 1px solid rgba(0, 113, 227, .55); border-radius: 50%;
+      pointer-events: none; opacity: 0; mix-blend-mode: multiply;
+      transition: width .25s var(--ease), height .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease), opacity .3s;
+      will-change: transform;
+    }
+    [data-theme="dark"] .cursor-ring { border-color: rgba(120, 200, 255, .65); mix-blend-mode: screen; }
+    .cursor-ring.hot { width: 48px; height: 48px; background: rgba(0, 113, 227, .10); border-color: rgba(0, 113, 227, .85); }
+    [data-theme="dark"] .cursor-ring.hot { background: rgba(120, 200, 255, .12); }
+    .hero { perspective: 1000px; }
+    .hero-title { translate: calc(var(--hx, 0) * 12px) calc(var(--hy, 0) * 9px); transition: translate .45s var(--ease); }
+    .hero-title span { display: inline-block; animation: heroRise 1s var(--ease) both; }
+    .hero-title span:nth-child(2) { animation-delay: .05s; }
+    .hero-title span:nth-child(3) { animation-delay: .1s; }
+    @keyframes heroRise { from { opacity: 0; transform: translateY(42px) rotateX(30deg); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+    .app-card::before {
+      content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), var(--accent-soft), transparent 66%);
+      opacity: 0; transition: opacity .4s var(--ease);
+    }
+    .app-card:hover::before { opacity: 1; }
+    .app-card > * { position: relative; z-index: 1; }
     /* ==== 2026 motion layer ==== */
     body { overflow-x: hidden; }
     body.intro-lock { overflow: hidden; }
@@ -894,6 +918,7 @@
   <div class="aurora" aria-hidden="true"></div>
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
   <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
   <canvas id="fx" aria-hidden="true"></canvas>
   <div class="bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span></div>
   <nav class="nav">
@@ -1216,7 +1241,7 @@
         var ctx = cv.getContext('2d', { alpha: true });
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
         var W = 0, H = 0, parts = [], mouse = { x: -999, y: -999 };
-        var count = window.innerWidth < 760 ? 26 : 64;
+        var count = window.innerWidth < 760 ? 44 : 110;
         function resize() {
           W = window.innerWidth; H = window.innerHeight;
           cv.width = W * dpr; cv.height = H * dpr;
@@ -1229,20 +1254,27 @@
             parts.push({
               x: Math.random() * W, y: Math.random() * H,
               vx: (Math.random() - .5) * .28, vy: (Math.random() - .5) * .28,
-              r: Math.random() * 1.3 + .7
+              r: Math.random() * 1.8 + .9
             });
           }
         }
         resize(); make();
         window.addEventListener('resize', function () { resize(); make(); }, { passive: true });
+        var bursts = [];
         window.addEventListener('pointermove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+        window.addEventListener('pointerdown', function (e) {
+          for (var b = 0; b < 16; b++) {
+            var a = Math.random() * 6.2832, v = Math.random() * 2.4 + .9;
+            bursts.push({ x: e.clientX, y: e.clientY, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1 });
+          }
+        }, { passive: true });
         document.addEventListener('mouseleave', function () { mouse.x = mouse.y = -999; });
         var last = performance.now();
         function frame(now) {
           var dt = Math.min(32, now - last); last = now;
           var dark = document.documentElement.getAttribute('data-theme') === 'dark';
           var line = dark ? 'rgba(120,200,255,' : 'rgba(0,113,227,';
-          var dot = dark ? 'rgba(140,210,255,.55)' : 'rgba(0,113,227,.36)';
+          var dot = dark ? 'rgba(140,210,255,.72)' : 'rgba(0,113,227,.52)';
           ctx.clearRect(0, 0, W, H);
           var off = (window.scrollY || 0) * .045;
           for (var i = 0; i < parts.length; i++) {
@@ -1252,10 +1284,10 @@
             if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
             var dx = p.x - mouse.x, dy = p.y - mouse.y;
             var d2 = dx * dx + dy * dy;
-            if (d2 < 22000 && d2 > .01) {
-              var f = (22000 - d2) / 22000;
-              p.x += dx / Math.sqrt(d2) * f * 1.4;
-              p.y += dy / Math.sqrt(d2) * f * 1.4;
+            if (d2 < 32000 && d2 > .01) {
+              var f = (32000 - d2) / 32000;
+              p.x += dx / Math.sqrt(d2) * f * 2.2;
+              p.y += dy / Math.sqrt(d2) * f * 2.2;
             }
             var py = ((p.y - off) % (H + 40) + H + 40) % (H + 40) - 20;
             for (var j = i + 1; j < parts.length; j++) {
@@ -1263,14 +1295,22 @@
               var qy = ((q.y - off) % (H + 40) + H + 40) % (H + 40) - 20;
               var lx = p.x - q.x, ly = py - qy;
               var ld = lx * lx + ly * ly;
-              if (ld < 13200) {
-                ctx.strokeStyle = line + (0.11 * (1 - ld / 13200)).toFixed(3) + ')';
-                ctx.lineWidth = .6;
+              if (ld < 19000) {
+                ctx.strokeStyle = line + (0.17 * (1 - ld / 19000)).toFixed(3) + ')';
+                ctx.lineWidth = .7;
                 ctx.beginPath(); ctx.moveTo(p.x, py); ctx.lineTo(q.x, qy); ctx.stroke();
               }
             }
             ctx.fillStyle = dot;
             ctx.beginPath(); ctx.arc(p.x, py, p.r, 0, 6.2832); ctx.fill();
+          }
+          for (var bi = bursts.length - 1; bi >= 0; bi--) {
+            var b = bursts[bi];
+            b.x += b.vx * dt * .05; b.y += b.vy * dt * .05;
+            b.vx *= .985; b.vy *= .985; b.life -= dt * .0022;
+            if (b.life <= 0) { bursts.splice(bi, 1); continue; }
+            ctx.fillStyle = line + (b.life * .45).toFixed(3) + ')';
+            ctx.beginPath(); ctx.arc(b.x, b.y, 1.4 + b.life * 1.6, 0, 6.2832); ctx.fill();
           }
           requestAnimationFrame(frame);
         }
@@ -1474,14 +1514,41 @@
       }
 
       if (fine && !reduce) {
+        var hero = document.querySelector('.hero');
+        if (hero) {
+          hero.addEventListener('pointermove', function (e) {
+            var r = hero.getBoundingClientRect();
+            hero.style.setProperty('--hx', (((e.clientX - r.left) / r.width - .5) * 2).toFixed(2));
+            hero.style.setProperty('--hy', (((e.clientY - r.top) / r.height - .5) * 2).toFixed(2));
+          });
+          hero.addEventListener('pointerleave', function () {
+            hero.style.setProperty('--hx', '0'); hero.style.setProperty('--hy', '0');
+          });
+        }
+        var ring = document.getElementById('cursor-ring');
+        if (ring) {
+          var rx = window.innerWidth / 2, ry = window.innerHeight / 2, tx = rx, ty = ry, rs = 1;
+          window.addEventListener('pointermove', function (e) {
+            tx = e.clientX; ty = e.clientY;
+            ring.style.opacity = '1';
+            var hot = e.target.closest('a, button, .acc-head, .feature, .app-card');
+            ring.classList.toggle('hot', !!hot);
+          }, { passive: true });
+          document.addEventListener('mouseleave', function () { ring.style.opacity = '0'; });
+          (function loop() {
+            rx += (tx - rx) * .18; ry += (ty - ry) * .18;
+            ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) translate(-50%,-50%)';
+            requestAnimationFrame(loop);
+          })();
+        }
         document.querySelectorAll('.feature, .product, .app-card').forEach(function (card) {
           card.classList.add('tilt');
           card.addEventListener('pointermove', function (e) {
             var r = card.getBoundingClientRect();
             var x = (e.clientX - r.left) / r.width;
             var y = (e.clientY - r.top) / r.height;
-            card.style.setProperty('--tilt-y', ((x - .5) * 3.4).toFixed(2) + 'deg');
-            card.style.setProperty('--tilt-x', ((.5 - y) * 3.0).toFixed(2) + 'deg');
+            card.style.setProperty('--tilt-y', ((x - .5) * 9).toFixed(2) + 'deg');
+            card.style.setProperty('--tilt-x', ((.5 - y) * 7.5).toFixed(2) + 'deg');
             card.classList.add('is-tilting');
           });
           card.addEventListener('pointerleave', function () {
