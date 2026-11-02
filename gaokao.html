@@ -234,6 +234,32 @@
       *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
       html { scroll-behavior: auto; }
     }
+
+    .mock-section { padding-top: 36px; padding-bottom: 46px; }
+    .mock-card {
+      position: relative; display: block; overflow: hidden;
+      padding: 28px 30px 26px; border: 1px solid var(--line); border-radius: 18px;
+      background: linear-gradient(135deg, var(--card), color-mix(in srgb, var(--accent-soft) 55%, var(--card)));
+      transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .3s var(--ease);
+    }
+    .mock-card::after {
+      content: ""; position: absolute; inset: -40%; pointer-events: none;
+      background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,.34) 48%, transparent 58%);
+      transform: translateX(-120%); transition: transform 1s var(--ease);
+    }
+    [data-theme="dark"] .mock-card::after { background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,.05) 48%, transparent 58%); }
+    .mock-card:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--accent) 34%, var(--line)); box-shadow: 0 22px 55px rgba(45, 32, 20, .1); }
+    .mock-card:hover::after { transform: translateX(120%); }
+    .mock-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--faint); font-size: 10px; letter-spacing: .08em; }
+    .mock-meta b { color: var(--accent); font-weight: 600; }
+    .mock-card h3 { margin: 14px 0 7px; font-family: var(--serif); font-size: clamp(24px, 3.6vw, 32px); font-weight: 500; letter-spacing: -.03em; }
+    .mock-card p { max-width: 44em; margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.9; }
+    .mock-go { display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: .06em; }
+    .mock-card:hover .mock-go { text-decoration: underline; text-underline-offset: 4px; }
+    @media (max-width: 720px) {
+      .mock-card { padding: 22px 20px; }
+      .mock-card h3 { font-size: 24px; }
+    }
   </style>
 </head>
 <body>
@@ -296,6 +322,20 @@
       <section class="note">
         <p>题目来自本人整理的 PDF 汇编，使用 LaTeX 重新排版，参考解答按高中方法整理，仅供对照；部分表格和公式在原 PDF 中为特殊排版，自动转换后可能有细微偏差。如发现明显问题，欢迎通过主页的 GitHub 告诉我。</p>
       </section>
+
+      <section class="section mock-section" id="mock">
+        <div class="section-head">
+          <h2>模考题型解法分享</h2>
+          <p>2026 武汉九调 · 第 19 题</p>
+        </div>
+        <a class="mock-card" href="mock/">
+          <div class="mock-meta"><b>2026 武汉九调</b><span>第 19 题</span><span>17 分</span><span>3 问</span></div>
+          <h3>成对和重构问题</h3>
+          <p>给出所有两两和，如何还原原来的数列？官方标准解法，加上一个用生成函数看“等和”的新视角。</p>
+          <span class="mock-go">阅读两种解法 ↗</span>
+        </a>
+      </section>
+
     </main>
 
     <footer>
