@@ -82,7 +82,7 @@
     if (catPromises[id]) return catPromises[id];
     catPromises[id] = new Promise((resolve) => {
       const s = document.createElement("script");
-      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=6";
+      s.src = "gaokao-data-" + encodeURIComponent(id) + ".js?v=7";
       s.onload = resolve;
       s.onerror = resolve;
       document.head.appendChild(s);
