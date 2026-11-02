@@ -374,6 +374,80 @@
     .tool-sha[open] summary::after { content: " ⌃"; }
     .tool-sha code { display: block; margin-top: 3px; font-size: 9px; line-height: 1.5; word-break: break-all; }
 
+    .acc-block { position: relative; }
+    .acc-head {
+      position: relative; isolation: isolate; overflow: hidden;
+      display: flex; align-items: center; justify-content: space-between; gap: 26px;
+      width: 100%; padding: 28px 32px; border: 0; border-bottom: 1px solid transparent;
+      background: linear-gradient(135deg, var(--accent-soft), transparent 58%);
+      color: inherit; text-align: left; cursor: pointer;
+      transition: border-color .45s var(--ease), background .45s var(--ease);
+    }
+    .acc-head::before {
+      content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(380px circle at var(--mx, 82%) var(--my, 50%), rgba(0, 113, 227, .12), transparent 66%);
+      opacity: 0; transition: opacity .4s var(--ease);
+    }
+    .acc-head::after {
+      content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%), rgba(0, 113, 227, .22), transparent 42%);
+      opacity: 0; transform: scale(.35);
+    }
+    .acc-head:hover::before { opacity: 1; }
+    .acc-head:hover .acc-title { transform: translateX(4px); }
+    .acc-head:hover .acc-plus { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); color: var(--accent); }
+    .acc-head:active { transform: scale(.996); }
+    .acc-head:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+    .acc-block.ping .acc-head::after { animation: accPing .85s var(--ease); }
+    @keyframes accPing {
+      0% { opacity: .9; transform: scale(.18); }
+      100% { opacity: 0; transform: scale(1.65); }
+    }
+    .acc-head-main { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+    .acc-title {
+      display: block; margin-top: 12px;
+      font-size: clamp(26px, 3.4vw, 36px); font-weight: 700; line-height: 1.1; letter-spacing: -.035em;
+      transition: transform .45s var(--ease);
+    }
+    .acc-desc { display: block; margin-top: 5px; color: var(--muted); font-size: 13.5px; line-height: 1.7; }
+    .acc-side { position: relative; z-index: 1; display: flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+    .acc-count { color: var(--faint); font-size: 11px; letter-spacing: .08em; white-space: nowrap; }
+    .acc-plus {
+      position: relative; width: 34px; height: 34px; flex: 0 0 auto;
+      border: 1px solid var(--line-strong); border-radius: 50%; color: var(--ink);
+      transition: transform .55s var(--ease), background .35s, border-color .35s, color .35s;
+    }
+    .acc-plus::before, .acc-plus::after {
+      content: ""; position: absolute; left: 50%; top: 50%; background: currentColor;
+      transform: translate(-50%, -50%); transition: transform .45s var(--ease), opacity .3s;
+    }
+    .acc-plus::before { width: 12px; height: 1.5px; }
+    .acc-plus::after { width: 1.5px; height: 12px; }
+    .acc-block.open .acc-head { border-bottom-color: var(--line); background: linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 82%, transparent), transparent 62%); }
+    .acc-block.open .acc-plus { background: var(--accent); border-color: var(--accent); color: #fff; transform: rotate(180deg); }
+    .acc-block.open .acc-plus::after { transform: translate(-50%, -50%) scaleY(0); opacity: 0; }
+    .acc-panel {
+      display: grid; grid-template-rows: 0fr; opacity: 0;
+      transition: grid-template-rows .85s var(--ease), opacity .55s var(--ease);
+    }
+    .acc-block.open .acc-panel { grid-template-rows: 1fr; opacity: 1; }
+    .acc-inner { min-height: 0; overflow: hidden; transform: translateY(-10px); filter: blur(5px); transition: transform .75s var(--ease), filter .65s var(--ease); }
+    .acc-block.open .acc-inner { transform: none; filter: none; }
+    .acc-panel .tool-row { opacity: 0; translate: 0 16px; transition: opacity .55s var(--ease), translate .55s var(--ease); }
+    .acc-block.open .tool-row { opacity: 1; translate: 0 0; }
+    .acc-block.open .tool-row:nth-child(1) { transition-delay: .10s; }
+    .acc-block.open .tool-row:nth-child(2) { transition-delay: .16s; }
+    .acc-block.open .tool-row:nth-child(3) { transition-delay: .22s; }
+    .acc-block.open .tool-row:nth-child(4) { transition-delay: .28s; }
+    .acc-block.open .tool-row:nth-child(5) { transition-delay: .34s; }
+    .apps-acc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+    .apps-acc .acc-head { background: linear-gradient(135deg, var(--accent-soft), transparent 62%); }
+    .apps-acc .acc-panel .apps { padding: 18px; }
+    .apps-acc .app-card { opacity: 0; translate: 0 22px; scale: .985; transition: opacity .6s var(--ease), translate .6s var(--ease), scale .6s var(--ease), transform .45s var(--ease), box-shadow .45s var(--ease), border-color .35s var(--ease); }
+    .apps-acc.open .app-card { opacity: 1; translate: 0 0; scale: 1; }
+    .apps-acc.open .app-card:nth-child(1) { transition-delay: .12s; }
+    .apps-acc.open .app-card:nth-child(2) { transition-delay: .20s; }
+
     .feature {
       position: relative; overflow: hidden; isolation: isolate;
       display: flex; align-items: center; justify-content: space-between; gap: 28px;
@@ -782,6 +856,15 @@
       .tool-actions { grid-column: 2; flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
       .tool-sha { text-align: left; max-width: 100%; flex-basis: 100%; }
     }
+
+    @media (max-width: 640px) {
+      .acc-head { padding: 22px 20px; gap: 14px; }
+      .acc-title { font-size: 25px; }
+      .acc-desc { font-size: 12px; }
+      .acc-count { display: none; }
+      .acc-plus { width: 30px; height: 30px; }
+      .apps-acc .acc-panel .apps { padding: 12px; gap: 10px; }
+    }
 </style>
 </head>
 <body>
@@ -865,16 +948,18 @@
         <span class="feature-arrow" aria-hidden="true">↗</span>
       </a>
 
-      <div class="toolbox reveal" id="software">
-        <div class="toolbox-head">
-          <div>
+      <div class="toolbox acc-block reveal" id="software">
+        <button class="acc-head" type="button" aria-expanded="false" aria-controls="software-panel">
+          <span class="acc-head-main">
             <span class="tag">WINDOWS · 5 个工具</span>
-            <h3>本地工具合集</h3>
-            <p>清理、优化、格式转换、数据迁移和 MathType 部署，全部收在这里。</p>
-          </div>
-          <span class="toolbox-note">免安装 · 离线运行</span>
-        </div>
-        <div class="tool-list">
+            <span class="acc-title">本地工具合集</span>
+            <span class="acc-desc">清理、优化、格式转换、数据迁移和 MathType 部署，全部收在这里。</span>
+          </span>
+          <span class="acc-side"><span class="acc-count">5 个</span><span class="acc-plus" aria-hidden="true"></span></span>
+        </button>
+        <div class="acc-panel" id="software-panel" aria-hidden="true">
+          <div class="acc-inner">
+            <div class="tool-list">
           <div class="tool-row">
             <span class="tool-icon" aria-hidden="true">C</span>
             <div class="tool-info">
@@ -932,21 +1017,30 @@
             </div>
           </div>
         </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section" id="apps">
-      <div class="section-head">
-        <h2>网页应用</h2>
-        <p>本人制作的练习工具 · 欢迎体验 · 免费使用</p>
-      </div>
-      <div class="apps">
-        <article class="app-card reveal">
+      <div class="acc-block apps-acc reveal" id="apps-acc">
+        <button class="acc-head" type="button" aria-expanded="false" aria-controls="apps-panel">
+          <span class="acc-head-main">
+            <span class="tag">WEB APPS · 2 个</span>
+            <span class="acc-title">网页应用</span>
+            <span class="acc-desc">本人制作的练习工具 · 欢迎体验 · 免费使用</span>
+          </span>
+          <span class="acc-side"><span class="acc-count">2 个</span><span class="acc-plus" aria-hidden="true"></span></span>
+        </button>
+        <div class="acc-panel" id="apps-panel" aria-hidden="true">
+          <div class="acc-inner">
+            <div class="apps">
+        <article class="app-card">
           <img class="app-shot" src="app-interview.png" alt="教师编面试模拟考场界面" loading="lazy">
           <div class="app-body">
             <span class="tag">教师编 · 面试</span>
             <h3>教师编面试模拟考场</h3>
-            <p>结构化面试模拟，逐题计时，AI 点评。内置 1055 道题，可查看历史报告。</p>
+            
             <div class="app-cred">
               <span>演示账号</span><b>user06</b>
               <span>密码</span><b>Wn771#bv</b>
@@ -973,17 +1067,20 @@
           </div>
         </article>
 
-        <article class="app-card reveal">
+        <article class="app-card">
           <img class="app-shot" src="app-shijiang.png" alt="试讲评分官界面" loading="lazy">
           <div class="app-body">
             <span class="tag">高中数学 · 试讲</span>
             <h3>试讲评分官</h3>
-            <p>高中数学试讲评分。上传视频或直接模拟，按评分标准生成报告。</p>
+            
             <div class="app-actions">
               <a class="button" href="https://shijiang-pingfen.netlify.app/" target="_blank" rel="noreferrer">打开应用 <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </article>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1326,6 +1423,56 @@
         }, { rootMargin: '-34% 0px -52% 0px', threshold: 0 });
         sections.forEach(function (s) { nio.observe(s); });
       }
+
+      (function () {
+        var blocks = document.querySelectorAll('.acc-block');
+        var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        blocks.forEach(function (block) {
+          var head = block.querySelector('.acc-head');
+          var panel = block.querySelector('.acc-panel');
+          if (!head || !panel) return;
+          panel.inert = true;
+          function setOpen(open) {
+            block.classList.toggle('open', open);
+            head.setAttribute('aria-expanded', open ? 'true' : 'false');
+            panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+            panel.inert = !open;
+          }
+          head.addEventListener('click', function (e) {
+            var open = !block.classList.contains('open');
+            var r = head.getBoundingClientRect();
+            var px = e.detail ? e.clientX : r.left + r.width / 2;
+            var py = e.detail ? e.clientY : r.top + r.height / 2;
+            head.style.setProperty('--rx', ((px - r.left) / r.width * 100).toFixed(1) + '%');
+            head.style.setProperty('--ry', ((py - r.top) / r.height * 100).toFixed(1) + '%');
+            setOpen(open);
+            if (open) {
+              blocks.forEach(function (other) {
+                if (other === block) return;
+                other.classList.remove('open');
+                var oh = other.querySelector('.acc-head');
+                var op = other.querySelector('.acc-panel');
+                if (oh) oh.setAttribute('aria-expanded', 'false');
+                if (op) { op.setAttribute('aria-hidden', 'true'); op.inert = true; }
+              });
+            }
+            if (open && !reduce) {
+              block.classList.remove('ping');
+              void block.offsetWidth;
+              block.classList.add('ping');
+              setTimeout(function () { block.classList.remove('ping'); }, 900);
+            }
+          });
+          if (fine && !reduce) {
+            head.addEventListener('pointermove', function (e) {
+              var r = head.getBoundingClientRect();
+              head.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+              head.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+            });
+          }
+        });
+      })();
     })();
   </script>
 </body>
