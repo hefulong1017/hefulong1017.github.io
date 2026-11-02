@@ -324,6 +324,56 @@
     .fine { margin-top: 11px; color: var(--faint); font-size: 10px; word-break: break-all; }
     .fine a { color: var(--accent); }
 
+    .toolbox {
+      margin-top: 18px; overflow: hidden;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--surface); box-shadow: var(--shadow);
+    }
+    .toolbox-head {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 28px;
+      padding: 28px 32px 24px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, var(--accent-soft), transparent 58%);
+    }
+    .toolbox-head h3 { margin: 12px 0 5px; font-size: 28px; letter-spacing: -.03em; line-height: 1.15; }
+    .toolbox-head p { margin: 0; color: var(--muted); font-size: 13.5px; }
+    .toolbox-note { flex: 0 0 auto; color: var(--faint); font-size: 11px; letter-spacing: .06em; white-space: nowrap; }
+    .tool-list { display: block; }
+    .tool-row {
+      display: grid; grid-template-columns: 38px minmax(0, 1fr) auto;
+      gap: 16px; align-items: center;
+      padding: 18px 32px; border-top: 1px solid var(--line);
+      transition: background .3s var(--ease);
+    }
+    .tool-row:first-child { border-top: 0; }
+    .tool-row:hover { background: color-mix(in srgb, var(--accent-soft) 55%, transparent); }
+    .tool-icon {
+      display: grid; place-items: center; width: 38px; height: 38px;
+      border-radius: 11px; background: var(--accent-soft); color: var(--accent);
+      font-family: "Songti SC", "Noto Serif SC", Georgia, serif;
+      font-size: 17px; font-weight: 600;
+    }
+    .tool-info h4 { margin: 0; font-size: 16px; letter-spacing: -.015em; line-height: 1.4; }
+    .tool-info h4 span { margin-left: 8px; color: var(--faint); font-size: 10.5px; font-weight: 500; letter-spacing: .03em; }
+    .tool-info p { margin: 4px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.7; }
+    .tool-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+    .tool-dl {
+      display: inline-flex; align-items: center; white-space: nowrap;
+      padding: 6px 13px; border: 1px solid var(--line-strong); border-radius: 999px;
+      color: var(--ink); font-size: 11.5px; font-weight: 600;
+      transition: background .25s var(--ease), color .25s, border-color .25s, transform .25s;
+    }
+    .tool-dl:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: translateY(-1px); }
+    .tool-dl:active { transform: scale(.96); }
+    .tool-parts { color: var(--faint); font-size: 10px; }
+    .tool-parts a { color: var(--accent); padding: 0 2px; }
+    .tool-sha { max-width: 340px; color: var(--faint); font-size: 9.5px; text-align: right; }
+    .tool-sha summary { cursor: pointer; list-style: none; }
+    .tool-sha summary::-webkit-details-marker { display: none; }
+    .tool-sha summary::after { content: " ⌄"; }
+    .tool-sha[open] summary::after { content: " ⌃"; }
+    .tool-sha code { display: block; margin-top: 3px; font-size: 9px; line-height: 1.5; word-break: break-all; }
+
     .feature {
       position: relative; overflow: hidden; isolation: isolate;
       display: flex; align-items: center; justify-content: space-between; gap: 28px;
@@ -721,7 +771,18 @@
       from { clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 50%)); }
       to { clip-path: circle(150vmax at var(--vt-x, 50%) var(--vt-y, 50%)); }
     }
-  </style>
+  
+    @media (max-width: 640px) {
+      .toolbox-head { flex-direction: column; align-items: flex-start; gap: 10px; padding: 22px 20px; }
+      .toolbox-note { white-space: normal; }
+      .tool-row { grid-template-columns: 32px minmax(0, 1fr); gap: 12px; padding: 16px 20px; align-items: start; }
+      .tool-icon { width: 32px; height: 32px; border-radius: 9px; font-size: 15px; }
+      .tool-info h4 { font-size: 14.5px; }
+      .tool-info h4 span { display: block; margin: 3px 0 0; }
+      .tool-actions { grid-column: 2; flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+      .tool-sha { text-align: left; max-width: 100%; flex-basis: 100%; }
+    }
+</style>
 </head>
 <body>
   <div class="intro" id="intro" aria-hidden="true">
@@ -804,81 +865,74 @@
         <span class="feature-arrow" aria-hidden="true">↗</span>
       </a>
 
-      <article class="product reveal">
-        <div class="product-media">
-          <img src="software/c-drive-cleaner.png" alt="C盘空间管家界面截图" loading="lazy">
+      <div class="toolbox reveal" id="software">
+        <div class="toolbox-head">
+          <div>
+            <span class="tag">WINDOWS · 5 个工具</span>
+            <h3>本地工具合集</h3>
+            <p>清理、优化、格式转换、数据迁移和 MathType 部署，全部收在这里。</p>
+          </div>
+          <span class="toolbox-note">免安装 · 离线运行</span>
         </div>
-        <div class="product-body">
-          <span class="tag">Windows</span>
-          <h3>C盘空间管家</h3>
-          <p>扫描 C 盘空间，按文件类型清理缓存、临时文件和下载残留。不读取文档内容，清理前逐项确认。</p>
-          <div class="meta">49 KB · 免安装 · IXHY 609</div>
-          <a class="button" href="software/c-drive-cleaner.exe" download>下载 <span aria-hidden="true">↓</span></a>
-          <div class="fine">SHA-256 · 903459a48ff99c7e64a518a368d8cc14e812867933fe98f68890592e78cd4c4d</div>
-        </div>
-      </article>
-
-      <article class="product reveal" style="margin-top:18px">
-        <div class="product-media">
-          <img src="software/pc-optimizer.png" alt="电脑优化工具界面截图" loading="lazy">
-        </div>
-        <div class="product-body">
-          <span class="tag">Windows · 离线</span>
-          <h3>电脑优化工具</h3>
-          <p>管理开机启动项和运行中的应用，标出系统/安全项，支持一键优化、离电性能和恢复记录。完全离线，扫描后不自动修改设置。</p>
-          <div class="meta">87 KB · 免安装 · IXHY 609</div>
-          <a class="button" href="software/pc-optimizer.exe" download>下载 <span aria-hidden="true">↓</span></a>
-          <div class="fine">SHA-256 · c43abf3eca01af6b679ff5ec1d69a2e9757c99d49eebbfb647da738b05f6af11</div>
-        </div>
-      </article>
-
-      <article class="product reveal" style="margin-top:18px">
-        <div class="product-media">
-          <img src="software/doc-converter.png" alt="文档与音视频转换工具界面截图" loading="lazy">
-        </div>
-        <div class="product-body">
-          <span class="tag">Windows · 离线</span>
-          <h3>文档与音视频转换工具</h3>
-          <p>PDF / LaTeX 公式转 Word，DOCX、PDF、EPUB 等文档互转；视频批量转 MP3、GIF、截取片段。内置 Pandoc、FFmpeg，离线运行。</p>
-          <div class="meta">270 MB · 分卷 3 · 免安装 · IXHY 609</div>
-          <a class="button" href="software/download-converter.bat" download>下载启动器 <span aria-hidden="true">↓</span></a>
-          <div class="fine">启动器会自动下载并合并 3 卷；也可手动下载 <a href="software/converter.part1" download>1</a> / <a href="software/converter.part2" download>2</a> / <a href="software/converter.part3" download>3</a>。SHA-256 · 3adc6c25021006756450abbaf7ccc188845b334765eb7c4aeb9ffeb5d5daa1b1</div>
-        </div>
-      </article>
-
-      <article class="product reveal" style="margin-top:18px">
-        <div class="product-media">
-          <img src="software/app-migrator.png" alt="应用数据迁移工具界面截图" loading="lazy">
-        </div>
-        <div class="product-body">
-          <span class="tag">Windows · 离线</span>
-          <h3>应用数据迁移工具</h3>
-          <p>把浏览器、聊天、编辑器等应用数据从 C 盘迁到 D 盘：复制后逐个 SHA-256 校验，用 NTFS 目录连接保留原路径，可恢复和释放备份。</p>
-          <div class="meta">87 KB · 免安装 · 需 D 盘 NTFS · IXHY 609</div>
-          <a class="button" href="software/app-migrator.exe" download>下载 <span aria-hidden="true">↓</span></a>
-          <div class="fine">SHA-256 · c5316aa516f986b0df34e206dcced0082af00f416bffdfc87da146b1baa573c6</div>
-        </div>
-      </article>
-
-      <article class="product reveal" style="margin-top:18px">
-        <div class="product-media mathtype-media">
-          <div class="math-cover">
-            <div>
-              <span>MathType</span>
-              <strong>一键部署 · 离线安装</strong>
-              <small>WINDOWS · OFFLINE</small>
+        <div class="tool-list">
+          <div class="tool-row">
+            <span class="tool-icon" aria-hidden="true">C</span>
+            <div class="tool-info">
+              <h4>C盘空间管家 <span>49 KB</span></h4>
+              <p>按类型清理 C 盘缓存、临时文件和下载残留，不读取文档内容。</p>
+            </div>
+            <div class="tool-actions">
+              <a class="tool-dl" href="software/c-drive-cleaner.exe" download>下载 ↓</a>
+              <details class="tool-sha"><summary>SHA-256</summary><code>903459a48ff99c7e64a518a368d8cc14e812867933fe98f68890592e78cd4c4d</code></details>
+            </div>
+          </div>
+          <div class="tool-row">
+            <span class="tool-icon" aria-hidden="true">优</span>
+            <div class="tool-info">
+              <h4>电脑优化工具 <span>87 KB · 离线</span></h4>
+              <p>管理启动项和运行中的应用，标出系统/安全项，支持一键优化与恢复。</p>
+            </div>
+            <div class="tool-actions">
+              <a class="tool-dl" href="software/pc-optimizer.exe" download>下载 ↓</a>
+              <details class="tool-sha"><summary>SHA-256</summary><code>c43abf3eca01af6b679ff5ec1d69a2e9757c99d49eebbfb647da738b05f6af11</code></details>
+            </div>
+          </div>
+          <div class="tool-row">
+            <span class="tool-icon" aria-hidden="true">转</span>
+            <div class="tool-info">
+              <h4>文档与音视频转换工具 <span>270 MB · 分卷 3</span></h4>
+              <p>PDF / LaTeX 转 Word，文档互转；视频转 MP3、GIF 或截取片段。</p>
+            </div>
+            <div class="tool-actions">
+              <a class="tool-dl" href="software/download-converter.bat" download>下载启动器 ↓</a>
+              <div class="tool-parts">分卷 <a href="software/converter.part1" download>1</a> / <a href="software/converter.part2" download>2</a> / <a href="software/converter.part3" download>3</a></div>
+              <details class="tool-sha"><summary>SHA-256</summary><code>3adc6c25021006756450abbaf7ccc188845b334765eb7c4aeb9ffeb5d5daa1b1</code></details>
+            </div>
+          </div>
+          <div class="tool-row">
+            <span class="tool-icon" aria-hidden="true">迁</span>
+            <div class="tool-info">
+              <h4>应用数据迁移工具 <span>87 KB · 离线</span></h4>
+              <p>把应用数据从 C 盘迁到 D 盘，SHA-256 校验，保留原路径。</p>
+            </div>
+            <div class="tool-actions">
+              <a class="tool-dl" href="software/app-migrator.exe" download>下载 ↓</a>
+              <details class="tool-sha"><summary>SHA-256</summary><code>c5316aa516f986b0df34e206dcced0082af00f416bffdfc87da146b1baa573c6</code></details>
+            </div>
+          </div>
+          <div class="tool-row">
+            <span class="tool-icon" aria-hidden="true">M</span>
+            <div class="tool-info">
+              <h4>MathType 一键部署 <span>40 MB · 离线</span></h4>
+              <p>离线部署 MathType 7，包含安装与配置步骤，按说明运行即可。</p>
+            </div>
+            <div class="tool-actions">
+              <a class="tool-dl" href="software/mathtype-setup.exe" download>下载 ↓</a>
+              <details class="tool-sha"><summary>SHA-256</summary><code>4cd77ba86ab8a614dbc6cb63f6c762d90275369b57fcdb32722537789f88d5b8</code></details>
             </div>
           </div>
         </div>
-        <div class="product-body">
-          <span class="tag">Windows · 离线</span>
-          <h3>MathType 一键部署</h3>
-          <p>离线部署 MathType 7，包含安装与配置步骤。适合 Windows 10/11，按说明运行即可，不需要联网下载组件。</p>
-          <div class="meta">40 MB · 离线部署 · IXHY 609</div>
-          <a class="button" href="software/mathtype-setup.exe" download>下载 <span aria-hidden="true">↓</span></a>
-          <div class="fine">SHA-256 · 4cd77ba86ab8a614dbc6cb63f6c762d90275369b57fcdb32722537789f88d5b8</div>
-        </div>
-      </article>
+      </div>
     </section>
 
     <section class="section" id="apps">
