@@ -225,7 +225,7 @@
         <div class="answer" hidden></div>` : "";
       const figures = Array.isArray(q.figures) && q.figures.length
         ? `<div class="q-figure">${q.figures.map((f) =>
-            `<img src="${esc(typeof f === "string" ? f : f.path)}" alt="题目示意图" loading="lazy" onerror="this.parentElement.style.display='none'">`
+            `<img src="${esc(typeof f === "string" ? f : f.path)}" alt="题目示意图" onerror="this.parentElement.style.display='none'">`
           ).join("")}</div>`
         : "";
       const options = Array.isArray(q.optionImages) && q.optionImages.length
