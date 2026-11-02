@@ -49,6 +49,10 @@
     if (/\.(pdf|zip|rar|7z|exe|part\d*|mp4|webp|png|jpe?g)$/i.test(url.pathname)) return;
     event.preventDefault();
     leaving = true;
+    var px = event.clientX || window.innerWidth / 2;
+    var py = event.clientY || window.innerHeight / 2;
+    pt.style.setProperty("--pt-x", px + "px");
+    pt.style.setProperty("--pt-y", py + "px");
     pt.classList.add("pt-out");
     setTimeout(function () { location.href = url.href; }, 500);
   });
