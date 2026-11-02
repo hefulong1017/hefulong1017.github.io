@@ -659,18 +659,6 @@
     @keyframes introLine { to { width: 128px; } }
     @keyframes introFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-    .cursor-dot, .cursor-ring {
-      position: fixed; left: 0; top: 0; z-index: 120; pointer-events: none;
-      border-radius: 50%; opacity: 0; transform: translate(-50%, -50%);
-      will-change: transform, width, height;
-    }
-    .cursor-dot { width: 5px; height: 5px; background: var(--accent); transition: opacity .25s, width .25s, height .25s; }
-    .cursor-ring {
-      width: 34px; height: 34px; border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
-      transition: opacity .3s, width .35s var(--ease), height .35s var(--ease), background .35s, border-color .35s;
-    }
-    .cursor-ring.is-hover { width: 56px; height: 56px; background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 58%, transparent); }
-    .cursor-dot.is-hover { width: 7px; height: 7px; }
 
     .nav { transition: padding .35s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease), transform .55s var(--ease); }
     .nav.nav-hidden { transform: translateY(-108%); box-shadow: none; }
@@ -710,7 +698,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .intro, .aurora, .cursor-dot, .cursor-ring { display: none !important; }
+      .intro, .aurora { display: none !important; }
       .section-head h2, .education h2 { opacity: 1 !important; transform: none !important; clip-path: none !important; }
       .portrait { translate: none !important; }
       .nav { transform: none !important; }
@@ -745,8 +733,6 @@
     </div>
   </div>
   <div class="aurora" aria-hidden="true"></div>
-  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
   <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
   <div class="bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span></div>
@@ -1184,31 +1170,6 @@
             document.body.classList.remove('intro-lock', 'intro-done');
           }, 2200);
         }
-      }
-
-      var dot = document.getElementById('cursor-dot');
-      var ring = document.getElementById('cursor-ring');
-      if (fine && !reduce && dot && ring) {
-        var mx = window.innerWidth / 2, my = window.innerHeight / 2;
-        var rx = mx, ry = my, shown = false;
-        window.addEventListener('pointermove', function (e) {
-          mx = e.clientX; my = e.clientY;
-          if (!shown) { dot.style.opacity = '1'; ring.style.opacity = '1'; shown = true; }
-          dot.style.transform = 'translate3d(' + (mx - 2.5) + 'px,' + (my - 2.5) + 'px,0) translate(-50%,-50%)';
-        }, { passive: true });
-        (function loop() {
-          rx += (mx - rx) * .16; ry += (my - ry) * .16;
-          ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) translate(-50%,-50%)';
-          if (shown) requestAnimationFrame(loop);
-        })();
-        document.addEventListener('pointerover', function (e) {
-          var hit = e.target.closest && e.target.closest('a, button, .feature, .product, .app-card');
-          dot.classList.toggle('is-hover', !!hit);
-          ring.classList.toggle('is-hover', !!hit);
-        });
-        document.addEventListener('mouseleave', function () {
-          dot.style.opacity = '0'; ring.style.opacity = '0'; shown = false;
-        });
       }
 
       var nav = document.querySelector('.nav');
