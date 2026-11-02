@@ -237,6 +237,7 @@
         <div class="q-meta">${meta}<span class="num"${q.paperNo ? ' title="按原卷题目顺序匹配"' : ''}>${q.paperNo ? "卷面第 " + q.paperNo + " 题" : ""}</span></div>
         <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="公式加载中"></span>')}</div>
         ${figures}
+        ${q.tableImage ? `<a class="table-link" href="${esc(q.tableImage)}" target="_blank" rel="noopener">查看表格图 ↗</a>` : ""}
         ${options}
         ${answer}
         <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
