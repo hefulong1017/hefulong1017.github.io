@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PINNLab · 偏微分方程体验工作台 · 何富龙</title>
+<meta name="description" content="PINNLab：用 LaTeX 输入偏微分方程，设置初边值，运行 PINN 数值候选，查看曲线、曲面切片与逐点结果。">
+<script>try{var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<link rel="stylesheet" href="../katex.min.css">
+<link rel="stylesheet" href="../page-transition.css">
+<script src="../page-transition.js" defer></script>
+<style>
+:root{
+  --bg:#050608; --ink:#f5f5f7; --muted:#a1a1a6; --faint:#6e6e73;
+  --line:rgba(255,255,255,.1); --line-2:rgba(255,255,255,.16);
+  --glass:rgba(25,27,33,.56); --glass-2:rgba(18,20,25,.72);
+  --blue:#6ab7ff; --blue-deep:#0a84ff; --orange:#ffb15c;
+  --sans:"Inter","SF Pro Text","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype","Noto Serif SC","Songti SC",serif;
+  --mono:"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(60vw 48vw at 12% 2%,rgba(10,132,255,.19),transparent 62%),
+    radial-gradient(44vw 44vw at 92% 20%,rgba(255,177,92,.1),transparent 64%),
+    radial-gradient(70vw 60vw at 50% 105%,rgba(80,120,255,.11),transparent 66%),
+    #050608;
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.15;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+.nav{
+  position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:14px 28px;
+  background:rgba(9,10,13,.56);
+  -webkit-backdrop-filter:saturate(180%) blur(24px);
+  backdrop-filter:saturate(180%) blur(24px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:650;letter-spacing:.01em}
+.brand i{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#f5f5f7;color:#08090b;font:600 15px/1 var(--serif);font-style:normal;box-shadow:0 8px 22px rgba(0,0,0,.4)}
+.brand small{display:block;margin-top:3px;color:var(--faint);font:500 9px/1 var(--mono);letter-spacing:.16em}
+.links{display:flex;align-items:center;gap:20px;font-size:12px;color:#c7c7cc}
+.links a{transition:color .2s ease}
+.links a:hover{color:#fff}
+.wrap{max-width:1120px;margin:0 auto;padding:72px 28px 96px}
+.hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:54px;align-items:center;min-height:68vh}
+.eyebrow{font:600 10px/1.4 var(--mono);letter-spacing:.24em;color:var(--blue);margin:0 0 22px}
+h1{font-size:clamp(38px,5vw,66px);line-height:.98;letter-spacing:-.055em;margin:0 0 24px;font-weight:760}
+h1 em{font-style:normal;color:var(--blue)}
+.lede{max-width:580px;color:#b6b6bc;font-size:15.5px;line-height:1.85;margin:0 0 26px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px}
+.pill{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:999px;padding:7px 12px;font-size:11px;color:#c7c7cc}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:12px 18px;font-size:12.5px;font-weight:650;border:1px solid transparent;transition:transform .25s ease,background .25s ease,border-color .25s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn.primary{background:#f5f5f7;color:#08090b}
+.btn.ghost{border-color:var(--line-2);background:rgba(255,255,255,.04);color:#e8e8ed}
+.note{margin-top:18px;color:var(--faint);font-size:11px;line-height:1.7}
+.console{
+  position:relative;border:1px solid var(--line);border-radius:26px;padding:18px;
+  background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+  -webkit-backdrop-filter:blur(28px) saturate(160%);
+  backdrop-filter:blur(28px) saturate(160%);
+  box-shadow:0 30px 90px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.12);
+  overflow:hidden;
+}
+.console::before{content:"";position:absolute;inset:-40% -20% auto;height:70%;background:radial-gradient(circle at 30% 10%,rgba(106,183,255,.25),transparent 62%);pointer-events:none}
+.windowbar{display:flex;align-items:center;gap:6px;padding:2px 4px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.windowbar i{width:8px;height:8px;border-radius:50%;background:#3a3a3f;display:block}
+.windowbar i:nth-child(1){background:#ff5f57}.windowbar i:nth-child(2){background:#febc2e}.windowbar i:nth-child(3){background:#28c840}
+.windowbar span{margin-left:auto;font:500 9px/1 var(--mono);color:var(--faint);letter-spacing:.13em}
+.screen{padding:20px 6px 6px;position:relative}
+.screen .label{font:500 9px/1 var(--mono);letter-spacing:.16em;color:var(--faint);margin-bottom:12px}
+.eq{font-family:var(--serif);font-size:clamp(24px,3.3vw,36px);letter-spacing:.01em;padding:18px 4px 20px;color:#f5f5f7;overflow-x:auto;white-space:nowrap}
+.eq .katex{color:#f5f5f7}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.mini{border:1px solid rgba(255,255,255,.09);border-radius:12px;background:rgba(255,255,255,.035);padding:10px 12px}
+.mini > b{display:block;font:600 10px/1.4 var(--mono);color:#d6d6db;letter-spacing:.08em}
+.mini > span{display:block;margin-top:5px;color:var(--faint);font-size:10px;line-height:1.5}
+.bars{display:flex;align-items:flex-end;gap:5px;height:66px;margin:18px 2px 2px;padding-top:8px;border-top:1px solid rgba(255,255,255,.08)}
+.bars i{flex:1;display:block;border-radius:4px 4px 1px 1px;background:linear-gradient(180deg,rgba(106,183,255,.9),rgba(10,132,255,.14));opacity:.75;animation:bar 2.8s ease-in-out infinite alternate}
+.bars i:nth-child(2n){animation-delay:-.6s}.bars i:nth-child(3n){animation-delay:-1.2s}
+@keyframes bar{from{transform:scaleY(.82);opacity:.55}to{transform:scaleY(1);opacity:.92}}
+.caption{display:flex;justify-content:space-between;color:var(--faint);font:500 9px/1.5 var(--mono);letter-spacing:.08em;margin-top:10px}
+section{margin-top:84px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:24px}
+.section-head h2{font-size:clamp(24px,3.2vw,34px);letter-spacing:-.035em;margin:0;font-weight:720}
+.section-head p{margin:0;color:var(--faint);font-size:11px;font-family:var(--mono);letter-spacing:.08em}
+.features{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{
+  border:1px solid var(--line);border-radius:20px;padding:22px;
+  background:linear-gradient(150deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  backdrop-filter:blur(22px) saturate(150%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+}
+.card h3{margin:0 0 8px;font-size:15px;letter-spacing:-.01em}
+.card p{margin:0;color:#a9a9b0;font-size:12px;line-height:1.75}
+.card .ico{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:rgba(106,183,255,.12);color:var(--blue);font:600 12px/1 var(--mono);margin-bottom:16px;border:1px solid rgba(106,183,255,.18)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-size:11px;color:#c7c7cc;
+  background:rgba(255,255,255,.04);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)
+}
+.deploy{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:16px;align-items:stretch}
+.deploy .card{padding:26px}
+.steps{counter-reset:s;display:grid;gap:14px;margin-top:18px}
+.step{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;color:#b5b5bb;font-size:12px;line-height:1.7}
+.step::before{counter-increment:s;content:counter(s,decimal-leading-zero);font:600 9px/1.9 var(--mono);color:var(--blue)}
+pre{border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.42);border-radius:14px;padding:16px 18px;overflow:auto;color:#d8d8dd;font:500 11px/1.8 var(--mono);margin:16px 0 0}
+pre .c{color:#6e6e73}
+.badge{display:inline-flex;align-items:center;gap:7px;font:600 9px/1 var(--mono);letter-spacing:.13em;color:#8bd5a8;text-transform:uppercase}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:#34c759;box-shadow:0 0 12px rgba(52,199,89,.65)}
+.footer{margin-top:88px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;gap:16px;color:var(--faint);font-size:10px;font-family:var(--mono);letter-spacing:.06em}
+.footer a{color:#b6b6bc}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:34px;min-height:auto;padding-top:12px}
+  .wrap{padding:52px 20px 70px}
+  section{margin-top:64px}
+  .features,.deploy{grid-template-columns:1fr}
+  .nav{padding:12px 18px}
+  .links{gap:14px;font-size:11px}
+  .links a.hide-m{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .bars i{animation:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div id="pt" class="pt-boot" aria-hidden="true"><span class="pt-glow"></span><span class="pt-bar"></span></div>
+
+<header class="nav">
+  <a class="brand" href="../"><i>何</i><span>PINNLab<small>PINN · EXPERIMENT</small></span></a>
+  <nav class="links">
+    <a class="hide-m" href="../gaokao.html">高考题库</a>
+    <a class="hide-m" href="../math/">高等数学</a>
+    <a href="../">返回主页 ↗</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">PINNLAB / SCIENTIFIC COMPUTING</p>
+      <h1>把偏微分方程，<br><em>写成可运行的实验。</em></h1>
+      <p class="lede">在网页里输入 LaTeX 方程，设定计算域和初边值，运行 PINN 数值候选，查看曲线、曲面切片或逐点结果。适合演示、教学与原型验证。</p>
+      <div class="pills">
+        <span class="pill">LaTeX 方程输入</span>
+        <span class="pill">1D–3D 模板</span>
+        <span class="pill">曲线 / 曲面切片</span>
+        <span class="pill">CSV 与逐点查询</span>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="pinnlab-public-release-v2.zip" download>下载发布包 ↓</a>
+        <a class="btn ghost" href="#deploy">部署说明</a>
+      </div>
+      <p class="note">发布包是一个 Streamlit + Docker 应用；GitHub Pages 只能承载这个介绍页和下载。<br>在线求解需要把 Docker 镜像部署到支持容器的平台。</p>
+    </div>
+
+    <div class="console" aria-label="PINNLab 界面示意">
+      <div class="windowbar"><i></i><i></i><i></i><span>PINNLAB / PREVIEW</span></div>
+      <div class="screen">
+        <div class="label">EQUATION</div>
+        <div class="eq">\[
+          \frac{\partial u}{\partial t}
+          = \nu\,\frac{\partial^2 u}{\partial x^2}
+          - u\,\frac{\partial u}{\partial x}
+        \]</div>
+        <div class="grid2">
+          <div class="mini"><b>DOMAIN</b><span>\(x\in[-1,1]\)<br>\(t\in[0,1]\)</span></div>
+          <div class="mini"><b>CONDITIONS</b><span>\(u(x,0)=-\sin(\pi x)\)<br>\(u(\pm1,t)=0\)</span></div>
+        </div>
+        <div class="bars" aria-hidden="true">
+          <i style="height:38%"></i><i style="height:64%"></i><i style="height:48%"></i><i style="height:82%"></i><i style="height:56%"></i><i style="height:72%"></i><i style="height:44%"></i><i style="height:88%"></i><i style="height:61%"></i><i style="height:76%"></i><i style="height:52%"></i><i style="height:68%"></i>
+        </div>
+        <div class="caption"><span>BURGERS · CANDIDATE V6</span><span>t = 0.60</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="section-head"><h2>不是一个黑箱按钮</h2><p>WHAT IT DOES</p></div>
+    <div class="features">
+      <article class="card"><div class="ico">∂</div><h3>方程直接写</h3><p>支持 \(x,y,z\) 与时间 \(t\)，可写变系数、散度形式和常见初边值条件，页面内实时编译 LaTeX。</p></article>
+      <article class="card"><div class="ico">3D</div><h3>从 1D 到 3D</h3><p>已通过方程族的 1D、2D、3D 扩展模板，包含坐标依赖系数示例；模板载入后仍可逐项修改。</p></article>
+      <article class="card"><div class="ico">∿</div><h3>结果能看，也能查</h3><p>固定坐标看曲线和曲面切片，单点查询具体数值，批量结果导出 CSV。</p></article>
+      <article class="card"><div class="ico">◌</div><h3>多版本候选</h3><p>V5–V8 数值候选并排比较，保留训练过程与误差信息，方便判断结果是否可信。</p></article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>方程库</h2><p>PARTIAL CATALOG</p></div>
+    <div class="chips">
+      <span class="chip">Heat 1D / 2D</span><span class="chip">Poisson</span><span class="chip">Burgers</span>
+      <span class="chip">Wave</span><span class="chip">Allen–Cahn</span><span class="chip">Black–Scholes</span>
+      <span class="chip">Fisher–KPP</span><span class="chip">Sine–Gordon</span><span class="chip">Helmholtz</span>
+      <span class="chip">Monge–Ampère</span><span class="chip">Reaction–Diffusion</span><span class="chip">Goursat</span>
+    </div>
+  </section>
+
+  <section id="deploy">
+    <div class="section-head"><h2>部署到自己的容器</h2><p>DOCKER / STREAMLIT</p></div>
+    <div class="deploy">
+      <div class="card">
+        <span class="badge">PUBLIC RELEASE V2</span>
+        <div class="steps">
+          <div class="step">下载右侧发布包，解压到仓库根目录，确认 <code>Dockerfile</code> 在根目录。</div>
+          <div class="step">在支持 Dockerfile 的平台创建 Web 服务，构建上下文选仓库根目录。</div>
+          <div class="step">容器读取平台注入的 <code>PORT</code>，健康检查路径 <code>/_stcore/health</code>。</div>
+        </div>
+        <pre><span class="c"># 本机预览</span>
+docker build -t pinnlab-public .
+docker run --rm -p 8501:8501 pinnlab-public</pre>
+        <p class="note">不需要 GPU。默认镜像含公式图片识别，建议至少 4 GB 内存；资源紧张时可在构建时关闭 OCR。</p>
+      </div>
+      <div class="card">
+        <h3>包里有什么</h3>
+        <p>Streamlit 界面、PINN 求解器、V5–V8 研究代码、方程模板与 Dockerfile。公开模式限制单任务 20 秒，适合体验和教学演示。</p>
+        <div style="height:14px"></div>
+        <a class="btn ghost" href="pinnlab-public-release-v2.zip" download>pinnlab-public-release-v2.zip ↓</a>
+        <div style="height:10px"></div>
+        <a class="btn ghost" href="PUBLIC_DEPLOYMENT.md">PUBLIC_DEPLOYMENT.md ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>PINNLAB / 2026</span>
+    <span><a href="../">何富龙 · 主页 ↗</a></span>
+  </footer>
+</main>
+
+<script src="../katex.min.js"></script>
+<script src="../auto-render.min.js"></script>
+<script>
+  if (window.renderMathInElement) {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "\\[", right: "\\]", display: true},
+        {left: "\\(", right: "\\)", display: false}
+      ],
+      throwOnError: false
+    });
+  }
+</script>
+</body>
+</html>

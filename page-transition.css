@@ -122,3 +122,8 @@
     animation-duration: .001ms !important;
   }
 }
+
+.nav {
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+  backdrop-filter: saturate(180%) blur(24px);
+}
