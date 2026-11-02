@@ -102,7 +102,7 @@
       pt.classList.remove("pt-boot");
       pt.style.opacity = "0";
     }, 360);
-    setTimeout(finish, 760);
+    setTimeout(finish, 840);
   }
 
   function prefetch(link) {
