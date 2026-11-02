@@ -746,19 +746,9 @@
     }
 
 
-    .cursor-ring {
-      position: fixed; left: 0; top: 0; z-index: 120; width: 30px; height: 30px;
-      border: 1px solid rgba(0, 113, 227, .55); border-radius: 50%;
-      pointer-events: none; opacity: 0; mix-blend-mode: multiply;
-      transition: width .25s var(--ease), height .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease), opacity .3s;
-      will-change: transform;
-    }
-    [data-theme="dark"] .cursor-ring { border-color: rgba(120, 200, 255, .65); mix-blend-mode: screen; }
-    .cursor-ring.hot { width: 48px; height: 48px; background: rgba(0, 113, 227, .10); border-color: rgba(0, 113, 227, .85); }
-    [data-theme="dark"] .cursor-ring.hot { background: rgba(120, 200, 255, .12); }
     .hero { perspective: 1000px; }
     .hero-title { translate: calc(var(--hx, 0) * 12px) calc(var(--hy, 0) * 9px); transition: translate .45s var(--ease); }
-    .hero-title span { display: inline-block; animation: heroRise 1s var(--ease) both; }
+    .hero-title span { display: inline-block; animation: heroRise 1s var(--ease) both; translate: var(--cx, 0px) var(--cy, 0px); rotate: var(--cr, 0deg); transition: translate .28s var(--ease), rotate .28s var(--ease); will-change: translate, rotate; }
     .hero-title span:nth-child(2) { animation-delay: .05s; }
     .hero-title span:nth-child(3) { animation-delay: .1s; }
     @keyframes heroRise { from { opacity: 0; transform: translateY(42px) rotateX(30deg); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
@@ -918,7 +908,6 @@
   <div class="aurora" aria-hidden="true"></div>
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
   <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
-  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
   <canvas id="fx" aria-hidden="true"></canvas>
   <div class="bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span></div>
   <nav class="nav">
@@ -1217,11 +1206,20 @@
       var nav = document.querySelector('.nav');
       var bar = document.getElementById('progress-bar');
       var ticking = false;
+      var lastSkewY = window.scrollY, skewTimer = 0;
       function paintScroll() {
         var max = document.documentElement.scrollHeight - window.innerHeight;
         var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
         if (bar) bar.style.transform = 'scaleX(' + p + ')';
         if (nav) nav.classList.toggle('scrolled', window.scrollY > 18);
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.innerWidth > 760) {
+          var dy = window.scrollY - lastSkewY;
+          lastSkewY = window.scrollY;
+          var sk = Math.max(-1.2, Math.min(1.2, dy * .035));
+          document.documentElement.style.setProperty('--skew', sk.toFixed(2) + 'deg');
+          clearTimeout(skewTimer);
+          skewTimer = setTimeout(function () { document.documentElement.style.setProperty('--skew', '0deg'); }, 110);
+        }
         var hero = document.querySelector('.hero-copy');
         if (hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           hero.style.setProperty('--hero-shift', (-Math.min(34, window.scrollY * .022)).toFixed(1) + 'px');
@@ -1241,7 +1239,7 @@
         var ctx = cv.getContext('2d', { alpha: true });
         var dpr = Math.min(window.devicePixelRatio || 1, 2);
         var W = 0, H = 0, parts = [], mouse = { x: -999, y: -999 };
-        var count = window.innerWidth < 760 ? 44 : 110;
+        var count = window.innerWidth < 760 ? 56 : 150;
         function resize() {
           W = window.innerWidth; H = window.innerHeight;
           cv.width = W * dpr; cv.height = H * dpr;
@@ -1253,8 +1251,8 @@
           for (var i = 0; i < count; i++) {
             parts.push({
               x: Math.random() * W, y: Math.random() * H,
-              vx: (Math.random() - .5) * .28, vy: (Math.random() - .5) * .28,
-              r: Math.random() * 1.8 + .9
+              vx: (Math.random() - .5) * .34, vy: (Math.random() - .5) * .34,
+              r: Math.random() * 2.1 + 1
             });
           }
         }
@@ -1263,7 +1261,7 @@
         var bursts = [];
         window.addEventListener('pointermove', function (e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
         window.addEventListener('pointerdown', function (e) {
-          for (var b = 0; b < 16; b++) {
+          for (var b = 0; b < 26; b++) {
             var a = Math.random() * 6.2832, v = Math.random() * 2.4 + .9;
             bursts.push({ x: e.clientX, y: e.clientY, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1 });
           }
@@ -1284,10 +1282,10 @@
             if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
             var dx = p.x - mouse.x, dy = p.y - mouse.y;
             var d2 = dx * dx + dy * dy;
-            if (d2 < 32000 && d2 > .01) {
-              var f = (32000 - d2) / 32000;
-              p.x += dx / Math.sqrt(d2) * f * 2.2;
-              p.y += dy / Math.sqrt(d2) * f * 2.2;
+            if (d2 < 50000 && d2 > .01) {
+              var f = (50000 - d2) / 50000;
+              p.x += dx / Math.sqrt(d2) * f * 3.0;
+              p.y += dy / Math.sqrt(d2) * f * 3.0;
             }
             var py = ((p.y - off) % (H + 40) + H + 40) % (H + 40) - 20;
             for (var j = i + 1; j < parts.length; j++) {
@@ -1295,8 +1293,8 @@
               var qy = ((q.y - off) % (H + 40) + H + 40) % (H + 40) - 20;
               var lx = p.x - q.x, ly = py - qy;
               var ld = lx * lx + ly * ly;
-              if (ld < 19000) {
-                ctx.strokeStyle = line + (0.17 * (1 - ld / 19000)).toFixed(3) + ')';
+              if (ld < 28000) {
+                ctx.strokeStyle = line + (0.22 * (1 - ld / 28000)).toFixed(3) + ')';
                 ctx.lineWidth = .7;
                 ctx.beginPath(); ctx.moveTo(p.x, py); ctx.lineTo(q.x, qy); ctx.stroke();
               }
@@ -1516,30 +1514,26 @@
       if (fine && !reduce) {
         var hero = document.querySelector('.hero');
         if (hero) {
+          var chars = hero.querySelectorAll('.hero-title span');
           hero.addEventListener('pointermove', function (e) {
             var r = hero.getBoundingClientRect();
             hero.style.setProperty('--hx', (((e.clientX - r.left) / r.width - .5) * 2).toFixed(2));
             hero.style.setProperty('--hy', (((e.clientY - r.top) / r.height - .5) * 2).toFixed(2));
+            chars.forEach(function (ch) {
+              var b = ch.getBoundingClientRect();
+              var dx = e.clientX - (b.left + b.width / 2);
+              var dy = e.clientY - (b.top + b.height / 2);
+              var d = Math.sqrt(dx * dx + dy * dy) || 1;
+              var f = Math.max(0, 1 - d / 260);
+              ch.style.setProperty('--cx', '0px');
+              ch.style.setProperty('--cy', (dy / d * f * 3).toFixed(1) + 'px');
+              ch.style.setProperty('--cr', (dx / d * f * 1.5).toFixed(1) + 'deg');
+            });
           });
           hero.addEventListener('pointerleave', function () {
             hero.style.setProperty('--hx', '0'); hero.style.setProperty('--hy', '0');
+            chars.forEach(function (ch) { ch.style.setProperty('--cx','0px'); ch.style.setProperty('--cy','0px'); ch.style.setProperty('--cr','0deg'); });
           });
-        }
-        var ring = document.getElementById('cursor-ring');
-        if (ring) {
-          var rx = window.innerWidth / 2, ry = window.innerHeight / 2, tx = rx, ty = ry, rs = 1;
-          window.addEventListener('pointermove', function (e) {
-            tx = e.clientX; ty = e.clientY;
-            ring.style.opacity = '1';
-            var hot = e.target.closest('a, button, .acc-head, .feature, .app-card');
-            ring.classList.toggle('hot', !!hot);
-          }, { passive: true });
-          document.addEventListener('mouseleave', function () { ring.style.opacity = '0'; });
-          (function loop() {
-            rx += (tx - rx) * .18; ry += (ty - ry) * .18;
-            ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) translate(-50%,-50%)';
-            requestAnimationFrame(loop);
-          })();
         }
         document.querySelectorAll('.feature, .product, .app-card').forEach(function (card) {
           card.classList.add('tilt');
