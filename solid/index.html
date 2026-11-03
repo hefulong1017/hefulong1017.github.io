@@ -8,7 +8,7 @@
 <title>立体几何大题 · 何富龙</title>
 <link rel="stylesheet" href="../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../katex.min.css"></noscript>
 <style>
-:root{--ink:#1f2328;--muted:#6b7280;--line:#e6e8eb;--bg:#f7f8fa;--blue:#2563eb;--soft:#eef4ff}
+:root{--ink:#1f2328;--muted:#6b7280;--line:#e6e8eb;--bg:#f7f8fa;--blue:#2563eb;--soft:#eef4ff;--ease:cubic-bezier(.22,1,.36,1)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
@@ -31,7 +31,10 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
 .chip.on{background:#111;border-color:#111;color:#fff}
 .count{margin-left:auto;color:var(--muted);font-size:12px}
 .list{display:grid;gap:14px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px 18px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px 18px;box-shadow:0 1px 2px rgba(16,24,40,.03);opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .3s,box-shadow .3s}
+.card.in{opacity:1;transform:none}
+.card.in:hover{transform:translateY(-3px);border-color:rgba(37,99,235,.28);box-shadow:0 14px 34px rgba(16,24,40,.09)}
+.card[hidden]{display:none!important}
 .card[hidden]{display:none}
 .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
 .tags{display:flex;gap:6px;flex-wrap:wrap;font-size:11px;color:#6b7280}
@@ -40,11 +43,13 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
 .q{font-family:"Songti SC","Noto Serif CJK SC",Georgia,serif;font-size:15px;line-height:2;white-space:pre-wrap;overflow-wrap:anywhere}
 .figure{margin:14px 0 4px;background:#fcfcfd;border:1px solid #eef0f3;border-radius:12px;overflow:hidden}
 .figure{display:grid;place-items:center;padding:10px;max-width:700px;margin:14px auto 4px}
-.figure img{display:block;width:auto;height:auto;max-width:100%;max-height:380px;object-fit:contain}
+.figure img{display:block;width:auto;height:auto;max-width:100%;max-height:380px;object-fit:contain;transition:transform .5s var(--ease),filter .3s}
+.figure:hover img{transform:scale(1.018)}
 .toggle{margin-top:12px;border:1px solid #d7e2f5;background:var(--soft);color:#1d4ed8;border-radius:9px;padding:8px 12px;font-size:12px;cursor:pointer}
 .toggle:hover{background:#e3edff}
-.answer{display:none;margin-top:14px;padding:14px 16px;border-left:3px solid #93b4f5;background:#f8faff;border-radius:0 10px 10px 0}
-.answer.open{display:block}
+.answer{display:grid;grid-template-rows:0fr;opacity:0;margin-top:0;padding:0 16px;border-left:3px solid transparent;background:#f8faff;border-radius:0 10px 10px 0;transition:grid-template-rows .45s var(--ease),opacity .3s,margin .3s,padding .3s,border-color .3s}
+.answer-inner{overflow:hidden;min-height:0}
+.answer.open{grid-template-rows:1fr;opacity:1;margin-top:14px;padding:14px 16px;border-left-color:#93b4f5}
 .alabel{font-size:10px;letter-spacing:.16em;color:#6b8fd8;margin-bottom:8px;font-weight:700}
 .abody{font-family:"Songti SC","Noto Serif CJK SC",Georgia,serif;font-size:14px;line-height:1.95;white-space:pre-wrap;overflow-wrap:anywhere}
 .empty{padding:40px;text-align:center;color:var(--muted);font-size:13px}
@@ -81,9 +86,10 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
 [data-theme="dark"] .answer .tag{background:#1d3557;color:#9ecbff}
 
 .figure img{cursor:zoom-in}
-.lb{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:rgba(0,0,0,.86);padding:24px;backdrop-filter:blur(6px)}
-.lb.open{display:grid}
-.lb img{max-width:92vw;max-height:86vh;background:#fff;border-radius:12px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.lb{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(0,0,0,.86);padding:24px;backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.lb.open{opacity:1;visibility:visible}
+.lb img{max-width:92vw;max-height:86vh;background:#fff;border-radius:12px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.5);transform:scale(.94);transition:transform .38s var(--ease)}
+.lb.open img{transform:none}
 .lb button{position:absolute;top:18px;right:22px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:24px;line-height:1;cursor:pointer}
 .theme{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:5px 9px;font-size:12px;cursor:pointer;margin-left:4px}
 </style>
@@ -133,7 +139,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
       '<div class="q"></div>'+
       '<div class="figure"><img loading="lazy" alt="'+(q.year||'')+' 立体几何图" src="'+q.image+'?v=3"></div>'+
       '<button class="toggle" type="button">显示答案 ↓</button>'+
-      '<div class="answer"><div class="alabel">参考答案</div><div class="abody"></div></div>';
+      '<div class="answer"><div class="answer-inner"><div class="alabel">参考答案</div><div class="abody"></div></div></div>';
     el.querySelector('.q').textContent=clean(q.question);
     var ans=el.querySelector('.answer'), body=el.querySelector('.abody'), btn=el.querySelector('.toggle');
     btn.addEventListener('click',function(){
@@ -148,7 +154,8 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
     var data=window.SOLID_DATA||[];
     if(!data.length){list.innerHTML='<div class="empty">题目数据没有载入，请刷新重试。</div>';return;}
     list.innerHTML='';
-    data.forEach(function(q){list.appendChild(card(q));});
+    var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.05,rootMargin:'0px 0px -6% 0px'}):null;
+    data.forEach(function(q,i){var c=card(q);c.style.transitionDelay=Math.min(i,8)*35+'ms';if(io)io.observe(c);else c.classList.add('in');list.appendChild(c);});
     typeset(list);
     var ys=[]; data.forEach(function(q){if(q.year&&ys.indexOf(q.year)<0)ys.push(q.year);}); ys.sort();
     ys.forEach(function(y){var b=document.createElement('button');b.className='chip';b.dataset.year=y;b.textContent=y;years.insertBefore(b,count);});
