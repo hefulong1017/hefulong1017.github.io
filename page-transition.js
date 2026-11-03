@@ -137,7 +137,8 @@
         }
         var px = p.tx + p.vx * ease * w * .30;
         var py = p.ty + p.vy * ease * h * .30;
-        ctx.globalAlpha = Math.min(1, Math.max(0, p.a * (1 - t * .95)));
+        var life = t < .62 ? 1 : Math.max(0, 1 - (t - .62) / .38);
+        ctx.globalAlpha = Math.min(1, p.a * life);
         if (p.dot) { ctx.fillRect(px, py, p.r, p.r); continue; }
         ctx.font = p.font;
         ctx.fillText(p.ch, px, py);
@@ -156,7 +157,7 @@
         }
         var nx = g.sx + (g.tx - g.sx) * e;
         var ny = g.sy + (g.ty - g.sy) * e;
-        ctx.globalAlpha = Math.min(1, .05 + g.a * e);
+        ctx.globalAlpha = Math.min(1, .12 + g.a * e);
         if (g.dot) { ctx.fillRect(nx, ny, g.r, g.r); continue; }
         ctx.font = g.font;
         ctx.fillText(g.ch, nx, ny);
