@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>try{var d=localStorage.getItem("darkDefault");if(d!=="1"){localStorage.setItem("theme","dark");localStorage.setItem("darkDefault","1");}var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
-  <title>椭圆外心与距离范围 · 2026 长沙适应性考试第18题</title>
-  <meta name="description" content="2026 届长沙新高考适应性考试第18题：椭圆外心与距离范围。标准解法，以及只用两根之积消去外心纵坐标的新思路。">
+  <title>椭圆外心与距离范围 · 2025 长沙适应性考试第18题</title>
+  <meta name="description" content="2025 届长沙新高考适应性考试第18题：椭圆外心与距离范围。标准解法，以及只用两根之积消去外心纵坐标的新思路。">
   <meta name="theme-color" content="#f4efe6">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b64a32'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='30' fill='%23fbf7ef' text-anchor='middle'%3E题%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../../katex.min.css"></noscript>
@@ -182,11 +182,11 @@
   </header>
   <main>
     <section class="hero">
-      <p class="eyebrow">Mock Exam / 2026 长沙适应性考试</p>
+      <p class="eyebrow">Mock Exam / 2025 长沙适应性考试</p>
       <h1>椭圆外心<br>与距离范围</h1>
-      <p class="lead">一道 17 分的解析几何压轴题。标准解法要设外心并比较系数；新思路把外接圆与椭圆相减，只用两根之积就消掉外心的纵坐标。</p>
+      <p class="lead">一道 17 分的解析几何压轴题。标准解法用 MN 与 AM 的两条中垂线，设出中点与坐标；新思路把外接圆与椭圆相减，只用两根之积就消掉外心的纵坐标。</p>
       <div class="hero-meta">
-        <span>2026 长沙新高考适应性考试 · 第18题</span>
+        <span>2025 长沙新高考适应性考试 · 第18题</span>
         <span>17 分</span>
         <span>2 问</span>
         <span>标准解法 + 两根之积</span>
@@ -205,7 +205,7 @@
       </aside>
       
 <article class="paper">
-  <div class="note"><p><b>先看结论：</b>椭圆为 \(\frac{x^2}{4}+y^2=1\)，\(A(-2,0)\)。第（2）② 的范围是 \(\left(0,\frac{28}{9}\right]\text{。}\)标准解法要设外心 \(P(-\frac13,t)\) 并比较系数；下面的新思路把圆与椭圆相减，只用两根之积就消掉 \(t\)。</p></div>
+  <div class="note"><p><b>先看结论：</b>椭圆为 \(\frac{x^2}{4}+y^2=1\)，\(A(-2,0)\)。第（2）② 的范围是 \(\left(0,\frac{28}{9}\right]\text{。}\)标准解法用 \(MN\) 与 \(AM\) 的两条中垂线，设出中点与坐标；下面的新思路把圆与椭圆相减，只用两根之积就消掉 \(t\)。</p></div>
 
   <h2 id="problem">原题</h2>
   <p>已知椭圆 \(C:\frac{x^2}{a^2}+\frac{y^2}{b^2}=1\ (a&gt;b&gt;0)\) 的左顶点为 \(A\)，焦距为 \(2\sqrt3\)，且离心率为 \(\frac{\sqrt3}{2}\text{。}\)</p>
@@ -282,47 +282,70 @@
   \boxed{P\left(-\frac67,0\right)}.
   \]</div>
 
-  <h3 id="official-3">（2）② 标准解法</h3>
-  <p>设 \(P\left(-\frac13,t\right)\)，\(l:x=my+n\)。因为 \(P\) 是外心，</p>
+  <h3 id="official-3">（2）② 标准解法 · 中垂线</h3>
+  <p>设 \(P\left(-\frac13,t\right)\)，\(l:x=my+n\)，\(M(x_1,y_1)\)、\(N(x_2,y_2)\)。设 \(MN\) 的中点为 \(Q\)。</p>
+  <p>把 \(l\) 代入椭圆，得</p>
   <div class="math">\[
-  PA^2=PM^2=PN^2.
+  (m^2+4)y^2+2mny+n^2-4=0.
   \]</div>
-  <p>先算</p>
+  <p>由根与系数的关系，</p>
+  <div class="math">\[
+  y_1+y_2=-\frac{2mn}{m^2+4},
+  \qquad
+  Q\left(\frac{4n}{m^2+4},-\frac{mn}{m^2+4}\right).
+  \]</div>
+  <p>因为 \(P\) 在 \(MN\) 的中垂线上，所以 \(PQ\perp l\)。直线 \(l\) 的方向向量是 \((m,1)\)，故 \(PQ\) 的方向向量可取 \((1,-m)\)。设</p>
+  <div class="math">\[
+  P=Q+\lambda(1,-m).
+  \]</div>
+  <p>由 \(P\) 的横坐标为 \(-\frac13\)，得</p>
+  <div class="math">\[
+  \lambda=-\frac13-\frac{4n}{m^2+4}.
+  \]</div>
+  <p>于是 \(P\) 的纵坐标为</p>
+  <div class="math">\[
+  t=-\frac{mn}{m^2+4}-m\lambda
+  =\frac m3+\frac{3mn}{m^2+4}. \tag{1}
+  \]</div>
+  <p>又因为 \(P\) 在 \(AM\) 的中垂线上，所以</p>
+  <div class="math">\[
+  PA^2=PM^2.
+  \]</div>
+  <p>由 \(Q\) 是 \(MN\) 的中点且 \(PQ\perp MN\)，</p>
+  <div class="math">\[
+  PM^2=PQ^2+QM^2.
+  \]</div>
+  <p>其中</p>
+  <div class="math">\[
+  PQ^2=\lambda^2(1+m^2).
+  \]</div>
+  <p>再由交点方程算出</p>
+  <div class="math">\[
+  (y_1-y_2)^2=\frac{16(m^2+4-n^2)}{(m^2+4)^2},
+  \]</div>
+  <p>所以</p>
+  <div class="math">\[
+  QM^2=\frac{MN^2}{4}
+  =\frac{4(1+m^2)(m^2+4-n^2)}{(m^2+4)^2}.
+  \]</div>
+  <p>另一方面，</p>
   <div class="math">\[
   PA^2=\left(-\frac13+2\right)^2+t^2=\frac{25}{9}+t^2.
   \]</div>
-  <p>对直线 \(l\) 上任意点 \((x,y)=(my+n,y)\)，</p>
+  <p>把（1）与 \(\lambda\) 代入 \(PA^2=PM^2\)，化简得</p>
   <div class="math">\[
-  PM^2=\left(my+n+\frac13\right)^2+(y-t)^2.
-  \]</div>
-  <p>由 \(PA^2=PM^2\) 得</p>
-  <div class="math">\[
-  (m^2+1)y^2+\left[2m\left(n+\frac13\right)-2t\right]y
-  +\left(n+\frac13\right)^2-\frac{25}{9}=0. \tag{1}
-  \]</div>
-  <p>而 \(M,N\) 的纵坐标满足椭圆与直线的交点方程</p>
-  <div class="math">\[
-  (m^2+4)y^2+2mny+n^2-4=0. \tag{2}
-  \]</div>
-  <p>（1）（2）有相同的两个根，所以系数成比例。比较二次项系数与常数项：</p>
-  <div class="math">\[
-  \frac{m^2+1}{m^2+4}
-  =
-  \frac{\left(n+\frac13\right)^2-\frac{25}{9}}{n^2-4}.
-  \]</div>
-  <p>化简：</p>
-  <div class="math">\[
-  (n+2)(2m^2+9n-10)=0.
+  PA^2-PM^2
+  =-\frac{(n+2)(2m^2+9n-10)}{3(m^2+4)}=0.
   \]</div>
   <p>\(n=-2\) 时直线过 \(A\)，不能构成三角形，故</p>
   <div class="math">\[
-  n=\frac{10-2m^2}{9}. \tag{3}
+  n=\frac{10-2m^2}{9}. \tag{2}
   \]</div>
   <p>令 \(u=m^2\ge0\)。直线与椭圆有两个不同交点，需要</p>
   <div class="math">\[
   n^2&lt;m^2+4.
   \]</div>
-  <p>把（3）代入，得</p>
+  <p>把（2）代入，得</p>
   <div class="math">\[
   (u-32)(4u+7)&lt;0
   \quad\Rightarrow\quad
@@ -407,7 +430,7 @@
   <div class="compare-grid">
     <div class="compare-col">
       <span>标准解法</span>
-      <p>设 \(P(-\frac13,t)\)，用 \(PA=PM\) 写出关于 \(y\) 的二次方程，再与椭圆交点方程比较系数，得到 \(n=\frac{10-2m^2}{9}\)。</p>
+      <p>设 \(P(-\frac13,t)\)，用 \(MN\) 中垂线定出 \(t\)，再由 \(AM\) 中垂线 \(PA=PM\) 得到 \(n=\frac{10-2m^2}{9}\)。</p>
     </div>
     <div class="compare-col alt">
       <span>新思路</span>
@@ -416,12 +439,12 @@
   </div>
   <p class="compare-end">两法最后都归结为同一个 \(n\)。新思路省掉的是“求外心纵坐标”这一步，计算量更小，也更容易在考场上看清结构。</p>
 
-  <p class="paper-foot">题目与标准解法整理自 2026 届湖南省长沙市新高考适应性考试第 18 题；第二问②的两根之积解法由何富龙提供。若公式在窄屏上显示不全，可左右滑动公式区域。</p>
+  <p class="paper-foot">题目与标准解法整理自 2025 届湖南省长沙市新高考适应性考试第 18 题；第二问②的两根之积解法由何富龙提供。若公式在窄屏上显示不全，可左右滑动公式区域。</p>
 </article>
 
     </div>
   </main>
-  <footer><span>© 2026 何富龙</span><span>MOCK SOLUTIONS <span style="color:var(--accent)">/</span> 2026 长沙适应性</span></footer>
+  <footer><span>© 2026 何富龙</span><span>MOCK SOLUTIONS <span style="color:var(--accent)">/</span> 2025 长沙适应性</span></footer>
 </div>
 <script src="../../katex.min.js"></script>
 <script src="../../auto-render.min.js"></script>
