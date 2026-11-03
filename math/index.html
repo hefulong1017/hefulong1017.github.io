@@ -427,16 +427,38 @@
 
           toggle.addEventListener('click', function () {
             var open = ans.hidden;
-            ans.hidden = !open;
-            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-            toggle.innerHTML = open
-              ? '收起答案 <span aria-hidden="true">↑</span>'
-              : '显示答案 <span aria-hidden="true">↓</span>';
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             if (open && !ans.dataset.rendered) {
               body.textContent = cleanAnswer(item.a);
               typeset(body);
               ans.dataset.rendered = '1';
             }
+            if (open) {
+              ans.hidden = false;
+              var target = ans.scrollHeight;
+              if (!reduce && ans.animate) {
+                ans.style.overflow = 'hidden';
+                var anim = ans.animate(
+                  [{ height: '0px', opacity: 0 }, { height: target + 'px', opacity: 1 }],
+                  { duration: 320, easing: 'cubic-bezier(.22,1,.36,1)' }
+                );
+                anim.onfinish = function () { ans.style.height = ''; ans.style.overflow = ''; };
+              }
+            } else if (!reduce && ans.animate) {
+              var start = ans.offsetHeight;
+              ans.style.overflow = 'hidden';
+              var close = ans.animate(
+                [{ height: start + 'px', opacity: 1 }, { height: '0px', opacity: 0 }],
+                { duration: 220, easing: 'cubic-bezier(.4,0,1,1)' }
+              );
+              close.onfinish = function () { ans.hidden = true; ans.style.height = ''; ans.style.overflow = ''; };
+            } else {
+              ans.hidden = true;
+            }
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            toggle.innerHTML = open
+              ? '收起答案 <span aria-hidden="true">↑</span>'
+              : '显示答案 <span aria-hidden="true">↓</span>';
           });
         }
 
@@ -594,7 +616,14 @@
         next.disabled = i === flat.length - 1;
         renderToc(search.value);
         history.replaceState(null, '', '#' + s.id);
-        if (scroll !== false) document.querySelector('.reader').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        var readerEl = document.querySelector('.reader');
+        if (readerEl && readerEl.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          readerEl.animate(
+            [{ opacity: .55, transform: 'translateY(7px)' }, { opacity: 1, transform: 'none' }],
+            { duration: 280, easing: 'cubic-bezier(.22,1,.36,1)' }
+          );
+        }
+        if (scroll !== false) readerEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
 
       function setView(mode) {

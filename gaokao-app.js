@@ -402,7 +402,29 @@
       renderMath(box);
     }
     const open = box.hidden;
-    box.hidden = !open;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (open) {
+      box.hidden = false;
+      const target = box.scrollHeight;
+      if (!reduceMotion && box.animate) {
+        box.style.overflow = "hidden";
+        const anim = box.animate(
+          [{ height: "0px", opacity: 0 }, { height: target + "px", opacity: 1 }],
+          { duration: 340, easing: "cubic-bezier(.22,1,.36,1)" }
+        );
+        anim.onfinish = () => { box.style.height = ""; box.style.overflow = ""; };
+      }
+    } else if (!reduceMotion && box.animate) {
+      const start = box.offsetHeight;
+      box.style.overflow = "hidden";
+      const anim = box.animate(
+        [{ height: start + "px", opacity: 1 }, { height: "0px", opacity: 0 }],
+        { duration: 240, easing: "cubic-bezier(.4,0,1,1)" }
+      );
+      anim.onfinish = () => { box.hidden = true; box.style.height = ""; box.style.overflow = ""; };
+    } else {
+      box.hidden = true;
+    }
     btn.setAttribute("aria-expanded", String(open));
     btn.innerHTML = open ? '收起答案 <span aria-hidden="true">↑</span>' : '显示答案 <span aria-hidden="true">↓</span>';
   });
