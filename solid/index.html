@@ -123,7 +123,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
     var no=q.no?('第 '+q.no+' 题'):'';
     el.innerHTML='<div class="head"><div class="tags">'+tags+'</div><div class="no">'+no+'</div></div>'+
       '<div class="q"></div>'+
-      '<div class="figure"><img loading="lazy" alt="'+(q.year||'')+' 立体几何图" src="'+q.image+'"></div>'+
+      '<div class="figure"><img loading="lazy" alt="'+(q.year||'')+' 立体几何图" src="'+q.image+'?v=3'"></div>'+
       '<button class="toggle" type="button">显示答案 ↓</button>'+
       '<div class="answer"><div class="alabel">参考答案</div><div class="abody"></div></div>';
     el.querySelector('.q').textContent=clean(q.question);
