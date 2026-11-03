@@ -100,6 +100,7 @@ html.pt-leave body {
   100% { opacity: .55; transform: scale(1.012); }
 }
 html.pt-enter body { opacity: .62; transform: scale(.995); }
+html.pt-back.pt-enter body { opacity: 1; transform: none; }
 html.pt-enter.pt-reveal body {
   opacity: 1; transform: none;
   transition: opacity .75s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);

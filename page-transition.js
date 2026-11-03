@@ -185,7 +185,7 @@
     pt.style.display = "none";
     pt.style.opacity = "0";
     pt.style.background = "";
-    document.documentElement.classList.remove("pt-hide", "pt-leave", "pt-enter", "pt-reveal");
+    document.documentElement.classList.remove("pt-hide", "pt-leave", "pt-enter", "pt-reveal", "pt-back");
     particles = [];
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
@@ -336,7 +336,7 @@
     try { animate = sessionStorage.getItem("ptGo") === "1"; sessionStorage.removeItem("ptGo"); } catch (e) {}
     try {
       var nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
-      if (nav && nav.type === "back_forward") animate = true;
+      if (nav && nav.type === "back_forward") { animate = true; document.documentElement.classList.add("pt-back"); }
     } catch (e) {}
     boot(animate);
   }
@@ -348,6 +348,7 @@
     if (event.persisted) {
       leaving = false;
       booted = false;
+      document.documentElement.classList.add("pt-back");
       boot(true);
     }
   });
