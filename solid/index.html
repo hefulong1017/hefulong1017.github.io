@@ -79,6 +79,13 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
 [data-theme="dark"] .toggle:hover{background:#17345a}
 [data-theme="dark"] .answer{background:#101b2b;border-left-color:#3b82f6;color:#e5e5e7}
 [data-theme="dark"] .answer .tag{background:#1d3557;color:#9ecbff}
+
+.figure img{cursor:zoom-in}
+.lb{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:rgba(0,0,0,.86);padding:24px;backdrop-filter:blur(6px)}
+.lb.open{display:grid}
+.lb img{max-width:92vw;max-height:86vh;background:#fff;border-radius:12px;padding:16px;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+.lb button{position:absolute;top:18px;right:22px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:24px;line-height:1;cursor:pointer}
+.theme{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:5px 9px;font-size:12px;cursor:pointer;margin-left:4px}
 </style>
   <link rel="stylesheet" href="../page-transition.css?v=18">
 </head>
@@ -86,7 +93,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
 
 <nav class="nav">
   <a class="brand" href="../"><i>何</i>何富龙</a>
-  <div class="links"><a href="../">主页</a><a href="../gaokao.html">高考题库</a><a href="../math/">高等数学</a><a href="../mworks/">数值实验</a></div>
+  <div class="links"><a href="../">主页</a><a href="../gaokao.html">高考题库</a><a href="../math/">高等数学</a><a href="../mworks/">数值实验</a><button class="theme" id="themeToggle" type="button" aria-label="切换深浅色">◐</button></div>
 </nav>
 <main class="wrap">
   <p class="kicker">SOLID GEOMETRY / 2016—2026</p>
@@ -102,6 +109,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
   <div class="list" id="list"><div class="empty">正在载入题目…</div></div>
   <div class="foot"><span>2016—2026 高考数学 · 立体几何</span><span>图形取自原卷</span></div>
 </main>
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="查看大图"><button type="button" aria-label="关闭">×</button><img alt=""></div>
 <script defer src="../katex.min.js"></script>
 <script defer src="../auto-render.min.js"></script>
 <script defer src="data.js"></script>
@@ -123,7 +131,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
     var no=q.no?('第 '+q.no+' 题'):'';
     el.innerHTML='<div class="head"><div class="tags">'+tags+'</div><div class="no">'+no+'</div></div>'+
       '<div class="q"></div>'+
-      '<div class="figure"><img loading="lazy" alt="'+(q.year||'')+' 立体几何图" src="'+q.image+'?v=3'"></div>'+
+      '<div class="figure"><img loading="lazy" alt="'+(q.year||'')+' 立体几何图" src="'+q.image+'?v=3"></div>'+
       '<button class="toggle" type="button">显示答案 ↓</button>'+
       '<div class="answer"><div class="alabel">参考答案</div><div class="abody"></div></div>';
     el.querySelector('.q').textContent=clean(q.question);
@@ -164,6 +172,17 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
     });
     count.textContent=data.length+' 题';
   }
+
+  var lb=document.getElementById('lightbox'), lbImg=lb.querySelector('img');
+  function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
+  list.addEventListener('click',function(e){
+    var im=e.target.closest('.figure img'); if(!im)return;
+    lbImg.src=im.currentSrc||im.src; lb.classList.add('open'); document.body.style.overflow='hidden';
+  });
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target.closest('button'))closeLb();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLb();});
+  var tb=document.getElementById('themeToggle');
+  if(tb){tb.addEventListener('click',function(){var cur=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',cur);try{localStorage.setItem('theme',cur);localStorage.setItem('darkDefault','1');}catch(e){}});}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
 })();
 </script>
