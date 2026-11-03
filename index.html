@@ -13,8 +13,6 @@
   <meta property="og:description" content="数学 · 教学工具 · 独立开发">
   <meta property="og:locale" content="zh_CN">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231d1d1f'/%3E%3Ctext x='32' y='43' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif' font-size='30' fill='%23fff' text-anchor='middle'%3E何%3C/text%3E%3C/svg%3E">
-  <link rel="prefetch" href="katex.min.js" as="script">
-  <link rel="prefetch" href="katex.min.css" as="style">
   <link rel="prefetch" href="auto-render.min.js" as="script">
   <noscript><style>.reveal, .section-head h2, .education h2 { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; } .intro { display: none !important; }
 
@@ -1256,7 +1254,6 @@
 
   <footer><span>© 2026 何富龙</span><span class="made">本站内容均为本人制作或整理，欢迎体验，免费使用。</span><span>数学 · 工具 · 分享</span></footer>
 
-  <script src="code/code-data.js"></script>
   <script>
     (function () {
       var root = document.documentElement;
@@ -1461,8 +1458,12 @@
         });
       });
 
-      var code = window.MATLAB_CODE;
-      if (code && code.chapters && code.chapters.length) {
+      var codeReady = false, codeLoading = false;
+      function initCode() {
+        if (codeReady) return;
+        var code = window.MATLAB_CODE;
+        if (!code || !code.chapters || !code.chapters.length) return;
+        codeReady = true;
         var tabs = document.getElementById('code-tabs');
         var list = document.getElementById('code-list');
         var title = document.getElementById('code-title');
@@ -1536,6 +1537,16 @@
         }
         drawTabs(); drawList(); drawCode();
       }
+      function loadCode() {
+        if (codeReady || codeLoading) return;
+        codeLoading = true;
+        var sc = document.createElement("script");
+        sc.src = "code/code-data.js";
+        sc.onload = function () { codeLoading = false; initCode(); };
+        sc.onerror = function () { codeLoading = false; };
+        document.body.appendChild(sc);
+      }
+      window.__loadMatlabCode = loadCode;
 
 
     })();
@@ -1715,6 +1726,7 @@
             head.style.setProperty('--ry', ((py - r.top) / r.height * 100).toFixed(1) + '%');
             setOpen(open);
             if (open) {
+              if (head.getAttribute("aria-controls") === "code-panel" && window.__loadMatlabCode) window.__loadMatlabCode();
               blocks.forEach(function (other) {
                 if (other === block) return;
                 other.classList.remove('open');
@@ -1742,7 +1754,7 @@
       })();
     })();
   </script>
-<script src="prefetch.js?v=1"></script>
+<script src="prefetch.js?v=2"></script>
 </body>
 </html>
 

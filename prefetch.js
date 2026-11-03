@@ -31,10 +31,25 @@
     document.head.appendChild(l);
   }
 
+  var formulaSeen = false;
+  function prefetchFormula(a) {
+    if (formulaSeen) return;
+    var u = new URL(a.href, location.href);
+    if (u.origin !== location.origin) return;
+    if (!/^\/(gaokao\.html|math\/|solid\/|mock\/)/.test(u.pathname)) return;
+    formulaSeen = true;
+    var js = document.createElement('link');
+    js.rel = 'prefetch'; js.as = 'script'; js.href = '/katex.min.js';
+    document.head.appendChild(js);
+    var css = document.createElement('link');
+    css.rel = 'prefetch'; css.as = 'style'; css.href = '/katex.min.css';
+    document.head.appendChild(css);
+  }
+
   function onIntent(e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
     if (!a) return;
-    setTimeout(function () { prefetch(a); }, 60);
+    setTimeout(function () { prefetch(a); prefetchFormula(a); }, 60);
   }
 
   document.addEventListener('pointerover', onIntent, { passive: true });
