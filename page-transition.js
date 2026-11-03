@@ -38,7 +38,7 @@
   function sampleGlyphs() {
     var list = [];
     var mobile = innerWidth < 640;
-    var cap = mobile ? 850 : 1600;
+    var cap = mobile ? 1200 : 2200;
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     var node;
     while ((node = walker.nextNode()) && list.length < cap) {
@@ -49,7 +49,7 @@
       if (parent.closest("#pt, script, style, noscript, svg, canvas")) continue;
       var cs = getComputedStyle(parent);
       var font = (cs.fontStyle || "normal") + " " + (cs.fontWeight || "400") + " " + (cs.fontSize || "14px") + " " + (cs.fontFamily || "sans-serif");
-      var alpha = parent.closest("h1,h2,h3,h4,.hero-title,.pinn-feature h1") ? .92 : .7;
+      var alpha = parent.closest("h1,h2,h3,h4,.hero-title,.pinn-feature h1") ? 1 : .9;
       for (var i = 0; i < text.length && list.length < cap; i++) {
         var ch = text[i];
         if (/\s/.test(ch)) continue;
@@ -67,8 +67,30 @@
           ty: r.top + r.height * .82,
           vx: (r.left - innerWidth / 2) / innerWidth + (Math.random() - .5) * 1.2,
           vy: (r.top - innerHeight / 2) / innerHeight + (Math.random() - .5) * 1.2,
-          a: alpha * (.78 + Math.random() * .22)
+          a: alpha * (.96 + Math.random() * .04)
         });
+      }
+    }
+    var surfaces = document.querySelectorAll(".feature,.pinn-feature,.product,.app-card,.acc-block,.code-card,.portrait,.panel,.side,.reader,.qa-card,.example,.method,.nav,.hero");
+    var fill = mobile ? 9 : 7;
+    for (var si = 0; si < surfaces.length && list.length < (mobile ? 5200 : 9000); si++) {
+      var el = surfaces[si];
+      if (!visible(el)) continue;
+      var b = el.getBoundingClientRect();
+      var left = Math.max(0, b.left), right = Math.min(innerWidth, b.right);
+      var top = Math.max(0, b.top), bottom = Math.min(innerHeight, b.bottom);
+      for (var yy = top; yy < bottom; yy += fill) {
+        for (var xx = left; xx < right; xx += fill) {
+          if (Math.random() > .82) continue;
+          list.push({
+            dot: true,
+            x: xx, y: yy, tx: xx, ty: yy,
+            vx: (xx - innerWidth / 2) / innerWidth + (Math.random() - .5) * 1.1,
+            vy: (yy - innerHeight / 2) / innerHeight + (Math.random() - .5) * 1.1,
+            a: .34 + Math.random() * .3,
+            r: 1.1 + Math.random() * 1.8
+          });
+        }
       }
     }
     return list;
@@ -115,7 +137,8 @@
         }
         var px = p.tx + p.vx * ease * w * .30;
         var py = p.ty + p.vy * ease * h * .30;
-        ctx.globalAlpha = Math.max(0, p.a * (1 - t * 1.08));
+        ctx.globalAlpha = Math.min(1, Math.max(0, p.a * (1 - t * .95)));
+        if (p.dot) { ctx.fillRect(px, py, p.r, p.r); continue; }
         ctx.font = p.font;
         ctx.fillText(p.ch, px, py);
       }
@@ -133,7 +156,8 @@
         }
         var nx = g.sx + (g.tx - g.sx) * e;
         var ny = g.sy + (g.ty - g.sy) * e;
-        ctx.globalAlpha = Math.min(g.a, .05 + g.a * e);
+        ctx.globalAlpha = Math.min(1, .05 + g.a * e);
+        if (g.dot) { ctx.fillRect(nx, ny, g.r, g.r); continue; }
         ctx.font = g.font;
         ctx.fillText(g.ch, nx, ny);
       }
@@ -201,7 +225,7 @@
     pt.style.display = "block";
     pt.style.opacity = "1";
     pt.style.background = "transparent";
-    pt.className = "pt-boot pt-shot";
+    pt.className = "pt-boot";
     particles = sampleGlyphs();
     for (var i = 0; i < particles.length; i++) {
       var g = particles[i];
@@ -213,17 +237,17 @@
     t0 = 0;
     startAmbient(90);
     if (!raf) raf = requestAnimationFrame(draw);
+    setTimeout(function () { document.documentElement.classList.add("pt-reveal"); }, 360);
     setTimeout(function () {
-      document.documentElement.classList.add("pt-reveal");
+      pt.style.opacity = "0";
       setTimeout(function () {
         if (raf) cancelAnimationFrame(raf);
         raf = 0;
         particles = [];
         ctx.clearRect(0, 0, innerWidth, innerHeight);
-        pt.style.opacity = "0";
-      }, 120);
-    }, 400);
-    setTimeout(settle, 780);
+      }, 440);
+    }, 380);
+    setTimeout(settle, 1180);
   }
 
   function pulseAt(x, y) {
