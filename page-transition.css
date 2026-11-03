@@ -95,12 +95,11 @@ html.pt-leave body {
   transform-origin: 50% 42%;
 }
 @keyframes ptPageOut {
-  0% { opacity: 1; filter: none; transform: scale(1); }
-  35% { opacity: .78; filter: grayscale(1) brightness(1.9) blur(1.5px); transform: scale(1.008); }
-  100% { opacity: 0; filter: grayscale(1) brightness(2.4) blur(8px); transform: scale(1.03); }
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.015); }
 }
-html.pt-enter body { opacity: 0; filter: blur(10px); transform: scale(.985); }
+html.pt-enter body { opacity: 0; transform: scale(.99); }
 html.pt-enter.pt-reveal body {
-  opacity: 1; filter: none; transform: none;
-  transition: opacity .7s cubic-bezier(.2,.7,.2,1), filter .7s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+  opacity: 1; transform: none;
+  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
 }

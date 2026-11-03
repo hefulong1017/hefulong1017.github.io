@@ -12,7 +12,7 @@
   var ctx = canvas.getContext("2d");
   var particles = [];
   var raf = 0;
-  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 640 ? 1.25 : 1.5);
   var mode = "";
   var t0 = 0;
   var navUrl = "";
@@ -140,7 +140,7 @@
         var life = t < .62 ? 1 : Math.max(0, 1 - (t - .62) / .38);
         ctx.globalAlpha = Math.min(1, p.a * life);
         if (p.dot) { ctx.fillRect(px, py, p.r, p.r); continue; }
-        ctx.font = p.font;
+        if (ctx.font !== p.font) ctx.font = p.font;
         ctx.fillText(p.ch, px, py);
       }
     } else if (mode === "in") {
@@ -159,7 +159,7 @@
         var ny = g.sy + (g.ty - g.sy) * e;
         ctx.globalAlpha = Math.min(1, .12 + g.a * e);
         if (g.dot) { ctx.fillRect(nx, ny, g.r, g.r); continue; }
-        ctx.font = g.font;
+        if (ctx.font !== g.font) ctx.font = g.font;
         ctx.fillText(g.ch, nx, ny);
       }
     } else if (mode === "pulse") {

@@ -955,8 +955,8 @@
     @media(max-width:760px){.pinn-feature{grid-template-columns:1fr;padding:24px;gap:20px}.pinn-visual{order:2}.pinn-copy h2{font-size:32px}}
 
 </style>
-  <link rel="stylesheet" href="page-transition.css?v=13">
-  <script src="page-transition.js?v=13" defer></script>
+  <link rel="stylesheet" href="page-transition.css?v=14">
+  <script src="page-transition.js?v=14" defer></script>
 </head>
 <body>
 <div id="pt" aria-hidden="true"><span class="pt-glow"></span><span class="pt-bar"></span></div>
@@ -1327,8 +1327,8 @@
         var cv = document.getElementById('fx');
         if (!cv || reduce) { if (cv) cv.remove(); return; }
         var ctx = cv.getContext('2d', { alpha: true });
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
-        var W = 0, H = 0, parts = [], mouse = { x: -999, y: -999 };
+        var dpr = Math.min(window.devicePixelRatio || 1, window.innerWidth < 760 ? 1.25 : 1.5);
+        var W = 0, H = 0, parts = [], mouse = { x: -999, y: -999 }, frameNo = 0;
         var count = window.innerWidth < 760 ? 52 : 140;
         function resize() {
           W = window.innerWidth; H = window.innerHeight;
@@ -1362,6 +1362,7 @@
         var last = performance.now();
         function frame(now) {
           var dt = Math.min(32, now - last); last = now;
+          var drawLines = (frameNo++ & 1) === 0;
           var dark = document.documentElement.getAttribute('data-theme') === 'dark';
           var line = dark ? 'rgba(120,200,255,' : 'rgba(0,113,227,';
           var dot = dark ? 'rgba(140,210,255,.72)' : 'rgba(0,113,227,.52)';
@@ -1387,7 +1388,7 @@
               var qy = ((q.y - off) % (H + 40) + H + 40) % (H + 40) - 20;
               var lx = p.x - q.x, ly = py - qy;
               var ld = lx * lx + ly * ly;
-              if (ld < 24000) {
+              if (ld < 24000 && drawLines) {
                 ctx.strokeStyle = line + (0.2 * (1 - ld / 24000)).toFixed(3) + ')';
                 ctx.lineWidth = .7;
                 ctx.beginPath(); ctx.moveTo(p.x, py); ctx.lineTo(q.x, qy); ctx.stroke();
