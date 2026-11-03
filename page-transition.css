@@ -68,23 +68,56 @@
   backdrop-filter: saturate(180%) blur(24px);
 }
 
-[data-theme="dark"] :is(.cat, .q-card, .panel, .side, .reader, .example, .method, .qa-card, .card, .paper) {
-  background: linear-gradient(140deg, rgba(255,255,255,.10), rgba(255,255,255,.035) 46%, rgba(255,255,255,.065)) !important;
+/* iOS 26 liquid glass */
+html[data-theme="dark"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature,.panel,.side,.reader,.example,.method,.paper) {
+  background:
+    radial-gradient(120% 90% at 16% 0%, rgba(255,255,255,.26), transparent 55%),
+    radial-gradient(110% 100% at 100% 12%, rgba(122,170,255,.13), transparent 62%),
+    linear-gradient(145deg, rgba(255,255,255,.15), rgba(255,255,255,.045) 48%, rgba(255,255,255,.09)) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  -webkit-backdrop-filter: blur(26px) saturate(190%) contrast(104%);
+  backdrop-filter: blur(26px) saturate(190%) contrast(104%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.36),
+    inset 0 -1px 0 rgba(0,0,0,.24),
+    inset 0 0 0 1px rgba(255,255,255,.035),
+    0 24px 64px rgba(0,0,0,.40) !important;
+}
+html[data-theme="light"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature,.panel,.side,.reader,.example,.method,.paper) {
+  background:
+    radial-gradient(120% 90% at 14% 0%, rgba(255,255,255,.92), transparent 58%),
+    radial-gradient(110% 100% at 100% 10%, rgba(120,170,255,.10), transparent 62%),
+    linear-gradient(145deg, rgba(255,255,255,.72), rgba(255,255,255,.42) 52%, rgba(255,255,255,.58)) !important;
+  border-color: rgba(255,255,255,.88) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 -1px 0 rgba(20,30,50,.06),
+    0 18px 44px rgba(30,40,60,.10) !important;
+}
+/* repeated list cards: gradient only, no per-card backdrop blur */
+html[data-theme="dark"] :is(.q-card,.cat,.card,.qa-card) {
+  background: linear-gradient(145deg, rgba(255,255,255,.105), rgba(255,255,255,.035) 52%, rgba(255,255,255,.07)) !important;
   border-color: rgba(255,255,255,.14) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(175%);
-  backdrop-filter: blur(30px) saturate(175%);
-  box-shadow: 0 22px 64px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 10px 30px rgba(0,0,0,.22) !important;
 }
-/* stronger Apple glass */
-html[data-theme="dark"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature,.panel,.side,.reader,.q-card,.cat,.example,.method,.paper,.qa-card) {
-  background: linear-gradient(135deg, rgba(255,255,255,.24), rgba(255,255,255,.16) 46%, rgba(255,255,255,.20)) !important;
-  border-color: rgba(255,255,255,.28) !important;
-  -webkit-backdrop-filter: blur(42px) saturate(185%) !important;
-  backdrop-filter: blur(42px) saturate(185%) !important;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.30), inset 0 0 0 1px rgba(255,255,255,.045), 0 24px 70px rgba(0,0,0,.44) !important;
+html[data-theme="light"] :is(.q-card,.cat,.card,.qa-card) {
+  background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(255,255,255,.48) 52%, rgba(255,255,255,.66)) !important;
+  border-color: rgba(255,255,255,.9) !important;
+  box-shadow: inset 0 1px 0 #fff, 0 10px 26px rgba(30,40,60,.08) !important;
 }
-html[data-theme="dark"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature)::after {
-  opacity: .9;
+html[data-theme="dark"] .nav {
+  background: rgba(18,20,26,.58) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(190%) !important;
+  backdrop-filter: blur(24px) saturate(190%) !important;
+  box-shadow: inset 0 -1px 0 rgba(255,255,255,.06), 0 12px 36px rgba(0,0,0,.28);
+}
+html[data-theme="light"] .nav {
+  background: rgba(255,255,255,.68) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.05), 0 10px 30px rgba(30,40,60,.08);
 }
 html.pt-hide body { opacity: 0 !important; transition: none !important; }
 #pt.pt-shot { transition: none; }
