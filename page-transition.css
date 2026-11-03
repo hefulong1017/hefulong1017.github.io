@@ -91,7 +91,7 @@ html.pt-hide body { opacity: 0 !important; transition: none !important; }
 #pt.pt-shot .pt-glow, #pt.pt-shot .pt-bar { display: none !important; }
 #pt.pt-shot .pt-canvas { opacity: 1; }
 html.pt-leave body {
-  animation: ptPageOut .38s cubic-bezier(.55,0,.9,.45) forwards;
+  animation: ptPageOut .56s cubic-bezier(.22,.61,.36,1) forwards;
   transform-origin: 50% 42%;
 }
 @keyframes ptPageOut {
@@ -101,5 +101,5 @@ html.pt-leave body {
 html.pt-enter body { opacity: 0; transform: scale(.99); }
 html.pt-enter.pt-reveal body {
   opacity: 1; transform: none;
-  transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+  transition: opacity .75s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
 }

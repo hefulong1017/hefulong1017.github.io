@@ -124,7 +124,7 @@
     ctx.textBaseline = "alphabetic";
 
     if (mode === "out") {
-      var t = Math.min(1, elapsed / 640);
+      var t = Math.min(1, elapsed / 700);
       var ease = 1 - Math.pow(1 - t, 3);
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
@@ -135,8 +135,8 @@
           ctx.fillRect(p.x, p.y, p.r, p.r);
           continue;
         }
-        var px = p.tx + p.vx * ease * w * .30;
-        var py = p.ty + p.vy * ease * h * .30;
+        var px = p.tx + p.vx * ease * w * .26;
+        var py = p.ty + p.vy * ease * h * .26;
         var life = t < .62 ? 1 : Math.max(0, 1 - (t - .62) / .38);
         ctx.globalAlpha = Math.min(1, p.a * life);
         if (p.dot) { ctx.fillRect(px, py, p.r, p.r); continue; }
@@ -214,7 +214,7 @@
     t0 = 0;
     startAmbient(150);
     if (!raf) raf = requestAnimationFrame(draw);
-    setTimeout(function () { location.href = url; }, 680);
+    setTimeout(function () { location.href = url; }, 760);
   }
 
   function assemble() {
@@ -238,17 +238,18 @@
     t0 = 0;
     startAmbient(90);
     if (!raf) raf = requestAnimationFrame(draw);
-    setTimeout(function () { document.documentElement.classList.add("pt-reveal"); }, 360);
+    setTimeout(function () { document.documentElement.classList.add("pt-reveal"); }, 180);
     setTimeout(function () {
+      pt.style.transition = "opacity .55s cubic-bezier(.22,.61,.36,1)";
       pt.style.opacity = "0";
       setTimeout(function () {
         if (raf) cancelAnimationFrame(raf);
         raf = 0;
         particles = [];
         ctx.clearRect(0, 0, innerWidth, innerHeight);
-      }, 440);
-    }, 380);
-    setTimeout(settle, 1180);
+      }, 560);
+    }, 200);
+    setTimeout(settle, 1080);
   }
 
   function pulseAt(x, y) {
