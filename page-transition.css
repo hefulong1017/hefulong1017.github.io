@@ -105,3 +105,16 @@ html.pt-enter.pt-reveal body {
   opacity: 1; transform: none;
   transition: opacity .75s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
 }
+
+/* scroll progress + page hero entrance */
+.scroll-progress{position:fixed;left:0;top:0;right:0;height:2px;z-index:300;pointer-events:none;background:linear-gradient(90deg,#3b82f6,#8b5cf6,rgba(139,92,246,.15));transform:scaleX(0);transform-origin:0 50%;opacity:.85}
+@supports (animation-timeline: scroll(root)) {
+  .scroll-progress{animation:scrollProgress linear both;animation-timeline:scroll(root);}
+  @keyframes scrollProgress { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+}
+@keyframes pageHeroIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+.hero { animation: pageHeroIn .72s cubic-bezier(.22,1,.36,1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress { animation:none; transform:scaleX(1); opacity:.35; }
+  .hero { animation:none; }
+}
