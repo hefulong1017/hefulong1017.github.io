@@ -1743,6 +1743,14 @@
               setTimeout(function () { block.classList.remove('ping'); }, 900);
             }
           });
+          if (head.getAttribute("aria-controls") === "code-panel") {
+            var codeHover = 0;
+            head.addEventListener("pointerover", function () {
+              clearTimeout(codeHover);
+              codeHover = setTimeout(function () { if (window.__loadMatlabCode) window.__loadMatlabCode(); }, 120);
+            }, { passive: true });
+            head.addEventListener("pointerout", function () { clearTimeout(codeHover); }, { passive: true });
+          }
           if (fine && !reduce) {
             head.addEventListener('pointermove', function (e) {
               var r = head.getBoundingClientRect();
