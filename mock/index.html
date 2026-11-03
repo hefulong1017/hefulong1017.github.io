@@ -156,7 +156,18 @@
       html { scroll-behavior: auto; }
       * { transition-duration: .001ms !important; animation-duration: .001ms !important; }
     }
-  </style>
+  
+    .more-mock {
+      display: block; margin-top: 28px; max-width: 620px;
+      padding: 16px 18px; border: 1px solid var(--line);
+      border-radius: 16px; background: var(--paper);
+      transition: transform .3s var(--ease), border-color .3s, box-shadow .3s;
+    }
+    .more-mock:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 16px 40px rgba(40,30,20,.08); }
+    .more-mock span { display: block; color: var(--accent); font-size: 9px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    .more-mock strong { display: block; margin-top: 6px; font-family: var(--serif); font-size: 21px; font-weight: 600; letter-spacing: -.02em; }
+    .more-mock em { display: block; margin-top: 5px; color: var(--muted); font-style: normal; font-size: 11.5px; line-height: 1.8; }
+</style>
   <link rel="stylesheet" href="../page-transition.css?v=23">
 </head>
 <body>
@@ -186,6 +197,12 @@
           <span>3 问</span>
           <span>官方答案 + 新视角</span>
         </div>
+
+        <a class="more-mock" href="changsha-2026/">
+          <span>另一份模考 · 2026 长沙适应性考试</span>
+          <strong>椭圆外心与距离范围</strong>
+          <em>第18题 · 17分 · 标准解法 + 只用两根之积的新思路 ↗</em>
+        </a>
       </section>
 
       <div class="layout">
