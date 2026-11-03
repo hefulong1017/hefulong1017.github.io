@@ -190,7 +190,7 @@
     [data-theme="dark"] .sec.active { background: #2c2c2e; color: #fff; }
     [data-theme="dark"] .view-switch button.active { background: #2c2c2e; color: #fff; border-color: #3a3a3c; }
 </style>
-  <link rel="stylesheet" href="../katex.min.css">
+  <link rel="stylesheet" href="../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../katex.min.css"></noscript>
   <link rel="stylesheet" href="../page-transition.css?v=18">
 </head>
 <body>
@@ -488,6 +488,17 @@
         });
       }
 
+      function showText() {
+        var sec = flat[current].sec;
+        var id = sec.id;
+        if (sec.text) { text.textContent = sec.text; return; }
+        text.textContent = '正在加载这一节的文字…';
+        loadSection(id).then(function (full) {
+          if (!full || flat[current].sec.id !== id) return;
+          text.textContent = full.text || '（本节暂无文字）';
+        });
+      }
+
       function renderLatex() {
         var sec = flat[current].sec;
         var id = sec.id;
@@ -573,11 +584,7 @@
 
         if (viewMode === 'qa') renderQa();
         if (viewMode === 'latex') renderLatex();
-        loadSection(s.id).then(function (full) {
-          if (!full) { if (viewMode === 'text') text.textContent = '这一节的文字加载失败。'; return; }
-          if (flat[current].sec.id !== s.id) return;
-          text.textContent = full.text || '（本节暂无文字）';
-        });
+        if (viewMode === 'text') showText();
 
         count.textContent = (i + 1) + ' / ' + flat.length;
         prev.disabled = i === 0;
@@ -599,6 +606,7 @@
         viewText.classList.toggle('active', mode === 'text');
         if (mode === 'qa') renderQa();
         if (mode === 'latex') renderLatex();
+        if (mode === 'text') showText();
       }
 
       viewQa.addEventListener('click', function () { setView('qa'); });
