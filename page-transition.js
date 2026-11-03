@@ -124,7 +124,7 @@
     ctx.textBaseline = "alphabetic";
 
     if (mode === "out") {
-      var t = Math.min(1, elapsed / 700);
+      var t = Math.min(1, elapsed / 760);
       var ease = 1 - Math.pow(1 - t, 3);
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
@@ -214,7 +214,7 @@
     t0 = 0;
     startAmbient(150);
     if (!raf) raf = requestAnimationFrame(draw);
-    setTimeout(function () { location.href = url; }, 760);
+    setTimeout(function () { location.href = url; }, 620);
   }
 
   function assemble() {
@@ -240,16 +240,16 @@
     if (!raf) raf = requestAnimationFrame(draw);
     setTimeout(function () { document.documentElement.classList.add("pt-reveal"); }, 180);
     setTimeout(function () {
-      pt.style.transition = "opacity .55s cubic-bezier(.22,.61,.36,1)";
+      pt.style.transition = "opacity .35s cubic-bezier(.22,.61,.36,1)";
       pt.style.opacity = "0";
       setTimeout(function () {
         if (raf) cancelAnimationFrame(raf);
         raf = 0;
         particles = [];
         ctx.clearRect(0, 0, innerWidth, innerHeight);
-      }, 560);
-    }, 200);
-    setTimeout(settle, 1080);
+      }, 380);
+    }, 160);
+    setTimeout(settle, 920);
   }
 
   function pulseAt(x, y) {

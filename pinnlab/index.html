@@ -7,8 +7,8 @@
 <meta name="description" content="PINNLab：用 LaTeX 输入偏微分方程，设置初边值，运行 PINN 数值候选，查看曲线、曲面切片与逐点结果。">
 <script>try{var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <link rel="stylesheet" href="../katex.min.css">
-<link rel="stylesheet" href="../page-transition.css?v=15">
-<script src="../page-transition.js?v=15" defer></script>
+<link rel="stylesheet" href="../page-transition.css?v=17">
+<script src="../page-transition.js?v=17" defer></script>
 <style>
 :root{
   --bg:#050608; --ink:#f5f5f7; --muted:#a1a1a6; --faint:#6e6e73;
@@ -82,6 +82,8 @@ h1 em{font-style:normal;color:var(--blue)}
 .screen{padding:20px 6px 6px;position:relative}
 .screen .label{font:500 9px/1 var(--mono);letter-spacing:.16em;color:var(--faint);margin-bottom:12px}
 .eq{font-family:var(--serif);font-size:clamp(24px,3.3vw,36px);letter-spacing:.01em;padding:18px 4px 20px;color:#f5f5f7;overflow-x:auto;white-space:nowrap}
+.eq,.mini{opacity:0;transition:opacity .3s ease}
+html.math-ready .eq,html.math-ready .mini{opacity:1}
 .eq .katex{color:#f5f5f7}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
 .mini{border:1px solid rgba(255,255,255,.09);border-radius:12px;background:rgba(255,255,255,.035);padding:10px 12px}
@@ -137,6 +139,7 @@ pre .c{color:#6e6e73}
   html{scroll-behavior:auto}
 }
 </style>
+<script>try{if(sessionStorage.getItem("ptGo")==="1")document.documentElement.classList.add("pt-enter")}catch(e){}</script>
 </head>
 <body>
 <div id="pt" aria-hidden="true"><span class="pt-glow"></span><span class="pt-bar"></span></div>
@@ -253,6 +256,7 @@ docker run --rm -p 8501:8501 pinnlab-public</pre>
       throwOnError: false
     });
   }
+  document.documentElement.classList.add("math-ready");
 </script>
 </body>
 </html>
