@@ -103,8 +103,8 @@
       margin: 0 0 10px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px;
       color: var(--muted); font: 13px/1.85 var(--serif); white-space: pre-wrap; overflow-wrap: anywhere;
     }
-    .qa-card { padding: 22px 0 20px; border-top: 1px solid var(--line); opacity: 0; animation: qaIn .48s cubic-bezier(.22,1,.36,1) forwards; animation-delay: var(--qd, 0ms); }
-    @keyframes qaIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    .qa-card { content-visibility: auto; contain-intrinsic-size: auto 320px; padding: 22px 0 20px; border-top: 1px solid var(--line); opacity: 0; animation: qaIn .48s cubic-bezier(.22,1,.36,1) forwards; animation-delay: var(--qd, 0ms); }
+    @keyframes qaIn { 0% { opacity: 0; transform: translateY(13px) scale(.99); } 70% { opacity: 1; transform: translateY(-2px) scale(1.001); } 100% { opacity: 1; transform: none; } }
     .qa-card:first-child { border-top: 0; padding-top: 6px; }
     .qa-head { display: grid; grid-template-columns: 38px minmax(0,1fr); gap: 14px; align-items: start; }
     .qa-num {
@@ -188,13 +188,13 @@
       .qa-q, .qa-a-body { font-size: 14px; }
       .qa-q .katex-display, .qa-a-body .katex-display { max-width: 100%; }
     }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .qa-card { animation: none; opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .qa-card { content-visibility: auto; contain-intrinsic-size: auto 320px; animation: none; opacity: 1; } }
   
     [data-theme="dark"] .sec.active { background: #2c2c2e; color: #fff; }
     [data-theme="dark"] .view-switch button.active { background: #2c2c2e; color: #fff; border-color: #3a3a3c; }
 </style>
   <link rel="stylesheet" href="../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../katex.min.css"></noscript>
-  <link rel="stylesheet" href="../page-transition.css?v=22">
+  <link rel="stylesheet" href="../page-transition.css?v=23">
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>

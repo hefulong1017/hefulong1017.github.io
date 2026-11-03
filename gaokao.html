@@ -170,7 +170,7 @@
       animation-delay: var(--qd, 0ms);
     }
     .q-card:hover { border-color: var(--line-strong); background: var(--bg-soft); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.06); }
-    @keyframes qIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    @keyframes qIn { 0% { opacity: 0; transform: translateY(16px) scale(.985); } 68% { opacity: 1; transform: translateY(-2px) scale(1.002); } 100% { opacity: 1; transform: none; } }
     .q-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; color: var(--faint); font-size: 10px; letter-spacing: .06em; }
     .q-meta .year { color: var(--accent); font-weight: 600; }
     .q-meta .sep { color: var(--line-strong); }
@@ -272,7 +272,7 @@
       .mock-card h3 { font-size: 24px; }
     }
   </style>
-  <link rel="stylesheet" href="page-transition.css?v=22">
+  <link rel="stylesheet" href="page-transition.css?v=23">
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -359,7 +359,7 @@
   </div>
 
   <script src="gaokao-index.js?v=3"></script>
-  <script src="gaokao-app.js?v=34"></script>
+  <script src="gaokao-app.js?v=35"></script>
 <script src="prefetch.js?v=1"></script>
 </body>
 </html>

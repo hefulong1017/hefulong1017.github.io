@@ -72,6 +72,7 @@
 html[data-theme="dark"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature,.panel,.side,.reader,.example,.method,.paper) {
   background:
     radial-gradient(120% 90% at 16% 0%, rgba(255,255,255,.26), transparent 55%),
+    radial-gradient(80% 60% at 0% 100%, rgba(120,170,255,.08), transparent 62%),
     radial-gradient(110% 100% at 100% 12%, rgba(122,170,255,.13), transparent 62%),
     linear-gradient(145deg, rgba(255,255,255,.15), rgba(255,255,255,.045) 48%, rgba(255,255,255,.09)) !important;
   border-color: rgba(255,255,255,.22) !important;
@@ -95,6 +96,26 @@ html[data-theme="light"] :is(.feature,.product,.app-card,.acc-block,.code-card,.
     inset 0 1px 0 rgba(255,255,255,.96),
     inset 0 -1px 0 rgba(20,30,50,.06),
     0 18px 44px rgba(30,40,60,.10) !important;
+}
+/* glass hover: brighter rim and deeper refraction */
+html[data-theme="dark"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature,.panel,.side,.reader,.example,.method,.paper):hover {
+  border-color: rgba(255,255,255,.40) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.52),
+    inset 0 -1px 0 rgba(0,0,0,.26),
+    0 30px 78px rgba(0,0,0,.46) !important;
+}
+html[data-theme="light"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature,.panel,.side,.reader,.example,.method,.paper):hover {
+  border-color: rgba(255,255,255,1) !important;
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 24px 56px rgba(30,40,60,.14) !important;
+}
+/* iOS-like press feedback */
+@media (hover: hover) {
+  :is(button, .button, .chip, .cat, .ans-toggle, .qa-toggle, .theme-toggle, .nav a, .feature, .product, .app-card):active {
+    transform: scale(.975);
+  }
 }
 /* repeated list cards: gradient only, no per-card backdrop blur */
 html[data-theme="dark"] :is(.q-card,.cat,.card,.qa-card) {

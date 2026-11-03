@@ -389,6 +389,15 @@
     return html;
   }
 
+  let answerHoverTimer = 0;
+  qList.addEventListener("pointerover", (e) => {
+    const btn = e.target.closest(".ans-toggle");
+    if (!btn || !btn.dataset.cat) return;
+    clearTimeout(answerHoverTimer);
+    answerHoverTimer = setTimeout(() => loadAnswerData(btn.dataset.cat), 120);
+  }, { passive: true });
+  qList.addEventListener("pointerout", () => clearTimeout(answerHoverTimer), { passive: true });
+
   qList.addEventListener("click", async (e) => {
     const btn = e.target.closest(".ans-toggle");
     if (!btn) return;
