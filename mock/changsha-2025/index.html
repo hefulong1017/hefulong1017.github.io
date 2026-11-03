@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>try{var d=localStorage.getItem("darkDefault");if(d!=="1"){localStorage.setItem("theme","dark");localStorage.setItem("darkDefault","1");}var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
   <title>椭圆外心与距离范围 · 2025 长沙适应性考试第18题</title>
-  <meta name="description" content="2025 届长沙新高考适应性考试第18题：椭圆外心与距离范围。标准解法，以及只用两根之积消去外心纵坐标的新思路。">
+  <meta name="description" content="2025 届长沙新高考适应性考试第18题：椭圆外心与距离范围。标准解法，以及只用两根之积消去外心纵坐标的另一种算法。">
   <meta name="theme-color" content="#f4efe6">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b64a32'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='30' fill='%23fbf7ef' text-anchor='middle'%3E题%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="../../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../../katex.min.css"></noscript>
@@ -110,9 +110,9 @@
       border-radius: 999px; padding: 4px 10px; font-family: var(--sans);
       font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
     }
-    #official::before { content: "官方答案"; color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent); }
-    #poly::before { content: "新视角"; color: var(--bg-soft); background: var(--ink); border: 1px solid var(--ink); }
-    #compare::before { content: "对照"; color: var(--faint); border: 1px solid var(--line); }
+    #official::before { content: "标准解法"; color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent); }
+    #poly::before { content: "另一种算法"; color: var(--bg-soft); background: var(--ink); border: 1px solid var(--ink); }
+    #compare::before { content: "比较"; color: var(--faint); border: 1px solid var(--line); }
     #poly { border-top: 1px solid var(--line); }
 
     .note { margin: 18px 0 22px; padding: 15px 17px; border-left: 2px solid var(--accent); border-radius: 0 12px 12px 0; background: var(--accent-soft); }
@@ -184,7 +184,7 @@
     <section class="hero">
       <p class="eyebrow">Mock Exam / 2025 长沙适应性考试</p>
       <h1>椭圆外心<br>与距离范围</h1>
-      <p class="lead">一道 17 分的解析几何压轴题。标准解法用 MN 与 AM 的两条中垂线，设出中点与坐标；新思路把外接圆与椭圆相减，只用两根之积就消掉外心的纵坐标。</p>
+      <p class="lead">一道 17 分的解析几何压轴题。标准解法用两条中垂线，设出中点与坐标；另一种算法把外接圆与椭圆相减，只比较两根之积。</p>
       <div class="hero-meta">
         <span>2025 长沙新高考适应性考试 · 第18题</span>
         <span>17 分</span>
@@ -196,16 +196,16 @@
       <aside class="toc" aria-label="文章目录">
         <p class="toc-title">CONTENTS</p>
         <a href="#problem">原题</a>
-        <a href="#official">标准答案</a>
+        <a href="#official">标准解法</a>
         <a class="sub" href="#official-1">（1）椭圆方程</a>
         <a class="sub" href="#official-2">（2）① 等边三角形</a>
         <a class="sub" href="#official-3">（2）② 标准解法</a>
-        <a href="#poly">新思路</a>
-        <a href="#compare">两法对照</a>
+        <a href="#poly">另一种算法</a>
+        <a href="#compare">方法比较</a>
       </aside>
       
 <article class="paper">
-  <div class="note"><p><b>先看结论：</b>椭圆为 \(\frac{x^2}{4}+y^2=1\)，\(A(-2,0)\)。第（2）② 的范围是 \(\left(0,\frac{28}{9}\right]\text{。}\)标准解法用 \(MN\) 与 \(AM\) 的两条中垂线，设出中点与坐标；下面的新思路把圆与椭圆相减，只用两根之积就消掉 \(t\)。</p></div>
+
 
   <h2 id="problem">原题</h2>
   <p>已知椭圆 \(C:\frac{x^2}{a^2}+\frac{y^2}{b^2}=1\ (a&gt;b&gt;0)\) 的左顶点为 \(A\)，焦距为 \(2\sqrt3\)，且离心率为 \(\frac{\sqrt3}{2}\text{。}\)</p>
@@ -214,7 +214,7 @@
   <p>① 若 \(\triangle AMN\) 为等边三角形，求点 \(P\) 的坐标；</p>
   <p>② 若点 \(P\) 在直线 \(x=-\frac13\) 上，求点 \(A\) 到直线 \(l\) 的距离的取值范围。</p>
 
-  <h2 id="official">标准答案 · 官方写法</h2>
+  <h2 id="official">标准解法</h2>
   <h3 id="official-1">（1）求椭圆方程</h3>
   <p>焦距 \(2c=2\sqrt3\)，所以 \(c=\sqrt3\)。又</p>
   <div class="math">\[
@@ -226,7 +226,7 @@
   \]</div>
   <p>所以</p>
   <div class="math">\[
-  \boxed{C:\frac{x^2}{4}+y^2=1},\qquad A(-2,0).
+  C:\frac{x^2}{4}+y^2=1,\qquad A(-2,0).
   \]</div>
 
   <h3 id="official-2">（2）① 等边三角形</h3>
@@ -279,7 +279,7 @@
   <p>不可能。水平线 \(y=k\) 时，弦 \(MN\) 的中点在外轴上，垂直平分线为 \(y\) 轴，\(A\) 不在其上，也不可能等边。</p>
   <p>所以</p>
   <div class="math">\[
-  \boxed{P\left(-\frac67,0\right)}.
+  P\left(-\frac67,0\right).
   \]</div>
 
   <h3 id="official-3">（2）② 标准解法 · 中垂线</h3>
@@ -366,11 +366,11 @@
   \]</div>
   <p>所以 \(d\le\frac{28}{9}\)，且 \(u=0\) 时取等号。另一方面，当 \(u\to14\) 时 \(d\to0\)，且 \(d\) 在 \([0,14)\) 上连续，因此 \((0,\frac{28}{9}]\) 内的每个值都能取到。</p>
   <div class="math">\[
-  \boxed{d\in\left(0,\frac{28}{9}\right]}.
+  d\in\left(0,\frac{28}{9}\right].
   \]</div>
 
-  <h2 id="poly">新思路 · 只用两根之积</h2>
-  <p>这是何富龙提供的做法。核心是：<strong>不把外心坐标完整求出来，只把外接圆与椭圆相减，再比较两根之积。</strong></p>
+  <h2 id="poly">另一种算法 · 两根之积</h2>
+  <p>这是何富龙提供的做法：不把外心坐标完整求出来，只把外接圆与椭圆相减，再比较两根之积。</p>
   <p>由前面的条件，椭圆为</p>
   <div class="math">\[
   C:\frac{x^2}{4}+y^2=1,\qquad A(-2,0).
@@ -401,7 +401,7 @@
   \]</div>
   <p>因为 \(n=-2\) 时直线过 \(A\)，不能构成三角形，所以约去 \(n+2\)，得</p>
   <div class="math">\[
-  \boxed{n=\frac{10-2m^2}{9}}.
+  n=\frac{10-2m^2}{9}.
   \]</div>
   <p>到这里，外心的参数 \(t\) 已经消掉了。接下来的判别式、距离和最值，与标准解法完全相同：</p>
   <div class="math">\[
@@ -422,11 +422,11 @@
   \]</div>
   <p>得到 \(d\le\frac{28}{9}\)，且 \(u\to14\) 时 \(d\to0\)。因此</p>
   <div class="math">\[
-  \boxed{d\in\left(0,\frac{28}{9}\right]}.
+  d\in\left(0,\frac{28}{9}\right].
   \]</div>
   <p><strong>为什么只比较两根之积就够了？</strong>因为椭圆与直线的交点 \(M,N\) 同时满足两个二次方程，所以这两个二次方程有相同的两个根。两个有相同两根的二次方程，其二次项系数与常数项成比例；这里二次项系数已知，比较常数项就等价于比较两根之积。这样不必求 \(t\)，也不必求外心坐标。</p>
 
-  <h2 id="compare">两法对照</h2>
+  <h2 id="compare">两种方法比较</h2>
   <div class="compare-grid">
     <div class="compare-col">
       <span>标准解法</span>
@@ -437,7 +437,7 @@
       <p>外接圆与椭圆相减，消去 \(x^2\) 项；把直线代入后，两个二次方程同根，只比较两根之积，直接消掉 \(t\)，得到同一个 \(n\)。</p>
     </div>
   </div>
-  <p class="compare-end">两法最后都归结为同一个 \(n\)。新思路省掉的是“求外心纵坐标”这一步，计算量更小，也更容易在考场上看清结构。</p>
+  <p class="compare-end">两种方法最后都归结为同一个 \(n\)。另一种算法省掉了求外心纵坐标这一步，计算量更小。</p>
 
   <p class="paper-foot">题目与标准解法整理自 2025 届湖南省长沙市新高考适应性考试第 18 题；第二问②的两根之积解法由何富龙提供。若公式在窄屏上显示不全，可左右滑动公式区域。</p>
 </article>
