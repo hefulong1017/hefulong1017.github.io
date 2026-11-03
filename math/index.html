@@ -265,10 +265,10 @@
 
   <script src="../katex.min.js"></script>
   <script src="../auto-render.min.js"></script>
-  <script src="data.js"></script>
+  <script src="index.js?v=1"></script>
   <script>
     (function () {
-      var data = window.ADV_MATH;
+      var data = window.ADV_MATH_INDEX;
       if (!data) return;
       var flat = [];
       data.chapters.forEach(function (ch) {
@@ -299,6 +299,8 @@
       var latexSource = document.getElementById('latex-source');
       var itemsCache = {};
       var itemsLoading = {};
+      var sectionCache = {};
+      var sectionLoading = {};
       var viewMode = 'qa';
       var current = 0;
       var renderToken = 0;
@@ -337,6 +339,27 @@
             throwOnError: false
           });
         }
+      }
+
+      function loadSection(id) {
+        if (sectionCache[id]) return Promise.resolve(sectionCache[id]);
+        if (sectionLoading[id]) return sectionLoading[id];
+        sectionLoading[id] = new Promise(function (resolve) {
+          var s = document.createElement('script');
+          s.src = 'sections/' + encodeURIComponent(id) + '.js?v=1';
+          s.onload = function () {
+            var sec = (window.ADV_MATH_SECTIONS || {})[id] || null;
+            if (sec) {
+              sectionCache[id] = sec;
+              var target = flat.find(function (x) { return x.sec.id === id; });
+              if (target) target.sec = sec;
+            }
+            resolve(sec);
+          };
+          s.onerror = function () { resolve(null); };
+          document.head.appendChild(s);
+        });
+        return sectionLoading[id];
       }
 
       function loadItems(id) {
@@ -467,12 +490,17 @@
 
       function renderLatex() {
         var sec = flat[current].sec;
-        var src = sec.latex || '';
-        latexSource.value = src;
-        if (!src) {
-          latexPreview.textContent = '本节的 LaTeX 源码还在转换中，稍后刷新。';
+        var id = sec.id;
+        if (!sec.latex) {
+          latexPreview.textContent = '正在加载 LaTeX…';
+          loadSection(id).then(function (full) {
+            if (!full || flat[current].sec.id !== id) return;
+            renderLatex();
+          });
           return;
         }
+        var src = sec.latex || '';
+        latexSource.value = src;
         latexPreview.textContent = cleanDisplay(src);
         typeset(latexPreview);
       }
@@ -501,7 +529,7 @@
           wrap.appendChild(h);
           ch.sections.forEach(function (s) {
             var idx = flat.findIndex(function (x) { return x.sec.id === s.id; });
-            if (q && (s.title + '\n' + s.text).toLowerCase().indexOf(q) < 0) return;
+            if (q && s.title.toLowerCase().indexOf(q) < 0) return;
             var b = document.createElement('button');
             b.type = 'button';
             b.className = 'sec' + (idx === current ? ' active' : '');
@@ -530,7 +558,7 @@
         kicker.textContent = item.ch + ' · ' + s.start + '–' + s.end + ' 页';
         pages.textContent = '第 ' + s.start + '–' + s.end + ' 页';
         pdf.href = 'advanced-math.pdf#page=' + s.start;
-        text.textContent = s.text || '（本节暂无文字）';
+        text.textContent = s.text || '正在加载这一节的文字…';
 
         var html = '';
         for (var n = s.start; n <= s.end; n++) {
@@ -545,6 +573,11 @@
 
         if (viewMode === 'qa') renderQa();
         if (viewMode === 'latex') renderLatex();
+        loadSection(s.id).then(function (full) {
+          if (!full) { if (viewMode === 'text') text.textContent = '这一节的文字加载失败。'; return; }
+          if (flat[current].sec.id !== s.id) return;
+          text.textContent = full.text || '（本节暂无文字）';
+        });
 
         count.textContent = (i + 1) + ' / ' + flat.length;
         prev.disabled = i === 0;
