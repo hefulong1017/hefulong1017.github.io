@@ -151,3 +151,19 @@ html.pt-enter.pt-reveal body {
   .scroll-progress { animation:none; transform:scaleX(1); opacity:.35; }
   .hero { animation:none; }
 }
+
+/* scroll-linked reveal for long content pages (CSS-only, no scroll listeners) */
+@supports (animation-timeline: view()) {
+  :is(.example, .method, .paper, .doc > section) {
+    animation: glassReveal linear both;
+    animation-timeline: view();
+    animation-range: entry 4% entry 38%;
+  }
+  @keyframes glassReveal {
+    from { opacity: .15; transform: translateY(26px) scale(.985); }
+    to { opacity: 1; transform: none; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.example, .method, .paper, .doc > section) { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
