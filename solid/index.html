@@ -20,14 +20,21 @@ a{color:inherit;text-decoration:none}
 .links a:hover{color:var(--blue)}
 .wrap{max-width:980px;margin:0 auto;padding:54px 22px 80px}
 .kicker{font:600 11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.22em;color:var(--blue);margin:0 0 18px}
-h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:0 0 14px;font-weight:800}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:0 0 14px;font-weight:800;animation:rise .7s var(--ease) both .04s}
+.kicker{animation:rise .6s var(--ease) both}
+.lede{animation:rise .7s var(--ease) both .1s}
+.stats{animation:rise .7s var(--ease) both .16s}
+.toolbar{animation:rise .7s var(--ease) both .22s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .lede{max-width:620px;color:#5b6472;font-size:15px;line-height:1.8;margin:0}
 .stats{display:flex;gap:34px;margin:30px 0 26px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .stats b{display:block;font-size:22px;letter-spacing:-.02em}
 .stats span{font-size:11px;color:var(--muted)}
 .toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 16px}
 .chip{border:1px solid var(--line);background:#fff;color:#4b5563;border-radius:999px;padding:7px 13px;font-size:12px;cursor:pointer;transition:.18s}
-.chip:hover{border-color:#c7d2e2}
+.chip:hover{border-color:#c7d2e2;transform:translateY(-1px)}
+.chip:active{transform:scale(.97)}
+.chip{transition:transform .2s var(--ease),border-color .2s,background .2s,color .2s}
 .chip.on{background:#111;border-color:#111;color:#fff}
 .count{margin-left:auto;color:var(--muted);font-size:12px}
 .list{display:grid;gap:14px}
@@ -92,6 +99,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
 .lb.open img{transform:none}
 .lb button{position:absolute;top:18px;right:22px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:24px;line-height:1;cursor:pointer}
 .theme{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:5px 9px;font-size:12px;cursor:pointer;margin-left:4px}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}.card{opacity:1!important;transform:none!important}}
 </style>
   <link rel="stylesheet" href="../page-transition.css?v=18">
 </head>
