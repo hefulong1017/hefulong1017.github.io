@@ -19,7 +19,9 @@
   <noscript><style>.reveal, .section-head h2, .education h2 { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; } .intro { display: none !important; }
 
 
-</style></noscript>
+
+    .scroll-progress{position:fixed;top:0;left:0;width:100%;height:2px;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 30%,transparent));z-index:120;pointer-events:none;opacity:.9;will-change:transform}
+  </style></noscript>
   <style>
     :root {
       --bg: #f5f5f7;
@@ -957,7 +959,9 @@
     .pinn-meta{display:flex;justify-content:space-between;margin-top:10px;font:500 8px/1 var(--mono);letter-spacing:.1em;color:#6e6e73}
     @media(max-width:760px){.pinn-feature{grid-template-columns:1fr;padding:24px;gap:20px}.pinn-visual{order:2}.pinn-copy h2{font-size:32px}}
 
-</style>
+
+    .scroll-progress{position:fixed;top:0;left:0;width:100%;height:2px;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 30%,transparent));z-index:120;pointer-events:none;opacity:.9;will-change:transform}
+  </style>
   <link rel="stylesheet" href="page-transition.css?v=18">
 </head>
 <body>
@@ -973,6 +977,7 @@
   <div class="aurora" aria-hidden="true"></div>
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
   <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
   <canvas id="fx" aria-hidden="true"></canvas>
   <div class="bg" aria-hidden="true"><span class="orb o1"></span><span class="orb o2"></span></div>
   <nav class="nav">
@@ -1301,6 +1306,7 @@
         var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
         if (bar) bar.style.transform = 'scaleX(' + p + ')';
         if (nav) nav.classList.toggle('scrolled', window.scrollY > 18);
+        var pr = document.getElementById('scrollProgress'); if (pr) pr.style.transform = 'scaleX(' + p.toFixed(4) + ')' ;
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.innerWidth > 760) {
           var dy = window.scrollY - lastSkewY;
           lastSkewY = window.scrollY;

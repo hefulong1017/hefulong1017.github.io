@@ -243,6 +243,12 @@
         <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
       </article>`;
     }).join("");
+    if (reset && qList.animate) {
+      qList.animate(
+        [{ opacity: .35, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }],
+        { duration: 320, easing: "cubic-bezier(.22,1,.36,1)" }
+      );
+    }
     moreWrap.hidden = list.length <= state.visible;
     moreBtn.disabled = list.length <= state.visible;
     moreBtn.textContent = `加载更多（还有 ${Math.max(0, list.length - state.visible)} 题）`;
