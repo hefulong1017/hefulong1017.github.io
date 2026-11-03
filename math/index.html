@@ -103,7 +103,8 @@
       margin: 0 0 10px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px;
       color: var(--muted); font: 13px/1.85 var(--serif); white-space: pre-wrap; overflow-wrap: anywhere;
     }
-    .qa-card { padding: 22px 0 20px; border-top: 1px solid var(--line); }
+    .qa-card { padding: 22px 0 20px; border-top: 1px solid var(--line); opacity: 0; animation: qaIn .48s cubic-bezier(.22,1,.36,1) forwards; animation-delay: var(--qd, 0ms); }
+    @keyframes qaIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
     .qa-card:first-child { border-top: 0; padding-top: 6px; }
     .qa-head { display: grid; grid-template-columns: 38px minmax(0,1fr); gap: 14px; align-items: start; }
     .qa-num {
@@ -185,7 +186,7 @@
       .qa-q, .qa-a-body { font-size: 14px; }
       .qa-q .katex-display, .qa-a-body .katex-display { max-width: 100%; }
     }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .qa-card { animation: none; opacity: 1; } }
   
     [data-theme="dark"] .sec.active { background: #2c2c2e; color: #fff; }
     [data-theme="dark"] .view-switch button.active { background: #2c2c2e; color: #fff; border-color: #3a3a3c; }
@@ -385,6 +386,7 @@
       function makeCard(item, index) {
         var card = document.createElement('article');
         card.className = 'qa-card';
+        card.style.setProperty('--qd', Math.min(index, 9) * 26 + 'ms');
 
         var head = document.createElement('div');
         head.className = 'qa-head';
