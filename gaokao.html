@@ -189,6 +189,8 @@
     .q-option-grid figure { margin: 0; border: 1px solid var(--line); background: #fff; padding: 8px; }
     .q-option-grid img { display: block; width: 100%; height: 150px; object-fit: contain; }
     .q-option-grid figcaption { margin-top: 4px; color: var(--faint); font-size: 10px; letter-spacing: .12em; }
+    .ans-toggle span { display: inline-block; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .ans-toggle[aria-expanded="true"] span { transform: rotate(180deg); }
     .ans-toggle {
       display: inline-flex; align-items: center; gap: 7px; margin-top: 12px;
       border: 1px solid var(--accent); background: transparent; color: var(--accent);
@@ -357,7 +359,7 @@
   </div>
 
   <script src="gaokao-index.js?v=3"></script>
-  <script src="gaokao-app.js?v=33"></script>
+  <script src="gaokao-app.js?v=34"></script>
 <script src="prefetch.js?v=1"></script>
 </body>
 </html>

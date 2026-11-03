@@ -437,6 +437,14 @@
     }
   });
 
+  let categoryHoverTimer = 0;
+  catsEl.addEventListener("pointerover", (e) => {
+    const card = e.target.closest(".cat");
+    if (!card || !card.dataset.cat) return;
+    clearTimeout(categoryHoverTimer);
+    categoryHoverTimer = setTimeout(() => loadCategory(card.dataset.cat), 110);
+  }, { passive: true });
+  catsEl.addEventListener("pointerout", () => clearTimeout(categoryHoverTimer), { passive: true });
   catsEl.addEventListener("pointerdown", (e) => {
     loadKatex();
     const card = e.target.closest(".cat");
