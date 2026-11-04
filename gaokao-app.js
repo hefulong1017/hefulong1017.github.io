@@ -150,6 +150,7 @@
     ).join("");
     emptyEl.hidden = true;
     moreWrap.hidden = true;
+    moreWrap.style.display = "none";
     setHash();
     if (!opts || opts.scroll !== false) {
       browserEl.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -242,6 +243,7 @@
       qList.innerHTML = "";
       emptyEl.hidden = false;
       moreWrap.hidden = true;
+      moreWrap.style.display = "none";
       return;
     }
     emptyEl.hidden = true;
@@ -260,8 +262,10 @@
         { duration: 320, easing: "cubic-bezier(.22,1,.36,1)" }
       );
     }
-    moreWrap.hidden = list.length <= state.visible;
-    moreBtn.disabled = list.length <= state.visible;
+    const noMore = list.length <= state.visible;
+    moreWrap.hidden = noMore;
+    moreWrap.style.display = noMore ? "none" : "flex";
+    moreBtn.disabled = noMore;
     moreBtn.textContent = `加载更多（还有 ${Math.max(0, list.length - state.visible)} 题）`;
     renderMath(qList);
     if (!reset || keepVisible) requestAnimationFrame(() => window.scrollTo(0, anchorY));
