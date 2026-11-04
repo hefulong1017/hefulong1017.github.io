@@ -231,6 +231,7 @@
 
   function renderQuestions(reset, keepVisible) {
     const cat = catById(state.cat);
+    const anchorY = window.scrollY;
     if (!cat) return;
     if (reset && !keepVisible) state.visible = PAGE;
     const list = filteredQuestions(cat);
@@ -263,6 +264,7 @@
     moreBtn.disabled = list.length <= state.visible;
     moreBtn.textContent = `加载更多（还有 ${Math.max(0, list.length - state.visible)} 题）`;
     renderMath(qList);
+    if (!reset || keepVisible) requestAnimationFrame(() => window.scrollTo(0, anchorY));
   }
 
   function normalizeMathIn(root) {
@@ -283,7 +285,7 @@
     normalizeMathIn(el);
     try {
       renderMathInElement(el, {
-        delimiters: [{ left: "\\(", right: "\\)", display: false }],
+        delimiters: [{ left: "\\(", right: "\\)", display: false }, { left: "\\[", right: "\\]", display: true }],
         throwOnError: false,
         output: "html",
         errorColor: "#b64a32",
