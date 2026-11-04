@@ -160,7 +160,7 @@
     renderBrowser();
     katexPromise.then(() => {
       katexReady = true;
-      if (state.cat === id) renderQuestions(true);
+      if (state.cat === id) renderQuestions(true, true);
     });
   }
 
@@ -198,10 +198,41 @@
     });
   }
 
-  function renderQuestions(reset) {
+  function questionCard(q, qi, cat) {
+    const meta = [
+      `<span class="year">${q.year}</span>`,
+      `<span class="sep">·</span><span>${esc(q.region)}</span>`,
+      q.subject && q.subject !== "不分" ? `<span class="sep">·</span><span>${esc(q.subject)}</span>` : "",
+      q.score ? `<span class="sep">·</span><span>${q.score} 分</span>` : "",
+    ].join("");
+    const answer = q.answer ? `
+      <button class="ans-toggle" type="button" aria-expanded="false" data-ans="${esc(q.id)}" data-cat="${esc(cat.id)}">显示答案 <span aria-hidden="true">↓</span></button>
+      <div class="answer" hidden></div>` : "";
+    const figures = Array.isArray(q.figures) && q.figures.length
+      ? `<div class="q-figure">${q.figures.map((f) =>
+          `<img src="${esc(typeof f === "string" ? f : f.path)}" alt="题目示意图" onerror="this.parentElement.style.display='none'">`
+        ).join("")}</div>`
+      : "";
+    const options = Array.isArray(q.optionImages) && q.optionImages.length
+      ? `<div class="q-option-grid">${q.optionImages.map((src, i) =>
+          `<figure><img src="${esc(src)}" alt="选项 ${"ABCD"[i] || i + 1}" loading="lazy"></figure>`
+        ).join("")}</div>`
+      : "";
+    return `<article class="q-card${q.figureOnly ? " figure-only" : ""}" style="--qd:${Math.min(qi, 8) * 28}ms">
+      <div class="q-meta">${meta}<span class="num"${q.paperNo ? ' title="按原卷题目顺序匹配"' : ''}>${q.paperNo ? "卷面第 " + q.paperNo + " 题" : ""}</span></div>
+      <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="公式加载中"></span>')}</div>
+      ${figures}
+      ${q.tableImage ? `<a class="table-link" href="${esc(q.tableImage)}" target="_blank" rel="noopener">查看表格图 ↗</a>` : ""}
+      ${options}
+      ${answer}
+      <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
+    </article>`;
+  }
+
+  function renderQuestions(reset, keepVisible) {
     const cat = catById(state.cat);
     if (!cat) return;
-    if (reset) state.visible = PAGE;
+    if (reset && !keepVisible) state.visible = PAGE;
     const list = filteredQuestions(cat);
     const shown = list.slice(0, state.visible);
     filterNote.textContent = `${list.length} 道题${state.query ? " · 已筛选" : ""}`;
@@ -213,36 +244,15 @@
       return;
     }
     emptyEl.hidden = true;
-    qList.innerHTML = shown.map((q, qi) => {
-      const meta = [
-        `<span class="year">${q.year}</span>`,
-        `<span class="sep">·</span><span>${esc(q.region)}</span>`,
-        q.subject && q.subject !== "不分" ? `<span class="sep">·</span><span>${esc(q.subject)}</span>` : "",
-        q.score ? `<span class="sep">·</span><span>${q.score} 分</span>` : "",
-      ].join("");
-      const answer = q.answer ? `
-        <button class="ans-toggle" type="button" aria-expanded="false" data-ans="${esc(q.id)}" data-cat="${esc(cat.id)}">显示答案 <span aria-hidden="true">↓</span></button>
-        <div class="answer" hidden></div>` : "";
-      const figures = Array.isArray(q.figures) && q.figures.length
-        ? `<div class="q-figure">${q.figures.map((f) =>
-            `<img src="${esc(typeof f === "string" ? f : f.path)}" alt="题目示意图" onerror="this.parentElement.style.display='none'">`
-          ).join("")}</div>`
-        : "";
-      const options = Array.isArray(q.optionImages) && q.optionImages.length
-        ? `<div class="q-option-grid">${q.optionImages.map((src, i) =>
-            `<figure><img src="${esc(src)}" alt="选项 ${"ABCD"[i] || i + 1}" loading="lazy"></figure>`
-          ).join("")}</div>`
-        : "";
-      return `<article class="q-card${q.figureOnly ? " figure-only" : ""}" style="--qd:${Math.min(qi, 8) * 28}ms">
-        <div class="q-meta">${meta}<span class="num"${q.paperNo ? ' title="按原卷题目顺序匹配"' : ''}>${q.paperNo ? "卷面第 " + q.paperNo + " 题" : ""}</span></div>
-        <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="公式加载中"></span>')}</div>
-        ${figures}
-        ${q.tableImage ? `<a class="table-link" href="${esc(q.tableImage)}" target="_blank" rel="noopener">查看表格图 ↗</a>` : ""}
-        ${options}
-        ${answer}
-        <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
-      </article>`;
-    }).join("");
+    if (reset) {
+      qList.innerHTML = shown.map((q, qi) => questionCard(q, qi, cat)).join("");
+    } else {
+      const already = qList.querySelectorAll(".q-card").length;
+      const more = shown.slice(already);
+      if (more.length) {
+        qList.insertAdjacentHTML("beforeend", more.map((q, i) => questionCard(q, already + i, cat)).join(""));
+      }
+    }
     if (reset && qList.animate) {
       qList.animate(
         [{ opacity: .35, transform: "translateY(8px)" }, { opacity: 1, transform: "none" }],
