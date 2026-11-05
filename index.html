@@ -1428,12 +1428,20 @@
         var sc = document.createElement("script");
         codeScript = sc;
         sc.src = "code/code-data.js?v=2";
+        var timer = setTimeout(function () {
+          if (!codeLoading) return;
+          codeLoading = false;
+          if (codeScript) codeScript.remove();
+          codeMessage("MATLAB 代码加载超时，请重试。", true);
+        }, 12000);
         sc.onload = function () {
+          clearTimeout(timer);
           codeLoading = false;
           if (window.MATLAB_CODE && window.MATLAB_CODE.chapters && window.MATLAB_CODE.chapters.length) initCode();
           else codeMessage("MATLAB 代码加载失败，请重试。", true);
         };
         sc.onerror = function () {
+          clearTimeout(timer);
           codeLoading = false;
           codeMessage("MATLAB 代码加载失败，请检查网络后重试。", true);
         };
