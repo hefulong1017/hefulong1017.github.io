@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PINNLab · 偏微分方程体验工作台 · 何富龙</title>
 <meta name="description" content="PINNLab：用 LaTeX 输入偏微分方程，设置初边值，运行 PINN 数值候选，查看曲线、曲面切片与逐点结果。">
-<script>try{var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<script src="../safe-store.js?v=2"></script>
 <link rel="stylesheet" href="../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../katex.min.css"></noscript>
-<link rel="stylesheet" href="../page-transition.css?v=23">
+<link rel="stylesheet" href="../page-transition.css?v=24">
 <style>
 :root{
   --bg:#050608; --ink:#f5f5f7; --muted:#a1a1a6; --faint:#6e6e73;
@@ -20,6 +20,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
 body{
   margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
@@ -80,8 +81,9 @@ h1 em{font-style:normal;color:var(--blue)}
 .windowbar span{margin-left:auto;font:500 9px/1 var(--mono);color:var(--faint);letter-spacing:.13em}
 .screen{padding:20px 6px 6px;position:relative}
 .screen .label{font:500 9px/1 var(--mono);letter-spacing:.16em;color:var(--faint);margin-bottom:12px}
-.eq{font-family:var(--serif);font-size:clamp(24px,3.3vw,36px);letter-spacing:.01em;padding:18px 4px 20px;color:#f5f5f7;overflow-x:auto;white-space:nowrap}
-.eq,.mini{opacity:0;transition:opacity .3s ease}
+.pinn-visual,.pinn-copy{min-width:0}
+.eq{max-width:100%;font-family:var(--serif);font-size:clamp(24px,3.3vw,36px);letter-spacing:.01em;padding:18px 4px 20px;color:#f5f5f7;overflow-x:auto;white-space:nowrap}
+.mini{max-width:100%;overflow-x:auto}.eq,.mini{opacity:0;transition:opacity .3s ease}
 html.math-ready .eq,html.math-ready .mini{opacity:1}
 .eq .katex{color:#f5f5f7}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
@@ -156,7 +158,7 @@ pre .c{color:#6e6e73}
     <div>
       <p class="eyebrow">PINNLAB / SCIENTIFIC COMPUTING</p>
       <h1>把偏微分方程，<br><em>写成可运行的实验。</em></h1>
-      <p class="lede">在网页里输入 LaTeX 方程，设定计算域和初边值，运行 PINN 数值候选，查看曲线、曲面切片或逐点结果。适合演示、教学与原型验证。</p>
+      <p class="lede">静态项目页，展示 PINNLab 的 LaTeX 方程输入、1D–3D 模板和曲线/曲面结果预览；在线求解需下载发布包并按部署说明运行。</p>
       <div class="pills">
         <span class="pill">LaTeX 方程输入</span>
         <span class="pill">1D–3D 模板</span>

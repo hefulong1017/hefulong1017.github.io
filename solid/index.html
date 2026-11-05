@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-  <script>try{var d=localStorage.getItem("darkDefault");if(d!=="1"){localStorage.setItem("theme","dark");localStorage.setItem("darkDefault","1");}var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+  <script src="../safe-store.js?v=2"></script>
 
 <title>立体几何大题 · 何富龙</title>
 <link rel="stylesheet" href="../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../katex.min.css"></noscript>
@@ -38,7 +38,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
 .chip.on{background:#111;border-color:#111;color:#fff}
 .count{margin-left:auto;color:var(--muted);font-size:12px}
 .list{display:grid;gap:14px}
-.card{content-visibility:auto;contain-intrinsic-size:auto 640px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px 18px;box-shadow:0 1px 2px rgba(16,24,40,.03);opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .3s,box-shadow .3s}
+.card{min-width:0;content-visibility:auto;contain-intrinsic-size:auto 640px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px 18px;box-shadow:0 1px 2px rgba(16,24,40,.03);opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .3s,box-shadow .3s}
 .card.in{opacity:1;transform:none}
 .card.in:hover{transform:translateY(-3px);border-color:rgba(37,99,235,.28);box-shadow:0 14px 34px rgba(16,24,40,.09)}
 .card[hidden]{display:none!important}
@@ -67,7 +67,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
  .wrap{padding:38px 14px 60px}
  .card{padding:16px;border-radius:13px}
  .q{font-size:14px;line-height:1.9}
- .figure img{max-height:290px}
+ .figure{max-width:100%;overflow:hidden}.figure img{max-width:100%;height:auto;max-height:290px}
  .stats{gap:22px}.stats b{font-size:19px}
 }
 
@@ -101,7 +101,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
 .theme{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:5px 9px;font-size:12px;cursor:pointer;margin-left:4px}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}.card{opacity:1!important;transform:none!important}}
 </style>
-  <link rel="stylesheet" href="../page-transition.css?v=23">
+  <link rel="stylesheet" href="../page-transition.css?v=24">
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -198,7 +198,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
   lb.addEventListener('click',function(e){if(e.target===lb||e.target.closest('button'))closeLb();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLb();});
   var tb=document.getElementById('themeToggle');
-  if(tb){tb.addEventListener('click',function(){var cur=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',cur);try{localStorage.setItem('theme',cur);localStorage.setItem('darkDefault','1');}catch(e){}});}
+  if(tb){tb.addEventListener('click',function(){var cur=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',cur);if(window.SafeStore)window.SafeStore.setTheme(cur);else try{localStorage.setItem('theme',cur);}catch(e){}});}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
 })();
 </script>

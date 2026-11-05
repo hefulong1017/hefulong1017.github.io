@@ -1,67 +1,18 @@
-@view-transition { navigation: none; }
-
-#pt {
-  position: fixed;
-  inset: 0;
-  z-index: 99999;
-  background: #07080b;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  overflow: hidden;
-  transition: opacity .42s cubic-bezier(.4, 0, .2, 1), visibility .42s;
-}
-
-#pt.pt-boot,
-#pt.pt-out {
-  opacity: 1;
-  visibility: visible;
-}
-
-#pt.pt-out {
-  pointer-events: auto;
-}
-
-#pt .pt-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-#pt .pt-glow {
-  position: absolute;
-  width: 48vw;
-  height: 48vw;
-  max-width: 680px;
-  max-height: 680px;
-  left: var(--pt-x, 50%);
-  top: var(--pt-y, 50%);
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(10, 132, 255, .28), rgba(80, 160, 255, .08) 42%, transparent 68%);
-  filter: blur(28px);
-  pointer-events: none;
-  animation: pt-breathe 2.2s ease-in-out infinite;
-}
-
-#pt .pt-bar {
-  display: none;
-}
-
-@keyframes pt-breathe {
-  0%, 100% { opacity: .55; transform: translate(-50%, -50%) scale(.88); }
-  50% { opacity: .95; transform: translate(-50%, -50%) scale(1.08); }
-}
+@view-transition { navigation: auto; }
 
 @media (prefers-reduced-motion: reduce) {
-  #pt,
-  #pt .pt-glow {
-    transition-duration: .001ms !important;
-    animation: none !important;
-  }
+  @view-transition { navigation: none; }
 }
+
+::view-transition-old(root) {
+  animation: pageOut .22s cubic-bezier(.4, 0, .2, 1) both;
+}
+::view-transition-new(root) {
+  animation: pageIn .28s cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes pageOut { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes pageIn { from { opacity: 0; transform: translateY(8px); } }
+::view-transition-old(root), ::view-transition-new(root) { mix-blend-mode: normal; }
 
 .nav {
   -webkit-backdrop-filter: saturate(180%) blur(24px);
@@ -140,26 +91,6 @@ html[data-theme="light"] .nav {
   backdrop-filter: blur(24px) saturate(180%) !important;
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.05), 0 10px 30px rgba(30,40,60,.08);
 }
-html.pt-hide body { opacity: 0 !important; transition: none !important; }
-#pt.pt-shot { transition: none; }
-#pt.pt-shot .pt-glow, #pt.pt-shot .pt-bar { display: none !important; }
-#pt.pt-shot .pt-canvas { opacity: 1; }
-html.pt-leave body {
-  animation: ptPageOut .98s cubic-bezier(.22,.61,.36,1) forwards;
-  transform-origin: 50% 42%;
-}
-@keyframes ptPageOut {
-  0% { opacity: 1; transform: scale(1); }
-  70% { opacity: .82; transform: scale(1.006); }
-  100% { opacity: .55; transform: scale(1.012); }
-}
-html.pt-enter body { opacity: .62; transform: scale(.995); }
-html.pt-back.pt-enter body { opacity: 1; transform: none; }
-html.pt-enter.pt-reveal body {
-  opacity: 1; transform: none;
-  transition: opacity .75s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1);
-}
-
 /* scroll progress + page hero entrance */
 .scroll-progress{position:fixed;left:0;top:0;right:0;height:2px;z-index:300;pointer-events:none;background:linear-gradient(90deg,#3b82f6,#8b5cf6,rgba(139,92,246,.15));transform:scaleX(0);transform-origin:0 50%;opacity:.85}
 @supports (animation-timeline: scroll(root)) {
@@ -167,7 +98,7 @@ html.pt-enter.pt-reveal body {
   @keyframes scrollProgress { from { transform:scaleX(0); } to { transform:scaleX(1); } }
 }
 @keyframes pageHeroIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
-.hero { animation: pageHeroIn .72s cubic-bezier(.22,1,.36,1) both; }
+.hero { animation: pageHeroIn .42s cubic-bezier(.22,1,.36,1) both; }
 @media (prefers-reduced-motion: reduce) {
   .scroll-progress { animation:none; transform:scaleX(1); opacity:.35; }
   .hero { animation:none; }
@@ -181,10 +112,44 @@ html.pt-enter.pt-reveal body {
     animation-range: entry 4% entry 38%;
   }
   @keyframes glassReveal {
-    from { opacity: .15; transform: translateY(26px) scale(.985); }
+    from { opacity: .35; transform: translateY(16px); }
     to { opacity: 1; transform: none; }
   }
 }
 @media (prefers-reduced-motion: reduce) {
   :is(.example, .method, .paper, .doc > section) { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+
+/* keyboard focus */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid #0a84ff;
+  outline-offset: 3px;
+}
+:where(a, button, input, select, textarea, summary, [tabindex]):focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* mobile: avoid large glass repaint costs */
+@media (max-width: 760px) {
+  html[data-theme="dark"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature,.panel,.side,.reader,.example,.method,.paper) {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: linear-gradient(145deg, rgba(32,34,42,.92), rgba(14,15,19,.94)) !important;
+  }
+  html[data-theme="light"] :is(.feature,.product,.app-card,.acc-block,.code-card,.toolbox,.portrait,.pinn-feature,.panel,.side,.reader,.example,.method,.paper) {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: linear-gradient(145deg, #fff, #f2f4f8) !important;
+  }
+  .nav { -webkit-backdrop-filter: blur(12px) !important; backdrop-filter: blur(12px) !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

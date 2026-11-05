@@ -59,13 +59,16 @@
     root.setAttribute("data-theme", theme);
     themeLabel.textContent = theme === "dark" ? "DARK" : "LIGHT";
     themeToggle.setAttribute("aria-label", theme === "dark" ? "切换到浅色主题" : "切换到深色主题");
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#0b0b0d" : "#f4efe6");
   }
-  const savedTheme = localStorage.getItem("theme");
-  applyTheme(savedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+  const savedTheme = window.SafeStore ? window.SafeStore.getTheme() : (localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+  applyTheme(savedTheme);
   themeToggle.addEventListener("click", () => {
     const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
     applyTheme(next);
-    localStorage.setItem("theme", next);
+    if (window.SafeStore) window.SafeStore.setTheme(next);
+    else try { localStorage.setItem("theme", next); } catch (e) {}
   });
 
   function esc(s) {
@@ -107,14 +110,16 @@
       </button>`).join("");
   }
 
-  function setHash() {
+  function setHash(mode) {
     const params = new URLSearchParams();
     if (state.cat) params.set("cat", state.cat);
     if (state.year) params.set("year", state.year);
     if (state.region) params.set("region", state.region);
     if (state.query) params.set("q", state.query);
     const hash = params.toString();
-    history.replaceState(null, "", hash ? "#" + hash : location.pathname + location.search);
+    const url = hash ? "#" + hash : location.pathname + location.search;
+    if (mode === "push") history.pushState(null, "", url);
+    else history.replaceState(null, "", url);
   }
 
   function readHash() {
@@ -151,7 +156,7 @@
     emptyEl.hidden = true;
     moreWrap.hidden = true;
     moreWrap.style.display = "none";
-    setHash();
+    setHash(opts && opts.fromHistory ? "replace" : "push");
     if (!opts || opts.scroll !== false) {
       browserEl.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -165,11 +170,11 @@
     });
   }
 
-  function closeCategory() {
+  function closeCategory(fromHistory) {
     state.cat = null;
     browserEl.classList.remove("open");
     $("categories").hidden = false;
-    setHash();
+    setHash(fromHistory ? "replace" : "push");
     $("categories").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -328,14 +333,14 @@
     state.visible = PAGE;
     renderYearChips(catById(state.cat));
     renderQuestions(true);
-    setHash();
+    setHash("push");
   });
 
   regionSel.addEventListener("change", () => {
     state.region = regionSel.value;
     state.visible = PAGE;
     renderQuestions(true);
-    setHash();
+    setHash("push");
   });
 
   let searchTimer = 0;
@@ -345,7 +350,7 @@
       state.query = searchEl.value;
       state.visible = PAGE;
       renderQuestions(true);
-      setHash();
+      setHash("replace");
     }, 140);
   });
 
@@ -357,19 +362,35 @@
   const answerPromises = {};
   function loadAnswerData(catId) {
     if (window.GAOKAO_ANSWERS && window.GAOKAO_ANSWERS.__cats && window.GAOKAO_ANSWERS.__cats[catId]) {
-      return Promise.resolve();
+      return Promise.resolve(true);
     }
     if (answerPromises[catId]) return answerPromises[catId];
     answerPromises[catId] = new Promise((resolve) => {
       const s = document.createElement("script");
+      let done = false;
+      const finish = (ok) => {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        resolve(ok);
+      };
+      const timer = setTimeout(() => {
+        delete answerPromises[catId];
+        s.remove();
+        finish(false);
+      }, 12000);
       s.src = "gaokao-answers-" + encodeURIComponent(catId) + ".js?v=4";
       s.onload = () => {
         window.GAOKAO_ANSWERS = window.GAOKAO_ANSWERS || {};
         window.GAOKAO_ANSWERS.__cats = window.GAOKAO_ANSWERS.__cats || {};
         window.GAOKAO_ANSWERS.__cats[catId] = true;
-        resolve();
+        finish(true);
       };
-      s.onerror = resolve;
+      s.onerror = () => {
+        delete answerPromises[catId];
+        s.remove();
+        finish(false);
+      };
       document.head.appendChild(s);
     });
     return answerPromises[catId];
@@ -419,25 +440,73 @@
     if (!btn) return;
     const box = btn.nextElementSibling;
     if (!box) return;
-    if (box.hidden && !box.dataset.loaded) {
-      await loadAnswerData(btn.dataset.cat);
-      const a = (window.GAOKAO_ANSWERS || {})[btn.dataset.ans];
+    const catId = btn.dataset.cat;
+    const answerId = btn.dataset.ans;
+    const retry = box.dataset.state === "error";
+    if ((box.hidden || retry) && box.dataset.state !== "loaded") {
+      if (box._anim) { box._anim.cancel(); box._anim = null; }
+      box.hidden = false;
+      box.dataset.state = "loading";
+      box.innerHTML = '<div class="ans-empty">答案加载中…</div>';
+      const ok = await loadAnswerData(catId);
+      if (!ok) {
+        box.dataset.state = "error";
+        box.innerHTML = '<div class="ans-empty">答案加载失败，请重试。</div>';
+        const retryBtn = document.createElement("button");
+        retryBtn.type = "button";
+        retryBtn.className = "ans-toggle";
+        retryBtn.dataset.cat = catId;
+        retryBtn.dataset.ans = answerId;
+        retryBtn.dataset.retry = "1";
+        retryBtn.textContent = "重新加载";
+        retryBtn.addEventListener("click", function () {
+          retryBtn.remove();
+          box.hidden = false;
+          box.dataset.state = "loading";
+          box.innerHTML = '<div class="ans-empty">答案加载中…</div>';
+          loadAnswerData(catId).then(function (ok) {
+            if (!ok) {
+              box.dataset.state = "error";
+              box.innerHTML = '<div class="ans-empty">答案加载失败，请重试。</div>';
+              const again = document.createElement("button");
+              again.type = "button";
+              again.className = "ans-toggle";
+              again.dataset.retry = "1";
+              again.textContent = "重新加载";
+              again.addEventListener("click", function () { again.remove(); box.dataset.state = ""; btn.click(); });
+              box.appendChild(again);
+              return;
+            }
+            box.innerHTML = answerHtml((window.GAOKAO_ANSWERS || {})[answerId]);
+            box.dataset.state = "loaded";
+            box.dataset.open = "1";
+            btn.setAttribute("aria-expanded", "true");
+            btn.innerHTML = '收起答案 <span aria-hidden="true">↑</span>';
+            renderMath(box);
+          });
+        });
+        box.appendChild(retryBtn);
+        return;
+      }
+      const a = (window.GAOKAO_ANSWERS || {})[answerId];
       box.innerHTML = answerHtml(a);
-      box.dataset.loaded = "1";
+      box.dataset.state = "loaded";
       renderMath(box);
     }
-    const open = box.hidden;
+    const open = box.dataset.open !== "1";
+    box.dataset.open = open ? "1" : "0";
+    if (box._anim) { box._anim.cancel(); box._anim = null; box.style.height = ""; box.style.overflow = ""; }
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (open) {
       box.hidden = false;
-      const target = box.scrollHeight;
+      const start = box.offsetHeight;
       if (!reduceMotion && box.animate) {
         box.style.overflow = "hidden";
-        const anim = box.animate(
-          [{ height: "0px", opacity: 0 }, { height: target + "px", opacity: 1 }],
-          { duration: 340, easing: "cubic-bezier(.22,1,.36,1)" }
+        box._anim = box.animate(
+          [{ height: "0px", opacity: 0 }, { height: start + "px", opacity: 1 }],
+          { duration: 300, easing: "cubic-bezier(.22,1,.36,1)" }
         );
-        anim.onfinish = () => { box.style.height = ""; box.style.overflow = ""; };
+        box._anim.onfinish = () => { box.style.height = ""; box.style.overflow = ""; box._anim = null; };
       }
     } else if (!reduceMotion && box.animate) {
       const start = box.offsetHeight;
@@ -446,7 +515,11 @@
         [{ height: start + "px", opacity: 1 }, { height: "0px", opacity: 0 }],
         { duration: 240, easing: "cubic-bezier(.4,0,1,1)" }
       );
-      anim.onfinish = () => { box.hidden = true; box.style.height = ""; box.style.overflow = ""; };
+      box._anim = anim;
+      anim.onfinish = () => {
+        box.style.height = ""; box.style.overflow = ""; box._anim = null;
+        if (box.dataset.open === "0") box.hidden = true;
+      };
     } else {
       box.hidden = true;
     }
@@ -454,13 +527,26 @@
     btn.innerHTML = open ? '收起答案 <span aria-hidden="true">↑</span>' : '显示答案 <span aria-hidden="true">↓</span>';
   });
 
-  window.addEventListener("hashchange", () => {
+  function applyRoute() {
     const h = readHash();
-    if (h.cat && h.cat !== state.cat) {
-      state.year = h.year; state.region = h.region; state.query = h.query;
-      openCategory(h.cat, { keepFilters: true, scroll: false });
+    if (h.cat !== (state.cat || "")) {
+      if (h.cat) {
+        state.year = h.year; state.region = h.region; state.query = h.query;
+        openCategory(h.cat, { keepFilters: true, scroll: false, fromHistory: true });
+      } else {
+        closeCategory(true);
+      }
+      return;
     }
-  });
+    if (!h.cat) return;
+    state.year = h.year; state.region = h.region; state.query = h.query;
+    state.visible = PAGE;
+    searchEl.value = state.query;
+    renderYearChips(catById(state.cat));
+    renderRegions(catById(state.cat));
+    renderQuestions(true);
+  }
+  window.addEventListener("popstate", applyRoute);
 
   let categoryHoverTimer = 0;
   catsEl.addEventListener("pointerover", (e) => {
@@ -486,7 +572,9 @@
     state.year = initial.year;
     state.region = initial.region;
     state.query = initial.query;
-    openCategory(initial.cat, { keepFilters: true, scroll: false });
+    openCategory(initial.cat, { keepFilters: true, scroll: false, fromHistory: true });
+  } else {
+    history.replaceState(null, "", location.pathname + location.search);
   }
 })();
 

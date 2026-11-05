@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>try{var d=localStorage.getItem("darkDefault");if(d!=="1"){localStorage.setItem("theme","dark");localStorage.setItem("darkDefault","1");}var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+  <script src="safe-store.js?v=2"></script>
 
   <title>高考题型分类 · 何富龙</title>
   <meta name="description" content="2016–2026 高考数学真题题型分类，按题型、年份、地区浏览，题目使用 LaTeX 排版，参考解答可逐题展开。">
@@ -161,6 +161,7 @@
     .sk-line.w90 { width: 90%; }
     @keyframes sk { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
     .q-card {
+      min-width: 0;
       padding: 20px 22px 18px; border: 1px solid var(--line); background: var(--card);
       transition: border-color .25s, background .25s, transform .35s var(--ease), box-shadow .35s var(--ease);
       content-visibility: auto;
@@ -171,11 +172,15 @@
     }
     .q-card:hover { border-color: var(--line-strong); background: var(--bg-soft); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.06); }
     @keyframes qIn { 0% { opacity: 0; transform: translateY(16px) scale(.985); } 68% { opacity: 1; transform: translateY(-2px) scale(1.002); } 100% { opacity: 1; transform: none; } }
-    .q-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; color: var(--faint); font-size: 10px; letter-spacing: .06em; }
+    .q-meta {
+      min-width: 0;
+      flex-wrap: wrap; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; color: var(--faint); font-size: 10px; letter-spacing: .06em; }
     .q-meta .year { color: var(--accent); font-weight: 600; }
     .q-meta .sep { color: var(--line-strong); }
     .q-meta .num { margin-left: auto; color: var(--faint); }
-    .q-text { font-size: 14.5px; line-height: 1.95; white-space: normal; overflow-wrap: anywhere; }
+    .q-text {
+      min-width: 0;
+      overflow-wrap: anywhere; font-size: 14.5px; line-height: 1.95; white-space: normal; overflow-wrap: anywhere; }
     .q-text .katex { font-size: 1.02em; }
     .q-text .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
     .q-card.figure-only .q-text { display: none; }
@@ -237,7 +242,9 @@
       .browser-head .total { display: block; margin-top: 8px; }
       .filter-note { margin-left: 0; }
       .q-card { padding: 16px 15px; }
-      .q-text { font-size: 14px; }
+      .q-text {
+      min-width: 0;
+      overflow-wrap: anywhere; font-size: 14px; }
       footer { flex-direction: column; gap: 6px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -273,7 +280,7 @@
       .mock-card h3 { font-size: 24px; }
     }
   </style>
-  <link rel="stylesheet" href="page-transition.css?v=23">
+  <link rel="stylesheet" href="page-transition.css?v=24">
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -379,7 +386,7 @@
   </div>
 
   <script src="gaokao-index.js?v=3"></script>
-  <script src="gaokao-app.js?v=36"></script>
+  <script src="gaokao-app.js?v=37"></script>
 <script src="prefetch.js?v=2"></script>
 </body>
 </html>

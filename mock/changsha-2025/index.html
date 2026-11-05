@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>try{var d=localStorage.getItem("darkDefault");if(d!=="1"){localStorage.setItem("theme","dark");localStorage.setItem("darkDefault","1");}var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+  <script src="../../safe-store.js?v=2"></script>
   <title>椭圆外心与距离范围 · 2025 长沙适应性考试第18题</title>
   <meta name="description" content="2025 届长沙新高考适应性考试第18题：椭圆外心与距离范围。标准解法，以及只用两根之积消去外心纵坐标的另一种算法。">
   <meta name="theme-color" content="#f4efe6">
@@ -161,10 +161,9 @@
       .top { gap: 10px; }
     }
 </style>
-  <link rel="stylesheet" href="../../page-transition.css?v=23">
+  <link rel="stylesheet" href="../../page-transition.css?v=24">
 </head>
 <body>
-<div class="scroll-progress" aria-hidden="true"></div>
 <div class="read-progress" aria-hidden="true"><span id="read-bar"></span></div>
 <div class="shell">
   <header class="top">
@@ -452,9 +451,9 @@
   var toggle=document.getElementById('theme-toggle');
   var label=document.getElementById('theme-label');
   function apply(t){root.setAttribute('data-theme',t);label.textContent=t==='dark'?'DARK':'LIGHT';toggle.setAttribute('aria-label',t==='dark'?'切换到浅色主题':'切换到深色主题');}
-  var saved=localStorage.getItem('theme');
+  var saved=window.SafeStore?window.SafeStore.get('theme',''):localStorage.getItem('theme');
   apply(saved||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
-  toggle.addEventListener('click',function(){var next=root.getAttribute('data-theme')==='dark'?'light':'dark';apply(next);localStorage.setItem('theme',next);});
+  toggle.addEventListener('click',function(){var next=root.getAttribute('data-theme')==='dark'?'light':'dark';apply(next);if(window.SafeStore){window.SafeStore.setTheme(next);}else{try{localStorage.setItem('theme',next);}catch(e){}}});
   function typeset(){if(!window.renderMathInElement)return;renderMathInElement(document.querySelector('.paper'),{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false,strict:false});}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',typeset);else typeset();
   var bar=document.getElementById('read-bar');

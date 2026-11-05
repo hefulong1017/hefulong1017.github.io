@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>try{var d=localStorage.getItem("darkDefault");if(d!=="1"){localStorage.setItem("theme","dark");localStorage.setItem("darkDefault","1");}var t=localStorage.getItem("theme")||"dark";document.documentElement.setAttribute("data-theme",t);}catch(e){document.documentElement.setAttribute("data-theme","dark");}</script>
+  <script src="../safe-store.js?v=2"></script>
 
   <title>高等数学上册 · 课本答案</title>
   <meta name="description" content="安徽大学版高等数学上册课本答案，按习题与复习题分类整理。">
@@ -194,7 +194,7 @@
     [data-theme="dark"] .view-switch button.active { background: #2c2c2e; color: #fff; border-color: #3a3a3c; }
 </style>
   <link rel="stylesheet" href="../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../katex.min.css"></noscript>
-  <link rel="stylesheet" href="../page-transition.css?v=23">
+  <link rel="stylesheet" href="../page-transition.css?v=24">
 </head>
 <body>
 <div class="scroll-progress" aria-hidden="true"></div>
@@ -215,7 +215,7 @@
 
   <div class="wrap">
     <aside class="side" aria-label="章节目录">
-      <input class="search" id="search" type="search" placeholder="搜索章节或答案…" autocomplete="off">
+      <input class="search" id="search" type="search" placeholder="搜索章节…" autocomplete="off">
       <div id="toc"></div>
     </aside>
 
@@ -253,6 +253,7 @@
           <button id="latex-edit" type="button">源码 / 编辑</button>
           <button id="latex-copy" type="button">复制本节 LaTeX</button>
           <button id="latex-copy-doc" type="button">复制完整 .tex</button>
+          <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
           <span>可直接编辑；复制后可在 Overleaf / TeX Live 编译</span>
         </div>
         <div class="latex-preview" id="latex-preview">正在转换…</div>
@@ -350,6 +351,14 @@
         if (sectionLoading[id]) return sectionLoading[id];
         sectionLoading[id] = new Promise(function (resolve) {
           var s = document.createElement('script');
+          var done = false;
+          var timer = setTimeout(function () { finish(null); }, 12000);
+          function finish(sec) {
+            if (done) return;
+            done = true; clearTimeout(timer); delete sectionLoading[id];
+            if (!sec) { try { s.remove(); } catch (e) {} }
+            resolve(sec);
+          }
           s.src = 'sections/' + encodeURIComponent(id) + '.js?v=1';
           s.onload = function () {
             var sec = (window.ADV_MATH_SECTIONS || {})[id] || null;
@@ -358,9 +367,9 @@
               var target = flat.find(function (x) { return x.sec.id === id; });
               if (target) target.sec = sec;
             }
-            resolve(sec);
+            finish(sec);
           };
-          s.onerror = function () { resolve(null); };
+          s.onerror = function () { finish(null); };
           document.head.appendChild(s);
         });
         return sectionLoading[id];
@@ -371,15 +380,21 @@
         if (itemsLoading[id]) return itemsLoading[id];
         itemsLoading[id] = new Promise(function (resolve) {
           var s = document.createElement('script');
+          var done = false;
+          var timer = setTimeout(function () { finish(null); }, 12000);
+          function finish(block) {
+            if (done) return;
+            done = true; clearTimeout(timer); delete itemsLoading[id];
+            if (!block) { try { s.remove(); } catch (e) {} }
+            resolve(block);
+          }
           s.src = 'items/' + encodeURIComponent(id) + '.js?v=1';
           s.onload = function () {
-            itemsCache[id] = (window.ADV_MATH_ITEMS || {})[id] || null;
-            resolve(itemsCache[id]);
+            var block = (window.ADV_MATH_ITEMS || {})[id] || null;
+            if (block) itemsCache[id] = block;
+            finish(block);
           };
-          s.onerror = function () {
-            itemsCache[id] = null;
-            resolve(null);
-          };
+          s.onerror = function () { finish(null); };
           document.head.appendChild(s);
         });
         return itemsLoading[id];
@@ -485,7 +500,16 @@
             qaCount.textContent = '题目加载失败';
             var failed = document.createElement('div');
             failed.className = 'qa-empty';
-            failed.textContent = '这一节的题目没能加载，可以刷新页面，或切到 LaTeX / 排版页查看。';
+            failed.textContent = '这一节的题目没能加载。';
+            var retry = document.createElement('button');
+            retry.type = 'button'; retry.className = 'qa-toggle'; retry.textContent = '重新加载';
+            retry.addEventListener('click', function () {
+              delete itemsLoading[sec.id];
+              delete itemsCache[sec.id];
+              renderQa();
+            });
+            failed.appendChild(document.createElement('br'));
+            failed.appendChild(retry);
             qaList.appendChild(failed);
             return;
           }
@@ -515,15 +539,36 @@
         });
       }
 
+      function sectionRetry(host, id, label) {
+        host.textContent = '';
+        var p = document.createElement('p');
+        p.textContent = label + '加载失败，请重试。';
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'qa-toggle'; b.textContent = '重新加载';
+        b.addEventListener('click', function () { loadSection(id).then(function () { select(current, false); }); });
+        host.appendChild(p); host.appendChild(b);
+      }
       function showText() {
         var sec = flat[current].sec;
         var id = sec.id;
         if (sec.text) { text.textContent = sec.text; return; }
         text.textContent = '正在加载这一节的文字…';
         loadSection(id).then(function (full) {
-          if (!full || flat[current].sec.id !== id) return;
+          if (!full) { if (flat[current].sec.id === id) sectionRetry(text, id, '这一节的文字'); return; }
+          if (flat[current].sec.id !== id) return;
           text.textContent = full.text || '（本节暂无文字）';
         });
+      }
+
+      var copyBtn = document.getElementById('latex-copy');
+      var copyDocBtn = document.getElementById('latex-copy-doc');
+      var copyStatus = document.getElementById('copy-status');
+      function setCopyReady(ready) {
+        if (copyBtn) copyBtn.disabled = !ready;
+        if (copyDocBtn) copyDocBtn.disabled = !ready;
+      }
+      function setCopyStatus(text) {
+        if (copyStatus) copyStatus.textContent = text || '';
       }
 
       function renderLatex() {
@@ -531,8 +576,11 @@
         var id = sec.id;
         if (!sec.latex) {
           latexPreview.textContent = '正在加载 LaTeX…';
+          latexSource.value = '';
+          setCopyReady(false);
           loadSection(id).then(function (full) {
-            if (!full || flat[current].sec.id !== id) return;
+            if (!full) { if (flat[current].sec.id === id) sectionRetry(latexPreview, id, '这一节的 LaTeX '); return; }
+            if (flat[current].sec.id !== id) return;
             renderLatex();
           });
           return;
@@ -541,14 +589,25 @@
         latexSource.value = src;
         latexPreview.textContent = cleanDisplay(src);
         typeset(latexPreview);
+        setCopyReady(Boolean(src));
+        setCopyStatus('');
       }
 
-      function copyText(t) {
-        if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t);
+      function fallbackCopy(t) {
         var ta = document.createElement('textarea');
-        ta.value = t; document.body.appendChild(ta); ta.select();
-        document.execCommand('copy'); ta.remove();
-        return Promise.resolve();
+        ta.value = t; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        ta.remove();
+        return ok;
+      }
+      function copyText(t) {
+        if (!t) return Promise.resolve(false);
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(t).then(function () { return true; }, function () { return fallbackCopy(t); });
+        }
+        return Promise.resolve(fallbackCopy(t));
       }
 
       function docWrap(body) {
@@ -591,6 +650,9 @@
       function select(i, scroll) {
         if (i < 0 || i >= flat.length) return;
         current = i;
+        latexSource.value = '';
+        setCopyReady(false);
+        setCopyStatus('');
         var item = flat[i];
         var s = item.sec;
         title.textContent = s.title;
@@ -660,17 +722,27 @@
         });
       });
 
-      document.getElementById('latex-copy').addEventListener('click', function () {
-        copyText(latexSource.value);
-        this.textContent = '已复制';
-        var b = this;
-        setTimeout(function () { b.textContent = '复制本节 LaTeX'; }, 1400);
+      function doCopy(text, button, normal, success) {
+        if (!text) { setCopyStatus('源码尚未加载完成'); return; }
+        button.disabled = true;
+        copyText(text).then(function (ok) {
+          button.disabled = false;
+          if (ok) {
+            setCopyStatus('已复制到剪贴板');
+            button.textContent = success;
+            setTimeout(function () { button.textContent = normal; }, 1400);
+          } else {
+            setCopyStatus('复制失败，请切到源码框手动全选复制');
+            button.textContent = '复制失败';
+            setTimeout(function () { button.textContent = normal; }, 2200);
+          }
+        });
+      }
+      copyBtn.addEventListener('click', function () {
+        doCopy(latexSource.value, copyBtn, '复制本节 LaTeX', '已复制');
       });
-      document.getElementById('latex-copy-doc').addEventListener('click', function () {
-        copyText(docWrap(latexSource.value));
-        this.textContent = '已复制 .tex';
-        var b = this;
-        setTimeout(function () { b.textContent = '复制完整 .tex'; }, 1600);
+      copyDocBtn.addEventListener('click', function () {
+        doCopy(docWrap(latexSource.value), copyDocBtn, '复制完整 .tex', '已复制 .tex');
       });
       document.getElementById('latex-edit').addEventListener('click', function () {
         var showSource = latexSource.hidden;
@@ -687,9 +759,11 @@
       next.addEventListener('click', function () { select(current + 1); });
       search.addEventListener('input', function () { renderToc(search.value); });
       document.addEventListener('keydown', function (e) {
-        if (e.target === search) return;
-        if (e.key === 'ArrowLeft') select(current - 1);
-        if (e.key === 'ArrowRight') select(current + 1);
+        if (e.defaultPrevented || e.isComposing || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+        var t = e.target;
+        if (t && t.closest && t.closest('input, textarea, select, [contenteditable="true"]')) return;
+        if (e.key === 'ArrowLeft') { e.preventDefault(); select(current - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); select(current + 1); }
       });
 
       var hash = location.hash.replace('#', '');
