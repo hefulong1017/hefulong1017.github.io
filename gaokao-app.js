@@ -107,7 +107,13 @@
         <span class="idx">${String(i + 1).padStart(2, "0")}</span>
         <h3>${esc(cat.name)}</h3>
         <span class="meta"><span class="count">${cat.count}</span><span class="years">${yearLabel(cat.years)}</span></span>
-      </button>`).join("");
+      </button>`).join("") + `
+      <a class="cat cat-ext" href="../solid/" aria-label="打开立体几何大题的原卷图形版">
+        <span class="arrow" aria-hidden="true">↗</span>
+        <span class="idx">图形版</span>
+        <h3>立体几何大题 · 原卷图形</h3>
+        <span class="meta"><span class="count">94</span><span class="years">独立页面</span></span>
+      </a>`;
   }
 
   function setHash(mode) {
@@ -322,7 +328,7 @@
 
   catsEl.addEventListener("click", (e) => {
     const btn = e.target.closest(".cat");
-    if (btn) openCategory(btn.dataset.cat);
+    if (btn && btn.dataset.cat) openCategory(btn.dataset.cat);
   });
   $("back-cats").addEventListener("click", closeCategory);
 
