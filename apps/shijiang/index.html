@@ -1,0 +1,441 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#000000" />
+<meta name="format-detection" content="telephone=no" />
+<title>试讲评分官 · 高中数学试讲评分</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%23fff' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16' r='2' fill='%23ff3b30'/%3E%3C/svg%3E" />
+<meta name="description" content="教师编制高中数学试讲自评工具：本机录音录像，七个维度严格评分，每一条扣分都能定位到录像时间点。" />
+
+<!-- —— 装到桌面：PWA —— -->
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="试讲评分" />
+<meta name="mobile-web-app-capable" content="yes" />
+<style>
+/* —— 首屏关键样式内联，避免 FOUC —— */
+:root{--black:#000;--gray:#f5f5f7;--ink:#1d1d1f;--ink2:#6e6e73;--blue:#0071e3;--nav:64px;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","PingFang SC","Helvetica Neue",Arial,sans-serif;background:var(--gray);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.no-scroll{overflow:hidden}
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav);z-index:900;display:flex;align-items:center;background:rgba(251,251,253,.72);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);transition:height .32s var(--ease),background .32s var(--ease)}
+.nav.scrolled{height:48px;background:rgba(251,251,253,.86)}
+.page{display:none;min-height:100vh}
+.page.active{display:block;animation:pageIn .2s ease-out both}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{background:var(--black);color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 90px}
+img,canvas{display:block;max-width:100%}
+</style>
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/v2.css" />
+<link rel="stylesheet" href="css/print.css" media="print" />
+<noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+
+<!-- ============ 图标精灵（纯手写线稿 SVG，无图片素材） ============ -->
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <symbol id="i-content" viewBox="0 0 24 24"><path d="M4 4.5h16v15H4z"/><path d="M8 9h8M8 12.5h8M8 16h5"/></symbol>
+    <symbol id="i-fluency" viewBox="0 0 24 24"><path d="M2 12c3-6 5 6 8 0s5 6 8 0"/><path d="M20 12h2"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8.5 5v14M15.5 5v14"/><path d="M3 12h2M19 12h2"/></symbol>
+    <symbol id="i-filler" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 9.5h.01M12 9.5h.01M15 9.5h.01"/></symbol>
+    <symbol id="i-board" viewBox="0 0 24 24"><path d="M3 4h18v12H3z"/><path d="M12 16v4M8 20h8"/><path d="M7 8.5h6M7 12h4"/></symbol>
+    <symbol id="i-speed" viewBox="0 0 24 24"><path d="M4 18a8 8 0 1116 0"/><path d="M12 18l4.5-6"/><circle cx="12" cy="18" r="1.2"/></symbol>
+    <symbol id="i-posture" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6.2 7-6.2s7 2.6 7 6.2"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21M9 21h6"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24"><rect x="2.5" y="6" width="13" height="12" rx="2.5"/><path d="M15.5 11l6-3.5v9l-6-3.5"/></symbol>
+    <symbol id="i-screen" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8 20h8M12 16.5V20"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v6c0 4.6-3.2 7.8-7.5 9-4.3-1.2-7.5-4.4-7.5-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+    <symbol id="i-flip" viewBox="0 0 24 24"><path d="M4 8h11l-3-3M20 16H9l3 3"/><path d="M15 8l3 3M9 16l-3 3"/></symbol>
+    <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5M8.5 11h5M11 8.5v5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2.5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3.5v11M7.5 10.5L12 15l4.5-4.5"/><path d="M4.5 18.5v1.5h15v-1.5"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 8V3.5h10V8"/><rect x="3.5" y="8" width="17" height="8.5" rx="2"/><path d="M7 14h10v6.5H7z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 6.5h15M9.5 6.5V4h5v2.5M6.5 6.5l1 14h9l1-14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5l12 7.5-12 7.5z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M12 4v16M6 14l6 6 6-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3.5l9.5 17h-19z"/><path d="M12 9.5v5M12 17.5h.01"/></symbol>
+    <symbol id="i-photo" viewBox="0 0 24 24"><path d="M3 7.5h4l1.5-2.5h7L17 7.5h4v12H3z"/><circle cx="12" cy="13.5" r="3.6"/></symbol>
+  </defs>
+</svg>
+
+<div class="scroll-sentinel" id="scrollSentinel" aria-hidden="true"></div>
+
+<!-- ============ 顶部导航 ============ -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" data-go="home" aria-label="试讲评分官 首页">
+      <span class="logo-dot" aria-hidden="true"></span>
+      <span>试讲评分官</span>
+    </a>
+    <div class="nav-actions">
+      <button class="nav-link" id="btnDemoHero" type="button">示例报告</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= 首页 ================= -->
+<section class="page active" id="page-home">
+
+  <!-- 首页：产品名 + 主入口（直接开始模拟）+ 历史记录，上传入口放在下面。 -->
+  <section class="home-hero" id="hero">
+    <div class="home-inner">
+      <p class="hero-eyebrow">教师编制 · 高中数学 · 试讲</p>
+      <h1 class="home-title">试讲评分官</h1>
+      <div class="home-actions">
+        <button class="btn btn-primary btn-lg" id="btnStart" type="button">直接开始模拟</button>
+        <button class="btn btn-ghost" id="btnViewHistory" type="button">历史记录</button>
+      </div>
+      <p class="home-links">
+        <button class="link-btn" id="btnUpload" type="button">上传视频并评估</button>
+      </p>
+    </div>
+  </section>
+
+  <!-- 评分标准与隐私收进折叠区：需要时能查，不需要时不占首屏 -->
+  <details class="home-more">
+    <summary>评分标准、等级与隐私</summary>
+    <div class="home-more-body">
+      <div class="home-dims">
+        <div><b>试讲内容</b><span>30%</span><em>五环节完整性 · 严谨性 · 语言规范</em></div>
+        <div><b>语气流畅性</b><span>15%</span><em>卡顿 · 整句重复 · 无意义重读</em></div>
+        <div><b>停顿次数</b><span>10%</span><em>静音检测 · 长停顿 · 分布</em></div>
+        <div><b>口头禅次数</b><span>10%</span><em>那/呢/呃逐项 · 语境豁免</em></div>
+        <div><b>板书工整性</b><span>15%</span><em>先定位板面，再按真正可测量的项评</em></div>
+        <div><b>语气语速</b><span>10%</span><em>字/分钟 · 波动 · 音量稳定</em></div>
+        <div><b>仪态表情</b><span>10%</span><em>只看连续关键点行为；不居中、不看正脸比例</em></div>
+      </div>
+      <p class="home-grades">优秀 ≥ 88 · 良好 78–87 · 合格 68–77 · 待提高 58–67 · 不合格 &lt; 58（本项目自定，非官方标准）</p>
+      <p class="home-privacy">录像与逐字稿写进本机 IndexedDB，断网也在；实时字幕那一段会上网（走浏览器自带的语音识别）；「AI 深度点评」只有你点了才会发，发之前会告诉你发什么、发给谁。没有证据的项一律标「未评估」，不扣分也不补默认分。</p>
+    </div>
+  </details>
+</section>
+
+<section class="page" id="page-prepare">
+  <div class="page-bar">
+    <button class="icon-btn" type="button" data-go="home" aria-label="返回首页"><svg width="18" height="18"><use href="#i-close" /></svg></button>
+    <span class="page-bar-title">准备</span>
+    <span class="page-bar-right" id="prepClock">—</span>
+  </div>
+
+  <div class="prep-grid">
+    <div class="prep-preview">
+      <div class="preview-wrap" id="previewWrap">
+        <video id="previewVideo" playsinline autoplay muted></video>
+        <div class="preview-placeholder" id="previewPlaceholder">
+          <svg width="34" height="34"><use href="#i-cam" /></svg>
+          <p>摄像头未启动</p>
+        </div>
+        <div class="preview-badges">
+          <span class="pbadge" id="zoomBadge">1.0×</span>
+          <span class="pbadge" id="mirrorBadge">镜像</span>
+        </div>
+      </div>
+
+      <!-- 只录音频时的占位：不碰摄像头，只显示麦克风电平 -->
+      <div class="audio-prep" id="audioPrep" hidden>
+        <div class="audio-orb" id="audioOrb"><svg width="30" height="30"><use href="#i-mic" /></svg></div>
+        <p class="audio-prep-title">只录音频</p>
+        <p class="audio-prep-hint">不申请摄像头。开口说话，这里会跟着电平跳动。</p>
+        <div class="audio-level"><i id="prepLevel"></i></div>
+      </div>
+
+      <!-- 变焦条紧贴画面下方：手指从画面滑下来就能调，不用去右边找 -->
+      <div class="zoom-bar" id="zoomBar" aria-label="变焦">
+        <button class="zbtn" type="button" id="btnZoomOut" aria-label="缩小">−</button>
+        <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1" aria-label="变焦倍数" />
+        <button class="zbtn" type="button" id="btnZoomIn" aria-label="放大">+</button>
+        <span class="zoom-val" id="zoomLabel">1.0×</span>
+        <span class="zoom-mode" id="zoomMode">数字变焦</span>
+      </div>
+      <p class="field-hint zoom-hint">1×–3× 是放大裁切；摄像头支持广角（0.5×）时才会出现 0.5× 那一档，变焦会写进成片。</p>
+
+      <div class="preview-tools">
+        <button class="tool" type="button" id="btnFlip"><svg width="18" height="18"><use href="#i-flip" /></svg><span>翻转</span></button>
+        <button class="tool" type="button" id="btnMirror"><svg width="18" height="18"><use href="#i-cam" /></svg><span>镜像</span></button>
+        <button class="tool" type="button" id="btnScreen"><svg width="18" height="18"><use href="#i-screen" /></svg><span>录屏</span></button>
+        <button class="tool" type="button" id="btnBoardPrep"><svg width="18" height="18"><use href="#i-photo" /></svg><span>板书</span></button>
+      </div>
+      <p class="tool-hint" id="screenHint">录屏指录制屏幕内容（讲 PPT / 投屏），与录像可同时进行。</p>
+    </div>
+
+    <div class="prep-form">
+      <div class="field">
+        <span class="field-label">录制方式</span>
+        <div class="seg" id="captureMode" role="radiogroup" aria-label="录制方式">
+          <button type="button" class="seg-item active" data-cap="av" role="radio" aria-checked="true">视频 + 语音</button>
+          <button type="button" class="seg-item" data-cap="audio" role="radio" aria-checked="false">只录音频</button>
+        </div>
+        <p class="field-hint" id="capHint">视频 + 语音：七项全评。只录音频：不申请摄像头，板书和仪态两项不评，其余照评——适合对着手机练口述、录音频复盘。</p>
+      </div>
+
+      <div class="perm-card">
+        <div class="perm-row"><svg width="16" height="16"><use href="#i-mic" /></svg><span>麦克风</span><i class="perm-dot" id="permMic">待授权</i></div>
+        <div class="perm-row" id="permCamRow"><svg width="16" height="16"><use href="#i-cam" /></svg><span>摄像头</span><i class="perm-dot" id="permCam">待授权</i></div>
+        <p class="privacy-line">录音录像仅在本机处理，不会上传到任何服务器。</p>
+      </div>
+
+      <label class="field">
+        <span class="field-label">课题名称</span>
+        <input class="input" id="topicInput" type="text" maxlength="40" placeholder="例：函数的单调性（人教A版 必修一 1.3）" autocomplete="off" />
+      </label>
+
+      <label class="field">
+        <span class="field-label">本课必写板书要点（可选）</span>
+        <textarea class="input" id="boardPoints" rows="2" placeholder="例：单调性的定义；增函数与减函数的区别；例1 的解题步骤"></textarea>
+        <span class="field-hint">填了才做「板书内容核对」：把 OCR 认出来的板书文字跟这几条对照，缺哪条会标出来。用逗号、分号或换行分隔。</span>
+      </label>
+
+      <div class="field">
+        <span class="field-label">这是什么</span>
+        <div class="seg" id="lessonMode" role="radiogroup" aria-label="评估形式">
+          <button type="button" class="seg-item active" data-mode="micro" role="radio" aria-checked="true">模拟试讲</button>
+          <button type="button" class="seg-item" data-mode="full" role="radio" aria-checked="false">完整课堂</button>
+          <button type="button" class="seg-item" data-mode="clip" role="radio" aria-checked="false">教学片段</button>
+        </div>
+        <p class="field-hint" id="modeHint">模拟试讲：10 分钟上下，按五个环节评。完整课堂：40 分钟左右的一节。教学片段：只评这一段讲得怎么样，不要求导入/小结。</p>
+      </div>
+
+      <div class="field" id="durationField">
+        <span class="field-label">试讲时长</span>
+        <div class="seg" id="durationGroup" role="radiogroup" aria-label="试讲时长">
+          <button type="button" class="seg-item" data-min="8" role="radio" aria-checked="false">8 分钟</button>
+          <button type="button" class="seg-item active" data-min="10" role="radio" aria-checked="true">10 分钟</button>
+          <button type="button" class="seg-item" data-min="12" role="radio" aria-checked="false">12 分钟</button>
+          <button type="button" class="seg-item" data-min="15" role="radio" aria-checked="false">15 分钟</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">分析精度</span>
+        <div class="seg" id="frameMode" role="radiogroup" aria-label="分析精度">
+          <button type="button" class="seg-item active" data-fm="standard" role="radio" aria-checked="true">标准（3 秒 1 帧）</button>
+          <button type="button" class="seg-item" data-fm="fine" role="radio" aria-checked="false">精细（1 秒 1 帧）</button>
+        </div>
+        <p class="field-hint" id="frameModeHint">标准：每 3 秒抽 1 帧（10 分钟约 200 帧），评分的所有判断都按这个节奏对齐。精细：每秒 1 帧，眨眼、快速转身这类瞬时动作才看得见，10 分钟素材会多花几分钟。</p>
+      </div>
+
+      <div class="notice" id="prepNotice" hidden></div>
+
+      <button class="btn btn-primary btn-lg btn-block" id="btnBegin" type="button">开始录制</button>
+      <p class="fine center">开始后会有 3 秒倒计时。录制中请勿锁屏。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 录制页 ================= -->
+<section class="page page-record" id="page-record">
+  <div class="rec-wrap">
+
+    <header class="rec-top">
+      <span class="rec-dot" id="recDot" aria-hidden="true"></span>
+      <span class="rec-timer" id="recTimer">00:00</span>
+      <span class="rec-remain" id="recRemain">/ 10:00</span>
+      <span class="rec-topic" id="recTopic">未命名课题</span>
+    </header>
+
+    <div class="rec-main">
+      <div class="rec-audio" id="recAudio" hidden>
+        <div class="rec-audio-orb"><svg width="34" height="34"><use href="#i-mic" /></svg></div>
+        <p class="rec-audio-text">正在录音</p>
+        <div class="audio-level big"><i id="recLevel"></i></div>
+      </div>
+      <div class="rec-cam">
+        <video id="recVideo" playsinline autoplay muted></video>
+      </div>
+      <div class="rec-side">
+        <div class="rec-metrics">
+          <div class="metric"><b id="recSpeed">—</b><span>字/分</span></div>
+          <div class="metric"><b id="recPauses">0</b><span>停顿</span></div>
+          <div class="metric"><b id="recFillers">0</b><span>口头禅</span></div>
+          <div class="metric"><b id="recWords">0</b><span>字数</span></div>
+        </div>
+        <canvas class="rec-wave" id="recWave" width="600" height="80" aria-hidden="true"></canvas>
+      </div>
+    </div>
+
+    <div class="rec-live">
+      <div class="rec-live-bar">
+        <span class="live-dot" id="liveDot" aria-hidden="true"></span>
+        <span id="liveState">实时识别</span>
+        <button class="live-retry" type="button" id="btnAsrRetry" hidden>重试识别</button>
+        <span class="live-count" id="liveCount"></span>
+      </div>
+      <div class="rec-lines" id="recLines">
+        <p class="rec-empty">开始讲话，这里会实时出现文字。</p>
+      </div>
+    </div>
+
+    <div class="rec-bottom">
+      <button class="round-btn" type="button" id="btnBoardShot" aria-label="拍摄板书"><svg width="22" height="22"><use href="#i-photo" /></svg></button>
+      <button class="rec-btn" type="button" id="btnStop" aria-label="停止录制"><span class="rec-btn-inner"></span></button>
+      <button class="round-btn" type="button" id="btnRecZoom" aria-label="变焦"><svg width="22" height="22"><use href="#i-zoom" /></svg></button>
+    </div>
+
+    <p class="rec-status" id="recStatus"></p>
+  </div>
+
+  <div class="silence-toast" id="silenceToast" role="status">已静音 5 秒</div>
+  <div class="rec-countdown" id="recCountdown" hidden><span>3</span></div>
+</section>
+
+<!-- ================= 报告页 ================= -->
+<section class="page" id="page-report">
+  <div class="page-bar light-bar">
+    <button class="icon-btn" type="button" data-go="home" aria-label="返回首页"><svg width="18" height="18"><use href="#i-close" /></svg></button>
+    <span class="page-bar-title">评分报告</span>
+    <button class="btn btn-ghost btn-xs" type="button" data-go="history">历史</button>
+  </div>
+  <div id="reportBody"></div>
+</section>
+
+<!-- ================= 历史页 ================= -->
+<section class="page" id="page-history">
+  <div class="page-bar light-bar">
+    <button class="icon-btn" type="button" data-go="home" aria-label="返回首页"><svg width="18" height="18"><use href="#i-close" /></svg></button>
+    <span class="page-bar-title">历史记录</span>
+    <button class="icon-btn" type="button" id="btnWipe" aria-label="清除全部数据"><svg width="18" height="18"><use href="#i-trash" /></svg></button>
+  </div>
+  <div class="wrap">
+    <h1 class="h1-sm">历史记录</h1>
+    <p class="lede">全部存在本机 IndexedDB 里。删除即从磁盘移除，不可恢复。</p>
+    <div id="historyList" class="history-list"></div>
+    <div id="historyEmpty" class="empty" hidden>
+      <svg width="40" height="40"><use href="#i-clock" /></svg>
+      <p>这台设备上还没有记录。</p>
+      <p class="empty-hint">记录存在这个浏览器里，跟网址绑定——换一个地址、换一个浏览器，都看不到之前的。</p>
+      <div class="empty-actions">
+        <button class="btn btn-primary" type="button" data-go="prepare">开始第一次</button>
+        <button class="btn btn-ghost" type="button" id="btnUpload2">上传一段录像</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 恢复提示条 -->
+<div class="recovery" id="recoveryBanner" hidden>
+  <div class="recovery-inner">
+    <p><b>发现上次未完成的录制</b><span id="recoveryMeta">正在检查分段数据…</span></p>
+    <div class="recovery-actions">
+      <button class="btn btn-primary btn-xs" type="button" id="btnRecover">恢复</button>
+      <button class="btn btn-ghost btn-xs" type="button" id="btnDiscardRecovery">丢弃</button>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+<div class="modal-root" id="modalRoot" hidden></div>
+
+<!-- 上传录像：只用音轨做节奏分析，不上传任何东西 -->
+<input type="file" id="uploadFile" accept="video/*,.mp4,.mov,.webm,.mkv,.m4v" hidden />
+<div class="upload-mask" id="uploadMask" hidden aria-live="polite">
+  <div class="upload-card">
+    <div class="upload-spin" aria-hidden="true"></div>
+    <p class="upload-title" id="uploadTitle">正在读取视频…</p>
+    <p class="upload-sub" id="uploadSub">大文件要等十几秒，别关页面。</p>
+  </div>
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/store.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/asr.js"></script>
+<script src="js/asrfile.js"></script>
+<script src="js/media.js"></script>
+<script src="js/pose.js"></script>
+<script src="js/facemodel.js"></script>
+<script src="js/frames.js"></script>
+<script src="js/board.js"></script>
+<script src="js/metrics-speech.js"></script>
+<script src="js/metrics-pose.js"></script>
+<script src="js/metrics-face.js"></script>
+<script src="js/metrics-board.js"></script>
+<script src="js/boardcheck.js"></script>
+<script src="js/theory.js"></script>
+<script src="js/ocr.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/rubric2.js"></script>
+<script src="js/rubric.js"></script>
+<script src="js/ai.js"></script>
+<script src="js/report.js"></script>
+<script src="js/history.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/app.js"></script>
+
+<!-- 自检：样式表或脚本没加载上时，直接把原因写在页面上，而不是让用户面对一堆没有样式的文字 -->
+<script>
+(function () {
+  function show(lines) {
+    if (document.getElementById('selfCheckBanner')) return;
+    var box = document.createElement('div');
+    box.id = 'selfCheckBanner';
+    box.setAttribute('style', [
+      'position:fixed', 'left:0', 'right:0', 'top:0', 'z-index:2147483647',
+      'background:#1d1d1f', 'color:#f5f5f7',
+      'font:14px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif',
+      'padding:18px 22px', 'box-shadow:0 10px 40px rgba(0,0,0,.45)'
+    ].join(';'));
+    box.innerHTML = lines.map(function (l) {
+      return '<div style="margin:2px 0"><b style="color:#ff9f0a">' + l[0] + '</b>' +
+        '<div style="color:#a1a1a6">' + l[1] + '</div></div>';
+    }).join('');
+    document.body.appendChild(box);
+  }
+
+  /* —— 装成 App：注册 Service Worker（http(s) 下才注册，file:// 会直接跳过）—— */
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').then(function (reg) {
+        /* 新版本装好后自动接管，不需要用户手动刷新两次 */
+        reg.addEventListener('updatefound', function () {
+          var sw = reg.installing;
+          if (!sw) return;
+          sw.addEventListener('statechange', function () {
+            if (sw.state === 'installed' && navigator.serviceWorker.controller) {
+              sw.postMessage('skip-waiting');
+            }
+          });
+        });
+      }).catch(function (err) {
+        console.warn('[sw] 注册失败（不影响使用）', err && err.message);
+      });
+    });
+  }
+
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      var h1 = document.querySelector('#hero h1') || document.querySelector('h1');
+      var styled = false;
+      try { styled = !!h1 && getComputedStyle(h1).fontSize !== '32px'; } catch (e) {}
+
+      var lines = [];
+      if (!styled) {
+        lines.push(['样式表没有加载上（css/app.css），所以页面看起来是纯文字。',
+          '请确认 css 和 js 两个文件夹与 index.html 在同一个目录里，没有被单独拷走某个文件。' +
+          '然后把整个文件夹拖进 Chrome，重新打开 index.html。']);
+      }
+      if (!window.App || !window.App.app) {
+        lines.push(['脚本没有加载完（js 目录），所以按钮不会有反应。',
+          '通常是文件被单独移动了。请保持 index.html、css、js 三者的相对位置不变。']);
+      }
+      if (lines.length) show(lines);
+    }, 600);
+  });
+})();
+</script>
+</body>
+</html>

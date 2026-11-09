@@ -1,0 +1,93 @@
+/* ==========================================================================
+   打印样式：报告导出为 PDF 时使用（window.print()）
+   目标：去掉所有交互控件，展开全部扣分明细，黑白高对比，按 A4 分页
+   ========================================================================== */
+
+@page { size: A4; margin: 16mm 14mm; }
+
+@media print {
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* 隐藏与打印无关的元素 */
+  .nav, .scroll-sentinel, .toasts, .modal-root, .recovery,
+  .page-bar, .report-actions, .dim-card summary::after,
+  .hero, #page-home, #page-prepare, #page-record, #page-history,
+  .scroll-hint, .preview-tools, .rec-bottom {
+    display: none !important;
+  }
+
+  /* 只保留报告页 */
+  .page { display: none !important; }
+  #page-report { display: block !important; background: #fff !important; padding: 0 !important; }
+  .page.active { animation: none !important; }
+
+  /* 报告头：去掉黑底，避免大面积耗墨 */
+  .report-hero {
+    background: #fff !important;
+    color: #000 !important;
+    padding: 0 0 10mm 0 !important;
+    border-bottom: 1px solid #d2d2d7;
+  }
+  .report-hero .wrap {
+    display: grid !important;
+    grid-template-columns: 46mm 1fr !important;
+    gap: 8mm !important;
+    align-items: center !important;
+    text-align: left !important;
+  }
+  .ring-wrap, .ring-wrap svg { width: 46mm !important; height: 46mm !important; }
+  .ring-track { stroke: #e5e5ea !important; }
+  .ring-score { font-size: 26pt !important; color: #000 !important; }
+  .ring-unit { color: #6e6e73 !important; }
+  .grade-badge { background: #f5f5f7 !important; color: #000 !important; border: 1px solid #d2d2d7; }
+  .report-summary { color: #000 !important; font-size: 12pt !important; }
+  .report-meta, .report-meta b { color: #444 !important; }
+  .strict-tag { color: #8a4b00 !important; }
+
+  .report-section { padding: 8mm 0 !important; page-break-inside: avoid; }
+  .report-section .wrap { max-width: none !important; }
+  .report-grid-2 { display: block !important; }
+
+  .panel, .dim-card, .sugg-col {
+    background: #fff !important;
+    box-shadow: none !important;
+    border: 1px solid #d2d2d7 !important;
+    border-radius: 8px !important;
+    padding: 4mm !important;
+    margin-bottom: 4mm !important;
+    page-break-inside: avoid;
+  }
+
+  /* 展开所有折叠的明细 */
+  .dim-card details { display: block !important; }
+  .dim-card details > * { display: revert !important; }
+  .ded-list { padding: 0 4mm 3mm !important; }
+  .ded { border-top: 1px solid #e5e5ea !important; font-size: 9.5pt; }
+  .ded-time { color: #0071e3 !important; background: none !important; }
+  .ded-pts { color: #c00 !important; }
+
+  #radar { width: 90mm !important; height: 90mm !important; margin: 0 auto; }
+  .radar-grid, .radar-axis { stroke: #d2d2d7 !important; }
+  .radar-shape { fill: rgba(0, 113, 227, .12) !important; stroke: #0071e3 !important; }
+  .radar-label, .radar-val { fill: #333 !important; }
+
+  .timeline-panel { page-break-inside: avoid; }
+  #timeline { height: 22mm !important; }
+
+  .sugg-grid { display: block !important; }
+  .sugg-col { page-break-inside: avoid; }
+  .sugg-tag { border: 1px solid #d2d2d7; }
+
+  /* 打印页脚 */
+  #page-report::after {
+    content: "试讲评分官 · 本次评分采用严格标准（教师编面试口径）· 全部数据由本机生成";
+    display: block; margin-top: 8mm; padding-top: 3mm;
+    border-top: 1px solid #d2d2d7;
+    font-size: 8.5pt; color: #86868b; text-align: center;
+  }
+}
