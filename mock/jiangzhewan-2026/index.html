@@ -215,6 +215,7 @@
       </aside>
 
 <article class="paper">
+<div class="note"><p><b>先看结论：</b>（1）\(q=\frac12\)，\(a_n=2^{-(n-1)}\)；（2）从 \(k+1\) 起任取若干项之和小于 \(a_k\)，因为尾巴是不超过 \(a_{k+1}\) 的等比和；（3）\(S_B=S_C\Rightarrow B=C\)，三种证法都归结到“最小的不同下标”或“最大的不同下标”。</p></div>
   <h2 id="problem">原题</h2>
   <p>设数列 \(\{a_n\}\) 为等比数列。对有限集合 \(T=\{t_1,t_2,\dots,t_k\}\subset\mathbb N^*\)，定义</p>
   <div class="math">\[
@@ -257,7 +258,7 @@
   \begin{aligned}
   S_T
   &=\sum_{i=1}^{k}\frac1{2^{t_i-1}}
-  \le \sum_{j=k+1}^{t_k}\frac1{2^{j-1}}\
+  \le \sum_{j=k+1}^{t_k}\frac1{2^{j-1}}\\
   &=\frac1{2^k}-\frac1{2^{t_k-1}}
   &lt;\frac1{2^{k-1}}=a_k.
   \end{aligned}
@@ -265,8 +266,7 @@
   <p>最后一步用了 \(t_k\ge k+1\)，所以减去的项为正。故 \(S_T&lt;a_k\)。</p>
 
   <h2 id="part3">第（3）问</h2>
-  <p>先给出参考答案的写法。</p>
-  <h3 id="official">参考答案：从第一个不相同的下标入手</h3>
+    <h3 id="official">参考答案：从第一个不相同的下标入手</h3>
   <p>设</p>
   <div class="math">\[
   B=\{b_1&lt;b_2&lt;\cdots&lt;b_k\},\qquad
