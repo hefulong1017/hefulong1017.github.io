@@ -23,7 +23,7 @@ html:not([data-theme="dark"]) {
     radial-gradient(130% 110% at 12% -10%, rgba(255, 255, 255, .72), transparent 56%),
     radial-gradient(90% 80% at 100% 0%, rgba(122, 168, 255, .2), transparent 62%),
     radial-gradient(120% 120% at 0% 100%, rgba(255, 196, 140, .16), transparent 60%),
-    linear-gradient(150deg, rgba(255, 255, 255, .58), rgba(255, 255, 255, .26) 52%, rgba(255, 255, 255, .44));
+    linear-gradient(150deg, rgba(255, 255, 255, .46), rgba(255, 255, 255, .16) 52%, rgba(255, 255, 255, .32));
   --lg-rim: rgba(255, 255, 255, .95);
   --lg-edge: rgba(255, 255, 255, .72);
   --lg-shadow: 0 26px 70px -28px rgba(52, 38, 22, .38), 0 8px 22px -14px rgba(52, 38, 22, .22);
@@ -308,7 +308,7 @@ html.lg-ready .hero { animation: lgHeroIn .85s var(--lg-spring) both; }
   inset: -22%;
   z-index: 0;
   pointer-events: none;
-  filter: blur(64px) saturate(150%);
+  filter: blur(46px) saturate(165%);
   opacity: .85;
   animation: lgFieldDrift 38s ease-in-out infinite alternate;
   will-change: transform;
@@ -320,11 +320,11 @@ html.lg-ready .hero { animation: lgHeroIn .85s var(--lg-spring) both; }
   border-radius: 50%;
   mix-blend-mode: normal;
 }
-.lg-backdrop i:nth-child(1) { left: 2%;  top: 2%;  width: 48vw; height: 48vw; background: rgba(74, 132, 255, .62); }
-.lg-backdrop i:nth-child(2) { left: 46%; top: -8%; width: 42vw; height: 42vw; background: rgba(150, 118, 255, .52); }
-.lg-backdrop i:nth-child(3) { left: 62%; top: 42%; width: 46vw; height: 46vw; background: rgba(255, 168, 116, .5); }
-.lg-backdrop i:nth-child(4) { left: -6%; top: 56%; width: 44vw; height: 44vw; background: rgba(96, 226, 206, .46); }
-.lg-backdrop i:nth-child(5) { left: 28%; top: 88%; width: 40vw; height: 40vw; background: rgba(255, 210, 122, .42); }
+.lg-backdrop i:nth-child(1) { left: 2%;  top: 2%;  width: 48vw; height: 48vw; background: rgba(74, 132, 255, .78); }
+.lg-backdrop i:nth-child(2) { left: 46%; top: -8%; width: 42vw; height: 42vw; background: rgba(150, 118, 255, .68); }
+.lg-backdrop i:nth-child(3) { left: 62%; top: 42%; width: 46vw; height: 46vw; background: rgba(255, 168, 116, .66); }
+.lg-backdrop i:nth-child(4) { left: -6%; top: 56%; width: 44vw; height: 44vw; background: rgba(96, 226, 206, .6); }
+.lg-backdrop i:nth-child(5) { left: 28%; top: 88%; width: 40vw; height: 40vw; background: rgba(255, 210, 122, .56); }
 
 html[data-theme="dark"] .lg-backdrop { opacity: .3; }
 
