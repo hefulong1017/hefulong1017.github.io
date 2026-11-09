@@ -1,0 +1,372 @@
+/* ==========================================================================
+   liquid-glass.css — iOS 26 "liquid glass" layer for hefulong1017.github.io
+   Loaded after page-transition.css so it can strengthen that base layer.
+   Layers per surface: tint gradient → backdrop blur/saturate → specular rim
+   → pointer-tracked highlight (::after) → edge shine (::before).
+   ========================================================================== */
+
+:root {
+  --lg-blur: 44px;
+  --lg-sat: 200%;
+  --lg-spring: cubic-bezier(.22, 1, .36, 1);
+  --lg-ease: cubic-bezier(.4, 0, .2, 1);
+  --mx: 50vw;
+  --my: 30vh;
+  --gx: 50%;
+  --gy: 0%;
+}
+
+/* ---------- light theme (also the fallback when no data-theme is set) ---- */
+html[data-theme="light"],
+html:not([data-theme="dark"]) {
+  --lg-tint:
+    radial-gradient(130% 110% at 12% -10%, rgba(255, 255, 255, .72), transparent 56%),
+    radial-gradient(90% 80% at 100% 0%, rgba(122, 168, 255, .2), transparent 62%),
+    radial-gradient(120% 120% at 0% 100%, rgba(255, 196, 140, .16), transparent 60%),
+    linear-gradient(150deg, rgba(255, 255, 255, .58), rgba(255, 255, 255, .26) 52%, rgba(255, 255, 255, .44));
+  --lg-rim: rgba(255, 255, 255, .95);
+  --lg-edge: rgba(255, 255, 255, .72);
+  --lg-shadow: 0 26px 70px -28px rgba(52, 38, 22, .38), 0 8px 22px -14px rgba(52, 38, 22, .22);
+  --lg-inner: inset 0 1px 0 rgba(255, 255, 255, 1), inset 0 -1px 0 rgba(24, 32, 48, .06);
+  --lg-hi: rgba(255, 255, 255, .9);
+}
+
+/* ---------- dark theme --------------------------------------------------- */
+html[data-theme="dark"] {
+  --lg-tint:
+    radial-gradient(130% 110% at 14% -8%, rgba(255, 255, 255, .22), transparent 56%),
+    radial-gradient(90% 80% at 100% 0%, rgba(120, 170, 255, .18), transparent 64%),
+    radial-gradient(140% 120% at 0% 100%, rgba(180, 140, 255, .12), transparent 62%),
+    linear-gradient(150deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .045) 50%, rgba(255, 255, 255, .09));
+  --lg-rim: rgba(255, 255, 255, .34);
+  --lg-edge: rgba(255, 255, 255, .16);
+  --lg-shadow: 0 30px 80px -30px rgba(0, 0, 0, .72), 0 10px 28px -18px rgba(0, 0, 0, .55);
+  --lg-inner: inset 0 1px 0 rgba(255, 255, 255, .3), inset 0 -1px 0 rgba(0, 0, 0, .3);
+  --lg-hi: rgba(255, 255, 255, .35);
+}
+
+/* ---------- tier 1: large panels ---------------------------------------- */
+html :is(
+  .portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+  .code-card, .toolbox, .teach-card, .math-cover, .panel, .side, .reader,
+  .paper, .card, .cat, .mock-card, .q-card, .qa-card, .example, .method,
+  .figure, .console, .compare-grid, .apps-acc, .code-acc
+) {
+  position: relative;
+  isolation: isolate;
+  background: var(--lg-tint) !important;
+  background-color: transparent !important;
+  border: 1px solid var(--lg-edge) !important;
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat)) brightness(1.04) contrast(1.02);
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat)) brightness(1.04) contrast(1.02);
+  box-shadow: var(--lg-shadow), var(--lg-inner) !important;
+  transition:
+    box-shadow .5s var(--lg-spring),
+    border-color .4s var(--lg-ease),
+    scale .45s var(--lg-spring),
+    filter .4s var(--lg-ease);
+}
+
+/* specular rim: a hairline gradient that reads as a polished edge */
+html :is(
+  .portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+  .code-card, .toolbox, .teach-card, .math-cover, .panel, .side, .reader,
+  .paper, .card, .cat, .mock-card, .q-card, .qa-card, .example, .method,
+  .figure, .console
+)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, .95),
+    rgba(255, 255, 255, .12) 26%,
+    rgba(255, 255, 255, 0) 46%,
+    rgba(255, 255, 255, .05) 62%,
+    rgba(255, 255, 255, .55)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: .75;
+  pointer-events: none;
+  z-index: 1;
+}
+html[data-theme="dark"] :is(
+  .portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+  .code-card, .toolbox, .teach-card, .math-cover, .panel, .side, .reader,
+  .paper, .card, .cat, .mock-card, .q-card, .qa-card, .example, .method,
+  .figure, .console
+)::before {
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, .55),
+    rgba(255, 255, 255, .06) 28%,
+    rgba(255, 255, 255, 0) 48%,
+    rgba(255, 255, 255, .04) 64%,
+    rgba(255, 255, 255, .28)
+  );
+  opacity: .8;
+}
+
+/* pointer-tracked caustic highlight */
+html :is(
+  .portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+  .code-card, .toolbox, .teach-card, .math-cover, .panel, .side, .reader,
+  .paper, .card, .cat, .mock-card, .q-card, .qa-card, .example, .method,
+  .figure, .console
+)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    220px circle at var(--gx) var(--gy),
+    rgba(255, 255, 255, .55),
+    rgba(255, 255, 255, .12) 38%,
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity .45s var(--lg-ease);
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: soft-light;
+}
+html[data-theme="dark"] :is(
+  .portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+  .code-card, .toolbox, .teach-card, .math-cover, .panel, .side, .reader,
+  .paper, .card, .cat, .mock-card, .q-card, .qa-card, .example, .method,
+  .figure, .console
+)::after {
+  background: radial-gradient(
+    220px circle at var(--gx) var(--gy),
+    rgba(160, 200, 255, .38),
+    rgba(160, 200, 255, .08) 40%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+}
+html :is(
+  .portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+  .code-card, .toolbox, .teach-card, .math-cover, .panel, .side, .reader,
+  .paper, .card, .cat, .mock-card, .q-card, .qa-card, .example, .method,
+  .figure, .console
+):hover::after { opacity: 1; }
+
+/* keep interactive children above the sheen */
+html :is(
+  .pinn-feature, .feature, .app-card, .card, .cat, .mock-card, .q-card
+) > * { position: relative; z-index: 2; }
+
+/* hover: lift + bloom */
+@media (hover: hover) {
+  html :is(
+    .portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+    .code-card, .toolbox, .teach-card, .math-cover, .cat, .mock-card,
+    .q-card, .qa-card, .example, .method, .figure
+  ):hover {
+    border-color: var(--lg-rim) !important;
+    box-shadow:
+      0 34px 90px -30px rgba(52, 38, 22, .45),
+      0 10px 26px -16px rgba(52, 38, 22, .28),
+      var(--lg-inner) !important;
+    scale: 1.006;
+  }
+  html[data-theme="dark"] :is(
+    .portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+    .code-card, .toolbox, .teach-card, .math-cover, .cat, .mock-card,
+    .q-card, .qa-card, .example, .method, .figure
+  ):hover {
+    box-shadow:
+      0 38px 100px -32px rgba(0, 0, 0, .8),
+      0 12px 30px -18px rgba(0, 0, 0, .6),
+      var(--lg-inner) !important;
+  }
+}
+
+/* ---------- tier 2: small controls -------------------------------------- */
+html :is(.chip, .tag, .pill, .back, .theme) {
+  background: var(--lg-tint) !important;
+  background-color: transparent !important;
+  border: 1px solid var(--lg-edge) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(180%) brightness(1.05);
+  backdrop-filter: blur(22px) saturate(180%) brightness(1.05);
+  box-shadow: 0 10px 28px -18px rgba(52, 38, 22, .35), var(--lg-inner) !important;
+  transition: border-color .35s var(--lg-ease), box-shadow .4s var(--lg-spring), scale .35s var(--lg-spring);
+}
+
+/* the "先看结论" callout keeps its accent tint, but as glass */
+html :is(.note) {
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, .34), rgba(255, 255, 255, 0)) ,
+    color-mix(in srgb, var(--accent) 12%, transparent) !important;
+  border-left: 3px solid color-mix(in srgb, var(--accent) 70%, transparent) !important;
+}
+
+@media (hover: hover) {
+  html :is(.chip, .btn, .pill, .back, .theme, .button):hover {
+    border-color: var(--lg-rim) !important;
+    box-shadow: 0 16px 36px -18px rgba(52, 38, 22, .4), var(--lg-inner) !important;
+  }
+  html :is(.btn, .button, .chip, .cat, .mock-card, .feature, .app-card):active {
+    scale: .975;
+  }
+}
+
+/* ---------- navigation: progressive frosted bar -------------------------- */
+html .nav {
+  background: color-mix(in srgb, var(--bg) 62%, transparent) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.06);
+  backdrop-filter: blur(28px) saturate(200%) brightness(1.06);
+  border-bottom: 1px solid var(--lg-edge) !important;
+  box-shadow: 0 12px 40px -24px rgba(30, 40, 60, .35);
+  transition: background .45s var(--lg-ease), box-shadow .45s var(--lg-ease);
+}
+html .nav.is-scrolled,
+html .nav.scrolled {
+  background: color-mix(in srgb, var(--bg) 82%, transparent) !important;
+  box-shadow: 0 18px 50px -26px rgba(30, 40, 60, .45);
+}
+html[data-theme="dark"] .nav {
+  background: color-mix(in srgb, #12141a 58%, transparent) !important;
+}
+
+/* ---------- pointer light across the page -------------------------------- */
+.lg-pointer-light {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .6s var(--lg-ease);
+  background:
+    radial-gradient(360px circle at var(--mx) var(--my), rgba(255, 255, 255, .5), transparent 62%),
+    radial-gradient(760px circle at var(--mx) var(--my), rgba(150, 190, 255, .18), transparent 70%);
+  mix-blend-mode: soft-light;
+}
+html[data-theme="dark"] .lg-pointer-light {
+  background:
+    radial-gradient(380px circle at var(--mx) var(--my), rgba(168, 205, 255, .3), transparent 62%),
+    radial-gradient(820px circle at var(--mx) var(--my), rgba(120, 90, 255, .16), transparent 72%);
+  mix-blend-mode: screen;
+}
+.lg-pointer-light.is-on { opacity: 1; }
+
+/* ---------- entrance motion ---------------------------------------------- */
+@keyframes lgRise {
+  from { opacity: 0; translate: 0 18px; scale: .985; filter: blur(6px); }
+  to   { opacity: 1; translate: 0 0; scale: 1; filter: blur(0); }
+}
+html.lg-ready :is(
+  .portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+  .code-card, .toolbox, .teach-card, .math-cover, .cat, .mock-card,
+  .q-card, .qa-card, .example, .method, .figure
+) {
+  animation: lgRise .72s var(--lg-spring) both;
+  animation-delay: calc(var(--lg-i, 0) * 55ms);
+}
+@keyframes lgHeroIn {
+  from { opacity: 0; translate: 0 22px; filter: blur(8px); }
+  to   { opacity: 1; translate: 0 0; filter: blur(0); }
+}
+html.lg-ready .hero { animation: lgHeroIn .85s var(--lg-spring) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.lg-ready :is(.hero, .portrait, .pinn-feature, .feature, .product, .app-card,
+    .acc-block, .code-card, .toolbox, .teach-card, .math-cover, .cat, .mock-card,
+    .q-card, .qa-card, .example, .method, .figure) {
+    animation: none !important;
+    opacity: 1 !important;
+    translate: none !important;
+    scale: none !important;
+    filter: none !important;
+  }
+  .lg-pointer-light { display: none !important; }
+}
+
+/* ---------- mobile: keep real glass, just cheaper ------------------------ */
+@media (max-width: 900px) {
+  :root { --lg-blur: 26px; }
+  html :is(.portrait, .pinn-feature, .feature, .product, .app-card, .acc-block,
+    .code-card, .toolbox, .teach-card, .math-cover, .panel, .side, .reader,
+    .paper, .card, .cat, .mock-card, .q-card, .qa-card, .example, .method,
+    .figure, .console) {
+    -webkit-backdrop-filter: blur(26px) saturate(170%) !important;
+    backdrop-filter: blur(26px) saturate(170%) !important;
+  }
+}
+
+/* ==========================================================================
+   colour field — a soft mesh behind everything so the glass has something
+   worth refracting. Injected by liquid-glass.js as .lg-backdrop.
+   ========================================================================== */
+.lg-backdrop {
+  position: fixed;
+  inset: -22%;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(64px) saturate(150%);
+  opacity: .85;
+  animation: lgFieldDrift 38s ease-in-out infinite alternate;
+  will-change: transform;
+  transition: opacity .6s var(--lg-ease);
+}
+.lg-backdrop i {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  mix-blend-mode: normal;
+}
+.lg-backdrop i:nth-child(1) { left: 2%;  top: 2%;  width: 48vw; height: 48vw; background: rgba(74, 132, 255, .62); }
+.lg-backdrop i:nth-child(2) { left: 46%; top: -8%; width: 42vw; height: 42vw; background: rgba(150, 118, 255, .52); }
+.lg-backdrop i:nth-child(3) { left: 62%; top: 42%; width: 46vw; height: 46vw; background: rgba(255, 168, 116, .5); }
+.lg-backdrop i:nth-child(4) { left: -6%; top: 56%; width: 44vw; height: 44vw; background: rgba(96, 226, 206, .46); }
+.lg-backdrop i:nth-child(5) { left: 28%; top: 88%; width: 40vw; height: 40vw; background: rgba(255, 210, 122, .42); }
+
+html[data-theme="dark"] .lg-backdrop { opacity: .3; }
+
+/* small readout cells inside the PINNLab console must stay dark for legibility */
+html[data-theme="dark"] .console .mini,
+html[data-theme="dark"] .screen .mini {
+  background: rgba(8, 10, 15, .5) !important;
+  border-color: rgba(255, 255, 255, .12) !important;
+}
+
+/* editorial pages (article / index sheets) get a warm, quieter field so the
+   cream palette survives */
+.lg-backdrop.is-warm {
+  opacity: .55;
+  filter: blur(78px) saturate(135%);
+}
+.lg-backdrop.is-warm i:nth-child(1) { background: rgba(255, 196, 130, .5); }
+.lg-backdrop.is-warm i:nth-child(2) { background: rgba(238, 160, 150, .42); }
+.lg-backdrop.is-warm i:nth-child(3) { background: rgba(255, 222, 170, .45); }
+.lg-backdrop.is-warm i:nth-child(4) { background: rgba(196, 226, 208, .4); }
+.lg-backdrop.is-warm i:nth-child(5) { background: rgba(206, 190, 240, .42); }
+html[data-theme="dark"] .lg-backdrop.is-warm { opacity: .22; }
+
+/* keep page content above the colour field */
+body > nav,
+body > header,
+body > main,
+body > footer,
+.shell,
+.layout,
+.hero {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes lgFieldDrift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(2.2%, -1.6%, 0) scale(1.05); }
+  100% { transform: translate3d(-1.8%, 2%, 0) scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-backdrop { animation: none !important; }
+}
+
