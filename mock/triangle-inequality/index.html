@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../../safe-store.js?v=3"></script>
+  <title>三角不等式四选一 · 模考选择题第10题</title>
+  <meta name="description" content="已知 x≠y，判断 sin x±sin y 与 sin(x±y)、2sin((x±y)/2) 的大小：A 假、B 真、C 真、D 假。和差化积与半角正切代换两种简洁写法。">
+  <meta name="theme-color" content="#f4efe6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b64a32'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='30' fill='%23fbf7ef' text-anchor='middle'%3E题%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../../katex.min.css"></noscript>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --bg-soft: #fbf7ef;
+      --paper: #fffdf8;
+      --ink: #1e1c18;
+      --muted: #6f6a60;
+      --faint: #9b9488;
+      --line: rgba(30, 28, 24, .14);
+      --line-strong: rgba(30, 28, 24, .28);
+      --accent: #b64a32;
+      --accent-soft: rgba(182, 74, 50, .1);
+      --serif: "Iowan Old Style", "Palatino Linotype", "Noto Serif SC", "Songti SC", "SimSun", serif;
+      --sans: "Inter", "SF Pro Text", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --ease: cubic-bezier(.22, .61, .36, 1);
+      --max: 1120px;
+    }
+    [data-theme="dark"] {
+      --bg: #141412;
+      --bg-soft: #1a1916;
+      --paper: #1b1a17;
+      --ink: #f2ece1;
+      --muted: #a8a094;
+      --faint: #777166;
+      --line: rgba(242, 236, 225, .15);
+      --line-strong: rgba(242, 236, 225, .3);
+      --accent: #e08363;
+      --accent-soft: rgba(224, 131, 99, .12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font-family: var(--sans); line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      transition: background .4s var(--ease), color .4s var(--ease);
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      opacity: .16;
+      background-image: radial-gradient(circle at 1px 1px, var(--line-strong) 1px, transparent 0);
+      background-size: 22px 22px;
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 52%);
+    }
+    ::selection { background: var(--accent); color: var(--bg-soft); }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; color: inherit; }
+    .shell { position: relative; z-index: 1; width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+    .read-progress { position: fixed; left: 0; top: 0; height: 2px; width: 100%; z-index: 60; pointer-events: none; }
+    .read-progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), #d99b63); }
+
+    .top { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .brand-mark { display: grid; place-items: center; width: 34px; height: 34px; flex: 0 0 auto; border: 1px solid var(--ink); border-radius: 50%; font-family: var(--serif); font-size: 16px; transition: background .25s, color .25s; }
+    .brand:hover .brand-mark { background: var(--ink); color: var(--bg); }
+    .brand-text { display: grid; gap: 1px; }
+    .brand-name { font-size: 13px; font-weight: 600; letter-spacing: .08em; }
+    .brand-en { font-size: 9px; color: var(--faint); letter-spacing: .18em; }
+    .top-right { display: flex; align-items: center; gap: 10px; }
+    .back, .theme { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line-strong); background: transparent; border-radius: 999px; padding: 7px 12px; color: var(--muted); font-size: 10px; letter-spacing: .1em; cursor: pointer; transition: .25s; }
+    .back:hover, .theme:hover { border-color: var(--ink); color: var(--ink); background: var(--accent-soft); }
+    .theme-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+    .hero { padding: clamp(54px, 9vh, 96px) 0 42px; }
+    .eyebrow { display: flex; align-items: center; gap: 12px; margin: 0; color: var(--faint); font-size: 10px; letter-spacing: .24em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--accent); }
+    h1 { margin: 20px 0 0; font-family: var(--serif); font-weight: 500; font-size: clamp(2.35rem, 6vw, 4.5rem); line-height: 1.16; letter-spacing: -.045em; }
+    .hero .lead { max-width: 42em; margin: 22px 0 0; color: var(--muted); font-size: 14.5px; line-height: 2; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+    .hero-meta span { border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; color: var(--faint); font-size: 10px; letter-spacing: .06em; }
+    .hero-meta span:first-child { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 34%, var(--line)); background: var(--accent-soft); }
+
+    .layout { display: grid; grid-template-columns: 190px minmax(0, 780px); gap: clamp(34px, 5vw, 64px); justify-content: center; padding-bottom: 70px; }
+    .toc { position: sticky; top: 28px; align-self: start; border-left: 1px solid var(--line); padding: 2px 0 2px 18px; }
+    .toc-title { margin: 0 0 12px; color: var(--faint); font-size: 9px; letter-spacing: .22em; }
+    .toc a { display: block; padding: 5px 0; color: var(--faint); font-size: 11.5px; line-height: 1.55; transition: color .2s, transform .2s; }
+    .toc a:hover { color: var(--ink); transform: translateX(2px); }
+    .toc a.sub { padding-left: 10px; font-size: 10.5px; color: color-mix(in srgb, var(--faint) 78%, transparent); }
+    .toc a.active { color: var(--accent); }
+    .toc a.active::before { content: ""; display: inline-block; width: 5px; height: 5px; margin-right: 6px; border-radius: 50%; background: var(--accent); vertical-align: 1px; }
+
+    .paper { min-width: 0; border: 1px solid var(--line); border-radius: 26px; background: var(--paper); padding: clamp(28px, 5vw, 62px); box-shadow: 0 24px 70px rgba(40, 30, 20, .07); }
+    .paper > h2:first-child { margin-top: 0; }
+    .paper h2 { position: relative; margin: 58px 0 22px; padding-top: 24px; border-top: 1px solid var(--line); font-family: var(--serif); font-weight: 500; font-size: clamp(24px, 3vw, 31px); line-height: 1.3; letter-spacing: -.02em; scroll-margin-top: 28px; }
+    .paper > h2:first-of-type { border-top: 0; padding-top: 0; margin-top: 0; }
+    .paper h3 { margin: 38px 0 13px; font-family: var(--serif); font-size: 19px; font-weight: 600; line-height: 1.5; letter-spacing: -.01em; scroll-margin-top: 28px; }
+    .paper p { margin: 0 0 17px; color: var(--ink); font-family: var(--serif); font-size: 16.5px; line-height: 2.02; }
+    .paper strong { font-weight: 700; color: var(--ink); }
+    .paper ol, .paper ul { margin: 0 0 18px; padding-left: 1.5em; font-family: var(--serif); font-size: 16px; line-height: 2; }
+    .paper li { margin: 4px 0; padding-left: .2em; }
+    .paper li::marker { color: var(--accent); }
+    .math { margin: 6px 0 20px; padding: 5px 0; overflow-x: auto; overflow-y: hidden; }
+    .katex-display { margin: 0 !important; padding: 3px 0; }
+    .paper code { font-family: var(--mono); font-size: .88em; background: var(--accent-soft); border-radius: 5px; padding: 1px 5px; }
+
+    #official::before, #poly::before, #compare::before {
+      display: none; align-items: center; gap: 7px; margin-bottom: 12px;
+      border-radius: 999px; padding: 4px 10px; font-family: var(--sans);
+      font-size: 9px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    }
+    #official::before { content: "标准解法"; color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 26%, transparent); }
+    #poly::before { content: "另一种算法"; color: var(--bg-soft); background: var(--ink); border: 1px solid var(--ink); }
+    #compare::before { content: "比较"; color: var(--faint); border: 1px solid var(--line); }
+    #poly { border-top: 1px solid var(--line); }
+
+    .note { margin: 18px 0 22px; padding: 15px 17px; border-left: 2px solid var(--accent); border-radius: 0 12px 12px 0; background: var(--accent-soft); }
+    .note p { margin: 0; font-size: 14.5px; line-height: 1.9; color: var(--muted); }
+    .note b { color: var(--ink); }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0 18px; }
+    .compare-col { padding: 17px 18px; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--bg-soft) 60%, transparent); }
+    .compare-col > span { display: block; margin-bottom: 7px; color: var(--accent); font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .12em; }
+    .compare-col.alt > span { color: var(--ink); }
+    .compare-col p { margin: 0; font-size: 14.5px; line-height: 1.95; color: var(--muted); }
+    .compare-kicker { margin: 0 0 4px !important; color: var(--faint) !important; font-family: var(--sans) !important; font-size: 10px !important; letter-spacing: .16em; text-transform: uppercase; }
+    .compare-end { margin-top: 20px !important; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted) !important; font-size: 14.5px !important; }
+
+    footer { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 16px; width: min(var(--max), calc(100% - 48px)); margin: 0 auto; padding: 22px 0 32px; border-top: 1px solid var(--line); color: var(--faint); font-size: 10px; letter-spacing: .06em; }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; gap: 20px; }
+      .toc { position: static; display: flex; gap: 14px; overflow-x: auto; border-left: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 11px 0; margin-bottom: 4px; white-space: nowrap; scrollbar-width: none; }
+      .toc::-webkit-scrollbar { display: none; }
+      .toc-title { display: none; }
+      .toc a { flex: 0 0 auto; padding: 3px 0; }
+      .toc a.sub { display: none; }
+    }
+    @media (max-width: 640px) {
+      .shell { width: calc(100% - 30px); }
+      .top { padding: 16px 0; }
+      .back span { display: none; }
+      .hero { padding: 46px 0 34px; }
+      h1 { font-size: 2.5rem; }
+      .paper { border-radius: 18px; padding: 23px 20px 26px; }
+      .paper p { font-size: 15.5px; line-height: 1.98; }
+      .paper h2 { margin-top: 42px; font-size: 25px; }
+      .paper h3 { margin-top: 30px; font-size: 18px; }
+      .compare-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 5px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition-duration: .001ms !important; animation-duration: .001ms !important; }
+    }
+  
+    @media (max-width: 600px) {
+      .brand-en { display: none; }
+      .top-right { gap: 6px; }
+      .back, .theme { padding: 6px 9px; white-space: nowrap; }
+      .top { gap: 10px; }
+    }
+
+    .table-wrap { overflow-x: auto; margin: 16px 0 20px; }
+    .table-wrap table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .table-wrap th, .table-wrap td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+    .table-wrap th { color: var(--faint); font-size: 10px; font-weight: 500; letter-spacing: .08em; }
+    .table-wrap td:first-child { white-space: nowrap; color: var(--muted); }
+</style>
+  <style>
+    .table-wrap table.fixed { table-layout: fixed; }
+    .table-wrap td.c, .table-wrap th.c { text-align: center; white-space: nowrap; }
+    .table-wrap td { word-break: break-word; }
+  </style>
+
+  <link rel="stylesheet" href="../../page-transition.css?v=24">
+</head>
+<body>
+<div class="read-progress" aria-hidden="true"><span id="read-bar"></span></div>
+<div class="shell">
+  <header class="top">
+    <a class="brand" href="../../" aria-label="返回何富龙主页">
+      <span class="brand-mark" aria-hidden="true">何</span>
+      <span class="brand-text"><span class="brand-name">何富龙</span><span class="brand-en">MOCK SOLUTIONS</span></span>
+    </a>
+    <div class="top-right">
+      <a class="back" href="../">← <span>模考分享</span></a>
+      <a class="back" href="../../gaokao.html">高考题库</a>
+      <button class="theme" id="theme-toggle" type="button" aria-label="切换深浅色主题"><span class="theme-dot" aria-hidden="true"></span><span id="theme-label">LIGHT</span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Mock Exam / 选择题 · 第 10 题</p>
+      <h1>三角不等式<br>四选一</h1>
+      <p class="lead">同一组正弦和、正弦差，分别与和角、半角形式比大小。四个命题两个真两个假，先给结论，再给最省字的判断。</p>
+      <div class="hero-meta">
+        <span>模考选择题 · 第 10 题</span>
+        <span>4 个选项</span>
+        <span>答案 BC</span>
+        <span>原答案 + 半角正切代换</span>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="toc" aria-label="文章目录">
+        <p class="toc-title">CONTENTS</p>
+        <a href="#problem">原题</a>
+        <a href="#answer">结论速览</a>
+        <a href="#quick">逐项判断</a>
+        <a class="sub" href="#qa">A</a>
+        <a class="sub" href="#qb">B</a>
+        <a class="sub" href="#qc">C</a>
+        <a class="sub" href="#qd">D</a>
+        <a href="#tan">另解：半角代换</a>
+        <a class="sub" href="#setup">代换与平方差</a>
+        <a class="sub" href="#tan-cases">四项判定</a>
+        <a class="sub" href="#table">一张表</a>
+        <a href="#compare">两法对照</a>
+      </aside>
+
+      <article class="paper">
+
+        <div class="note"><p><b>先看结论：</b>B、C 为真，A、D 为假，答案 <b>BC</b>。判断只用一句话：和差化积之后，\(\sin x\pm\sin y\) 与 \(\sin(x\pm y)\)、\(2\sin\frac{x\pm y}{2}\) 的差别，全在余弦因子是否小于 \(1\)。</p></div>
+
+        <h2 id="problem">原题</h2>
+        <p>已知 \(x\ne y\)，则下列命题为真命题的是（　　）。</p>
+        <p><b>A．</b>\(\exists\,x,y\in\left(0,\dfrac{\pi}{2}\right),\ \sin x+\sin y&lt;\sin(x+y)\)</p>
+        <p><b>B．</b>\(\forall\,x,y\in\left(0,\dfrac{\pi}{2}\right),\ \sin x+\sin y&lt;2\sin\dfrac{x+y}{2}\)</p>
+        <p><b>C．</b>\(\exists\,x,y\in\left(0,\dfrac{\pi}{2}\right),\ \sin x-\sin y&lt;\sin(x-y)\)</p>
+        <p><b>D．</b>\(\forall\,x,y\in\left(0,\dfrac{\pi}{2}\right),\ \sin x-\sin y&lt;2\sin\dfrac{x-y}{2}\)</p>
+
+        <h2 id="answer">结论速览</h2>
+        <p>四个选项是两对：A 与 B 比 \(\sin x+\sin y\)，C 与 D 比 \(\sin x-\sin y\)。每一对里，一个问“是否存在”，一个问“是否恒成立”，而判断依据都是同一个余弦因子。</p>
+        <p><b>A 假。</b>\(\sin(x+y)=\sin x\cos y+\cos x\sin y&lt;\sin x+\sin y\)，方向永远相反，“存在”也救不回来。</p>
+        <p><b>B 真。</b>和差化积后多出因子 \(\cos\dfrac{x-y}{2}\in(0,1)\)，所以恒更小。</p>
+        <p><b>C 真。</b>取 \(x&gt;y\)，则 \(\cos\dfrac{x+y}{2}&lt;\cos\dfrac{x-y}{2}\)，存在一组就够。</p>
+        <p><b>D 假。</b>取 \(x&lt;y\)，\(\sin\dfrac{x-y}{2}&lt;0\) 乘上小于 \(1\) 的正数，不等号反向。</p>
+
+        <h2 id="quick">逐项判断</h2>
+
+        <h3 id="qa">A：恒为反向，故假</h3>
+        <p>由 \(x,y\in\left(0,\dfrac{\pi}{2}\right)\) 得 \(0&lt;\cos x,\cos y&lt;1\)，且 \(\sin x,\sin y&gt;0\)，所以</p>
+        <div class="math">\[
+        \sin(x+y)=\sin x\cos y+\cos x\sin y&lt;\sin x+\sin y .
+        \]</div>
+        <p>不等号方向与 A 中的写法相反，“存在”也无从谈起，故 <b>A 假</b>。</p>
+
+        <h3 id="qb">B：恒成立，故真</h3>
+        <p>和差化积：</p>
+        <div class="math">\[
+        \sin x+\sin y=2\sin\frac{x+y}{2}\cos\frac{x-y}{2}.
+        \]</div>
+        <p>由 \(x\ne y\) 得 \(0&lt;\cos\dfrac{x-y}{2}&lt;1\)，于是</p>
+        <div class="math">\[
+        \sin x+\sin y&lt;2\sin\frac{x+y}{2},
+        \]</div>
+        <p>对任意符合条件的 \(x,y\) 都成立，<b>B 真</b>。</p>
+
+        <h3 id="qc">C：取 \(x&gt;y\) 即可，故真</h3>
+        <p>设 \(x&gt;y\)，则 \(0&lt;\dfrac{x-y}{2}&lt;\dfrac{x+y}{2}&lt;\dfrac{\pi}{2}\)。余弦在 \(\left(0,\dfrac{\pi}{2}\right)\) 上递减，故 \(\cos\dfrac{x+y}{2}&lt;\cos\dfrac{x-y}{2}\)；又 \(\sin\dfrac{x-y}{2}&gt;0\)，两边同乘得</p>
+        <div class="math">\[
+        \sin x-\sin y=2\cos\frac{x+y}{2}\sin\frac{x-y}{2}
+        &lt;2\cos\frac{x-y}{2}\sin\frac{x-y}{2}=\sin(x-y).
+        \]</div>
+        <p>这样的 \(x,y\) 确实存在，<b>C 真</b>。（取 \(x=\dfrac{\pi}{3},\ y=\dfrac{\pi}{6}\) 也能直接验算。）</p>
+
+        <h3 id="qd">D：取 \(x&lt;y\) 即可推翻，故假</h3>
+        <p>设 \(x&lt;y\)，则 \(\sin\dfrac{x-y}{2}&lt;0\)，而 \(0&lt;\cos\dfrac{x+y}{2}&lt;1\)。负数乘一个小于 \(1\) 的正数会变大：</p>
+        <div class="math">\[
+        \sin x-\sin y=2\sin\frac{x-y}{2}\cos\frac{x+y}{2}&gt;2\sin\frac{x-y}{2}.
+        \]</div>
+        <p>与 D 的方向相反，故 <b>D 假</b>。</p>
+
+        <h2 id="tan">另解：半角正切代换</h2>
+        <p>把四个选项都化成一个代数式的符号判断，优点是不必逐项找公式。</p>
+
+        <h3 id="setup">代换与两个平方差</h3>
+        <p>令</p>
+        <div class="math">\[
+        a=\tan\frac{x}{2},\qquad b=\tan\frac{y}{2},\qquad R=\sqrt{(1+a^2)(1+b^2)},
+        \]</div>
+        <p>由 \(x,y\in\left(0,\dfrac{\pi}{2}\right)\) 得 \(0&lt;a,b&lt;1\)，且 \(a\ne b\)、\(R&gt;0\)。半角公式给出</p>
+        <div class="math">\[
+        \sin x\pm\sin y=\frac{2(a\pm b)(1\pm ab)}{R^2},\qquad
+        2\sin\frac{x\pm y}{2}=\frac{2(a\pm b)}{R}.
+        \]</div>
+        <p>关键的两条恒等式：</p>
+        <div class="math">\[
+        R^2-(1+ab)^2=(a-b)^2&gt;0,\qquad R^2-(1-ab)^2=(a+b)^2&gt;0,
+        \]</div>
+        <p>即 \(R&gt;1+ab\) 且 \(R&gt;1-ab\)。四个选项的比较全部由这两条决定。</p>
+
+        <h3 id="tan-cases">四项判定</h3>
+        <p><b>A：</b>由和角公式 \(\sin(x+y)=\dfrac{2a(1-b^2)+2b(1-a^2)}{R^2}\)，两式相减</p>
+        <div class="math">\[
+        \sin x+\sin y-\sin(x+y)=\frac{4ab(a+b)}{R^2}&gt;0,
+        \]</div>
+        <p>故 A 中的反向不等式不可能成立，<b>A 假</b>。</p>
+
+        <p><b>B：</b>两项之差为</p>
+        <div class="math">\[
+        2\sin\frac{x+y}{2}-(\sin x+\sin y)
+        =\frac{2(a+b)}{R^2}\big(R-1-ab\big)
+        =\frac{2(a+b)(a-b)^2}{(R+1+ab)R^2}&gt;0,
+        \]</div>
+        <p>由 \(a\ne b\) 知恒成立，<b>B 真</b>。</p>
+
+        <p><b>C：</b>同理</p>
+        <div class="math">\[
+        \sin(x-y)-(\sin x-\sin y)=\frac{4ab(a-b)}{R^2},
+        \]</div>
+        <p>符号与 \(a-b\) 相同。取 \(x&gt;y\)（即 \(a&gt;b\)）就为正，存在性成立，<b>C 真</b>。</p>
+
+        <p><b>D：</b>两项之差为</p>
+        <div class="math">\[
+        (\sin x-\sin y)-2\sin\frac{x-y}{2}
+        =\frac{2(a-b)\big(1-ab-R\big)}{R^2}
+        =-\frac{2(a-b)(a+b)^2}{(R+1-ab)R^2},
+        \]</div>
+        <p>当 \(x&lt;y\)（即 \(a&lt;b\)）时为正，与 D 的方向相反，<b>D 假</b>。</p>
+
+        <h3 id="table">一张表收尾</h3>
+        <div class="table-wrap">
+          <table class="fixed">
+            <colgroup><col style="width:11%"><col style="width:69%"><col style="width:20%"></colgroup>
+            <thead><tr><th>选项</th><th>代换后的关键式</th><th class="c">真假</th></tr></thead>
+            <tbody>
+              <tr><td>A</td><td>\(\sin x+\sin y-\sin(x+y)=\dfrac{4ab(a+b)}{R^2}&gt;0\)</td><td class="c">假</td></tr>
+              <tr><td>B</td><td>\(\dfrac{2(a+b)(a-b)^2}{(R+1+ab)R^2}&gt;0\)</td><td class="c">真</td></tr>
+              <tr><td>C</td><td>\(\dfrac{4ab(a-b)}{R^2}\)，当 \(x&gt;y\) 时为正</td><td class="c">真</td></tr>
+              <tr><td>D</td><td>\(-\dfrac{2(a-b)(a+b)^2}{(R+1-ab)R^2}\)，当 \(x&lt;y\) 时为正</td><td class="c">假</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>答案：<b>BC</b>。</p>
+
+        <h2 id="compare">两法对照</h2>
+        <div class="compare-grid">
+          <div class="compare-col">
+            <span>原答案 · 和差化积</span>
+            <p>不换元。A、D 用 \(\cos&lt;1\) 直接夹；B 用 \(\cos\dfrac{x-y}{2}\in(0,1)\)；C 用余弦在 \(\left(0,\dfrac{\pi}{2}\right)\) 上的单调性。步骤短，考场首选。</p>
+          </div>
+          <div class="compare-col alt">
+            <span>半角正切代换</span>
+            <p>四个选项同分母 \(R^2\)，只剩 \(\pm4ab(a\pm b)\) 与两个平方差的符号。计算略多，但能看清四个选项其实是 \(a,b\) 的四种组合。</p>
+          </div>
+        </div>
+        <p class="compare-end">一句话记住：B、C 真，是因为余弦因子取不到 \(1\)；A、D 假，一个方向反了，一个在 \(x&lt;y\) 时不等号翻转。</p>
+
+        <p class="paper-foot">题目整理自模考选择题第 10 题（原答案按所给截图整理）；半角正切代换与排版为个人整理。若公式在窄屏上显示不全，可左右滑动公式区域。</p>
+      </article>
+    </div>
+  </main>
+
+  <footer><span>© 2026 何富龙</span><span>MOCK SOLUTIONS <span style="color:var(--accent)">/</span> 选择题 · 第 10 题</span></footer>
+</div>
+<script src="../../katex.min.js"></script>
+<script src="../../auto-render.min.js"></script>
+<script>
+(function () {
+  var root=document.documentElement;
+  var toggle=document.getElementById('theme-toggle');
+  var label=document.getElementById('theme-label');
+  function apply(t){root.setAttribute('data-theme',t);label.textContent=t==='dark'?'DARK':'LIGHT';toggle.setAttribute('aria-label',t==='dark'?'切换到浅色主题':'切换到深色主题');}
+  var saved=window.SafeStore?window.SafeStore.get('theme',''):localStorage.getItem('theme');
+  apply(saved||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+  toggle.addEventListener('click',function(){var next=root.getAttribute('data-theme')==='dark'?'light':'dark';apply(next);if(window.SafeStore){window.SafeStore.setTheme(next);}else{try{localStorage.setItem('theme',next);}catch(e){}}});
+  function typeset(){if(!window.renderMathInElement)return;renderMathInElement(document.querySelector('.paper'),{delimiters:[{left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}],throwOnError:false,strict:false});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',typeset);else typeset();
+  var bar=document.getElementById('read-bar');
+  function paint(){var max=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=(max>0?Math.min(100,Math.max(0,window.scrollY/max*100)):0)+'%';}
+  window.addEventListener('scroll',paint,{passive:true});paint();
+  var links=Array.prototype.slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  if('IntersectionObserver' in window&&targets.length){var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(!en.isIntersecting)return;links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+en.target.id);});});},{rootMargin:'-18% 0px -62% 0px',threshold:0});targets.forEach(function(t){io.observe(t);});}
+})();
+</script>
+<script src="../../prefetch.js?v=2"></script>
+</body>
+</html>
