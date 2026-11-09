@@ -5,7 +5,7 @@
   <script src="safe-store.js?v=3"></script>
   <script>(function(){var t;try{t=window.SafeStore?SafeStore.getTheme():(localStorage.getItem("theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));}catch(e){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}document.documentElement.setAttribute("data-theme",t);})();</script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>何富龙</title>
+  <title>何富龙 · 安徽大学数学硕士 | 偏微分方程 · 教学工具</title>
   <meta name="description" content="何富龙，安徽大学数学硕士在读。关注数学表达、教学工具与可复用的代码。">
   <meta name="author" content="何富龙">
   <meta name="theme-color" content="#050608">
@@ -13,6 +13,16 @@
   <meta property="og:title" content="何富龙 · 数学教育">
   <meta property="og:description" content="数学 · 教学工具 · 独立开发">
   <meta property="og:locale" content="zh_CN">
+<meta property="og:url" content="https://hefulong1017.github.io/">
+<meta property="og:image" content="https://hefulong1017.github.io/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="何富龙 · 安徽大学数学硕士 · 数学与教学工具">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="何富龙 · 数学教育">
+<meta name="twitter:description" content="数学 · 教学工具 · 独立开发">
+<meta name="twitter:image" content="https://hefulong1017.github.io/og-cover.png">
+<link rel="canonical" href="https://hefulong1017.github.io/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%231d1d1f'/%3E%3Ctext x='32' y='43' font-family='-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif' font-size='30' fill='%23fff' text-anchor='middle'%3E何%3C/text%3E%3C/svg%3E">
   <link rel="prefetch" href="auto-render.min.js" as="script">
   <noscript><style>.reveal, .section-head h2, .education h2 { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; } .intro { display: none !important; }
@@ -151,6 +161,19 @@
     .theme:hover { transform: rotate(24deg) scale(1.1); }
     .theme:active { transform: scale(.92); }
     .theme-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .theme-dot::after { content: ""; }
+    .theme::before {
+      content: "☾";
+      position: absolute; inset: 0;
+      display: grid; place-items: center;
+      font-size: 13px; line-height: 1; color: var(--ink);
+      pointer-events: none;
+    }
+    .theme { position: relative; }
+    .theme-dot { opacity: 0; }
+    html[data-theme="dark"] .theme::before { content: "☀"; }
+    [data-theme="dark"] .pinn-feature .tag { background: rgba(255,255,255,.1); color: #f2f2f5; }
+    [data-theme="dark"] .app-card .tag { background: rgba(255,255,255,.1); color: #f2f2f5; }
 
     main { position: relative; z-index: 1; width: min(1120px, calc(100% - 44px)); margin: 0 auto; padding: 82px 0 70px; }
     .hero {
@@ -976,6 +999,13 @@
   </style>
   <link rel="stylesheet" href="page-transition.css?v=24">
   <link rel="stylesheet" href="liquid-glass.css?v=1">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"何富龙","alternateName":"He Fulong",
+   "affiliation":{"@type":"CollegeOrUniversity","name":"安徽大学"},
+   "jobTitle":"数学硕士研究生",
+   "description":"安徽大学数学硕士在读，做偏微分方程数值解，也把教学与科研里重复的活儿写成工具。",
+   "url":"https://hefulong1017.github.io/","sameAs":["https://github.com/hefulong1017"]}
+  </script>
 </head>
 <body>
 
@@ -990,7 +1020,7 @@
       <a class="nav-keep" href="#share">分享</a>
       <a class="nav-keep" href="#mworks">MWORKS</a>
       <a href="https://github.com/hefulong1017" target="_blank" rel="noreferrer">GitHub</a>
-      <button class="theme" id="theme-toggle" type="button" aria-label="切换深浅色"><span class="theme-dot" aria-hidden="true"></span></button>
+      <button class="theme" id="theme-toggle" type="button" aria-label="切换深浅色" title="切换深浅色"><span class="theme-dot" aria-hidden="true"></span></button>
     </div>
   </nav>
 
@@ -1131,12 +1161,11 @@
           <div class="tool-row">
             <span class="tool-icon" aria-hidden="true">M</span>
             <div class="tool-info">
-              <h4>MathType 一键部署 <span>40 MB · 离线</span></h4>
-              <p>离线部署 MathType 7，包含安装与配置步骤，按说明运行即可。</p>
+              <h4>MathType <span>官方下载</span></h4>
+              <p>商业软件，请从官网下载并按授权使用；安装后在 Word 里即可插入公式。</p>
             </div>
             <div class="tool-actions">
-              <a class="tool-dl" href="software/mathtype-setup.exe" download>下载 ↓</a>
-              <details class="tool-sha"><summary>SHA-256</summary><code>4cd77ba86ab8a614dbc6cb63f6c762d90275369b57fcdb32722537789f88d5b8</code></details>
+              <a class="tool-dl" href="https://www.wiris.com/en/mathtype/" target="_blank" rel="noreferrer">官网下载 ↗</a>
             </div>
           </div>
         </div>
@@ -1159,7 +1188,7 @@
           <div class="acc-inner">
             <div class="apps">
         <article class="app-card">
-          <img class="app-shot" src="app-interview.png" alt="教师编面试模拟考场界面" loading="lazy">
+          <img class="app-shot" src="app-interview.webp" width="1200" height="833" alt="教师编面试模拟考场界面" loading="lazy" decoding="async">
           <div class="app-body">
             <span class="tag">教师编 · 面试</span>
             <h3>教师编面试模拟考场</h3>
@@ -1191,7 +1220,7 @@
         </article>
 
         <article class="app-card">
-          <img class="app-shot" src="app-shijiang.png" alt="试讲评分官界面" loading="lazy">
+          <img class="app-shot" src="app-shijiang.webp" width="1200" height="833" alt="试讲评分官界面" loading="lazy" decoding="async">
           <div class="app-body">
             <span class="tag">高中数学 · 试讲</span>
             <h3>试讲评分官</h3>

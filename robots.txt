@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /apps/shijiang/_lab/
+Disallow: /software/
+
+Sitemap: https://hefulong1017.github.io/sitemap.xml
