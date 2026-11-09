@@ -98,22 +98,29 @@
     return years.length === 1 ? String(years[0]) : years[0] + "–" + years[years.length - 1];
   }
 
-  function renderCats() {
-    $("stat-total").textContent = INDEX.total.toLocaleString("zh-CN");
-    $("stat-cats").textContent = String(INDEX.categories.length);
-    catsEl.innerHTML = INDEX.categories.map((cat, i) => `
+  function catCard(cat, i) {
+    if (cat.id === "solid-big") {
+      return `
+      <a class="cat" href="../solid/" aria-label="打开${esc(cat.name)}，原卷图形版">
+        <span class="arrow" aria-hidden="true">↗</span>
+        <span class="idx">${String(i + 1).padStart(2, "0")}</span>
+        <h3>${esc(cat.name)}</h3>
+        <span class="meta"><span class="count">${cat.count}</span><span class="years">原卷图形</span></span>
+      </a>`;
+    }
+    return `
       <button class="cat" type="button" data-cat="${esc(cat.id)}" aria-label="打开${esc(cat.name)}">
         <span class="arrow" aria-hidden="true">↗</span>
         <span class="idx">${String(i + 1).padStart(2, "0")}</span>
         <h3>${esc(cat.name)}</h3>
         <span class="meta"><span class="count">${cat.count}</span><span class="years">${yearLabel(cat.years)}</span></span>
-      </button>`).join("") + `
-      <a class="cat cat-ext" href="../solid/" aria-label="打开立体几何大题的原卷图形版">
-        <span class="arrow" aria-hidden="true">↗</span>
-        <span class="idx">图形版</span>
-        <h3>立体几何大题 · 原卷图形</h3>
-        <span class="meta"><span class="count">94</span><span class="years">独立页面</span></span>
-      </a>`;
+      </button>`;
+  }
+
+  function renderCats() {
+    $("stat-total").textContent = INDEX.total.toLocaleString("zh-CN");
+    $("stat-cats").textContent = String(INDEX.categories.length);
+    catsEl.innerHTML = INDEX.categories.map(catCard).join("");
   }
 
   function setHash(mode) {
