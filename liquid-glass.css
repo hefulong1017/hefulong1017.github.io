@@ -21,8 +21,8 @@ html[data-theme="light"],
 html:not([data-theme="dark"]) {
   --lg-tint:
     radial-gradient(130% 110% at 12% -10%, rgba(255, 255, 255, .72), transparent 56%),
-    radial-gradient(90% 80% at 100% 0%, rgba(122, 168, 255, .2), transparent 62%),
-    radial-gradient(120% 120% at 0% 100%, rgba(255, 196, 140, .16), transparent 60%),
+    radial-gradient(90% 80% at 100% 0%, rgba(255, 255, 255, .6), transparent 62%),
+    radial-gradient(120% 120% at 0% 100%, rgba(198, 198, 202, .16), transparent 60%),
     linear-gradient(150deg, rgba(255, 255, 255, .46), rgba(255, 255, 255, .16) 52%, rgba(255, 255, 255, .32));
   --lg-rim: rgba(255, 255, 255, .95);
   --lg-edge: rgba(255, 255, 255, .72);
@@ -35,8 +35,8 @@ html:not([data-theme="dark"]) {
 html[data-theme="dark"] {
   --lg-tint:
     radial-gradient(130% 110% at 14% -8%, rgba(255, 255, 255, .22), transparent 56%),
-    radial-gradient(90% 80% at 100% 0%, rgba(120, 170, 255, .18), transparent 64%),
-    radial-gradient(140% 120% at 0% 100%, rgba(180, 140, 255, .12), transparent 62%),
+    radial-gradient(90% 80% at 100% 0%, rgba(255, 255, 255, .18), transparent 64%),
+    radial-gradient(140% 120% at 0% 100%, rgba(255, 255, 255, .1), transparent 62%),
     linear-gradient(150deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .045) 50%, rgba(255, 255, 255, .09));
   --lg-rim: rgba(255, 255, 255, .34);
   --lg-edge: rgba(255, 255, 255, .16);
@@ -244,7 +244,7 @@ html[data-theme="dark"] .nav {
   transition: opacity .6s var(--lg-ease);
   background:
     radial-gradient(360px circle at var(--mx) var(--my), rgba(255, 255, 255, .5), transparent 62%),
-    radial-gradient(760px circle at var(--mx) var(--my), rgba(150, 190, 255, .18), transparent 70%);
+    radial-gradient(760px circle at var(--mx) var(--my), rgba(255, 255, 255, .14), transparent 70%);
   mix-blend-mode: soft-light;
 }
 html[data-theme="dark"] .lg-pointer-light {
@@ -300,55 +300,38 @@ html.lg-ready .hero { animation: lgHeroIn .85s var(--lg-spring) both; }
 }
 
 /* ==========================================================================
-   colour field — a soft mesh behind everything so the glass has something
-   worth refracting. Injected by liquid-glass.js as .lg-backdrop.
+   neutral lift — no hue, just a whisper of light so the frosted panels have
+   something to sit on. Injected by liquid-glass.js as .lg-backdrop.
    ========================================================================== */
 .lg-backdrop {
   position: fixed;
-  inset: -22%;
+  inset: -18%;
   z-index: 0;
   pointer-events: none;
-  filter: blur(46px) saturate(165%);
-  opacity: .85;
-  animation: lgFieldDrift 38s ease-in-out infinite alternate;
+  filter: blur(70px);
+  opacity: .55;
+  animation: lgFieldDrift 46s ease-in-out infinite alternate;
   will-change: transform;
-  transition: opacity .6s var(--lg-ease);
 }
 .lg-backdrop i {
   position: absolute;
   display: block;
   border-radius: 50%;
-  mix-blend-mode: normal;
 }
-.lg-backdrop i:nth-child(1) { left: 2%;  top: 2%;  width: 48vw; height: 48vw; background: rgba(74, 132, 255, .78); }
-.lg-backdrop i:nth-child(2) { left: 46%; top: -8%; width: 42vw; height: 42vw; background: rgba(150, 118, 255, .68); }
-.lg-backdrop i:nth-child(3) { left: 62%; top: 42%; width: 46vw; height: 46vw; background: rgba(255, 168, 116, .66); }
-.lg-backdrop i:nth-child(4) { left: -6%; top: 56%; width: 44vw; height: 44vw; background: rgba(96, 226, 206, .6); }
-.lg-backdrop i:nth-child(5) { left: 28%; top: 88%; width: 40vw; height: 40vw; background: rgba(255, 210, 122, .56); }
+.lg-backdrop i:nth-child(1) { left: 4%;  top: 0%;   width: 46vw; height: 46vw; background: rgba(255, 255, 255, .75); }
+.lg-backdrop i:nth-child(2) { left: 52%; top: 8%;   width: 40vw; height: 40vw; background: rgba(120, 128, 145, .16); }
+.lg-backdrop i:nth-child(3) { left: 66%; top: 50%;  width: 44vw; height: 44vw; background: rgba(255, 255, 255, .6); }
+.lg-backdrop i:nth-child(4) { left: -4%; top: 58%;  width: 42vw; height: 42vw; background: rgba(110, 118, 136, .14); }
+.lg-backdrop i:nth-child(5) { left: 30%; top: 92%;  width: 40vw; height: 40vw; background: rgba(255, 255, 255, .55); }
 
-html[data-theme="dark"] .lg-backdrop { opacity: .3; }
+html[data-theme="dark"] .lg-backdrop { opacity: .35; }
+html[data-theme="dark"] .lg-backdrop i:nth-child(1) { background: rgba(255, 255, 255, .10); }
+html[data-theme="dark"] .lg-backdrop i:nth-child(3) { background: rgba(255, 255, 255, .08); }
+html[data-theme="dark"] .lg-backdrop i:nth-child(5) { background: rgba(255, 255, 255, .07); }
+html[data-theme="dark"] .lg-backdrop i:nth-child(2),
+html[data-theme="dark"] .lg-backdrop i:nth-child(4) { background: rgba(0, 0, 0, .35); }
 
-/* small readout cells inside the PINNLab console must stay dark for legibility */
-html[data-theme="dark"] .console .mini,
-html[data-theme="dark"] .screen .mini {
-  background: rgba(8, 10, 15, .5) !important;
-  border-color: rgba(255, 255, 255, .12) !important;
-}
-
-/* editorial pages (article / index sheets) get a warm, quieter field so the
-   cream palette survives */
-.lg-backdrop.is-warm {
-  opacity: .55;
-  filter: blur(78px) saturate(135%);
-}
-.lg-backdrop.is-warm i:nth-child(1) { background: rgba(255, 196, 130, .5); }
-.lg-backdrop.is-warm i:nth-child(2) { background: rgba(238, 160, 150, .42); }
-.lg-backdrop.is-warm i:nth-child(3) { background: rgba(255, 222, 170, .45); }
-.lg-backdrop.is-warm i:nth-child(4) { background: rgba(196, 226, 208, .4); }
-.lg-backdrop.is-warm i:nth-child(5) { background: rgba(206, 190, 240, .42); }
-html[data-theme="dark"] .lg-backdrop.is-warm { opacity: .22; }
-
-/* keep page content above the colour field */
+/* keep page content above the lift */
 body > nav,
 body > header,
 body > main,
@@ -362,11 +345,21 @@ body > footer,
 
 @keyframes lgFieldDrift {
   0%   { transform: translate3d(0, 0, 0) scale(1); }
-  50%  { transform: translate3d(2.2%, -1.6%, 0) scale(1.05); }
-  100% { transform: translate3d(-1.8%, 2%, 0) scale(1.02); }
+  50%  { transform: translate3d(1.6%, -1.2%, 0) scale(1.04); }
+  100% { transform: translate3d(-1.4%, 1.6%, 0) scale(1.02); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .lg-backdrop { animation: none !important; }
 }
 
+/* small readout cells inside the PINNLab console must stay dark for legibility */
+html[data-theme="dark"] .console .mini,
+html[data-theme="dark"] .screen .mini {
+  background: rgba(8, 10, 15, .5) !important;
+  border-color: rgba(255, 255, 255, .12) !important;
+}
+html[data-theme="dark"] .console .mini > span,
+html[data-theme="dark"] .screen .mini > span {
+  color: rgba(214, 218, 228, .78) !important;
+}

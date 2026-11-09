@@ -70,9 +70,6 @@
     if (document.querySelector('.lg-backdrop')) return;
     var bd = document.createElement('div');
     bd.className = 'lg-backdrop';
-    if (document.querySelector('.paper, #cats, .reader, .q-card, .mock-card')) {
-      bd.className += ' is-warm';
-    }
     bd.setAttribute('aria-hidden', 'true');
     for (var i = 0; i < 5; i++) bd.appendChild(document.createElement('i'));
     document.body.insertBefore(bd, document.body.firstChild);
