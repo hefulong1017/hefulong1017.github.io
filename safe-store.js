@@ -50,7 +50,8 @@
 (function () {
   "use strict";
   try {
-    var theme = window.SafeStore.getTheme();
+    var forced = document.documentElement.getAttribute("data-force-theme");
+    var theme = (forced === "dark" || forced === "light") ? forced : window.SafeStore.getTheme();
     document.documentElement.setAttribute("data-theme", theme);
     function syncMeta() {
       var meta = document.querySelector('meta[name="theme-color"]');
@@ -63,11 +64,14 @@
     var mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
     if (mq && mq.addEventListener) {
       mq.addEventListener("change", function (e) {
+        var lock = document.documentElement.getAttribute("data-force-theme");
+        if (lock === "dark" || lock === "light") return;
         if (window.SafeStore.get("theme", "")) return;
         document.documentElement.setAttribute("data-theme", e.matches ? "dark" : "light");
       });
     }
   } catch (e) {
-    document.documentElement.setAttribute("data-theme", "light");
+    document.documentElement.setAttribute("data-theme",
+      document.documentElement.getAttribute("data-force-theme") === "dark" ? "dark" : "light");
   }
 })();
