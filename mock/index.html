@@ -228,6 +228,7 @@
       <div class="layout">
         <aside class="toc" aria-label="文章目录">
           <p class="toc-title">CONTENTS</p>
+          <a href="#note">先看结论</a>
           <a href="#problem">原题</a>
           <a href="#official">官方答案</a>
           <a class="sub" href="#official-1">（1）两组解</a>
@@ -241,7 +242,7 @@
         </aside>
 
         <article class="paper">
-          <div class="note"><p><b>先看结论：</b>把所有两两和排序后，端点给出 \(a_1+a_2\) 与 \(a_{n-1}+a_n\)，次端点给出 \(a_1+a_3\) 与 \(a_{n-2}+a_n\)。\(n=5\) 时这些信息锁死五个数；\(n=4\) 时留下一个“谁大谁小”的自由度，于是出现两组解。</p></div>
+          <div class="note" id="note" style="scroll-margin-top:28px"><p><b>先看结论：</b>把所有两两和排序后，端点给出 \(a_1+a_2\) 与 \(a_{n-1}+a_n\)，次端点给出 \(a_1+a_3\) 与 \(a_{n-2}+a_n\)。\(n=5\) 时这些信息锁死五个数；\(n=4\) 时留下一个“谁大谁小”的自由度，于是出现两组解。</p></div>
 <h2 id="problem">原题</h2>
 <p>已知 \(n\) 个正整数 \(a_1,a_2,\cdots,a_n\) 满足：\(a_1&lt;a_2&lt;\cdots&lt;a_n\)。这 \(n\) 个数两两成对可组成</p>
 <div class="math">\[
