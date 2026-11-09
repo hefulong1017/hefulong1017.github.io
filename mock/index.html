@@ -157,24 +157,6 @@
       * { transition-duration: .001ms !important; animation-duration: .001ms !important; }
     }
   
-    .more-mock {
-      display: block; margin-top: 28px; max-width: 620px;
-      padding: 16px 18px; border: 1px solid var(--line);
-      border-radius: 16px; background: var(--paper);
-      transition: transform .3s var(--ease), border-color .3s, box-shadow .3s;
-    }
-    .more-mock:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 16px 40px rgba(40,30,20,.08); }
-    .more-mock span { display: block; color: var(--accent); font-size: 9px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
-    .more-mock strong { display: block; margin-top: 6px; font-family: var(--serif); font-size: 21px; font-weight: 600; letter-spacing: -.02em; }
-    .more-mock em { display: block; margin-top: 5px; color: var(--muted); font-style: normal; font-size: 11.5px; line-height: 1.8; }
-    .more-mock + .more-mock { margin-top: 12px; }
-    .more-wrap { grid-column: 2; margin-top: 46px; padding-top: 22px; border-top: 1px solid var(--line); }
-    .more-title { margin: 0 0 14px; color: var(--faint); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
-    .more-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-    .more-grid .more-mock { margin-top: 0; max-width: none; }
-    .more-grid .more-mock strong { font-size: 18px; }
-    @media (max-width: 900px) { .more-wrap { grid-column: 1; margin-top: 34px; } }
-    @media (max-width: 760px) { .more-grid { grid-template-columns: 1fr; } }
 </style>
   <link rel="stylesheet" href="../page-transition.css?v=24">
 </head>
@@ -351,36 +333,6 @@ P_C-P_D=(P_A-P_B)(1-x^T),\qquad P_C+P_D=(P_A+P_B)(1+x^T).
           <p class="paper-foot">题目与官方标准答案整理自 2026 武汉九调第 19 题；多项式视角为个人整理。若公式在窄屏上显示不全，可左右滑动公式区域。</p>
         
 </article>
-      <section class="more-wrap" aria-label="其他模考">
-        <p class="more-title">其他模考</p>
-        <div class="more-grid">
-        <a class="more-mock" href="jiangzhewan-2026/">
-          <span>另一份模考 · 2026 江浙皖共同体高三联考</span>
-          <strong>等比数列与子集和</strong>
-          <em>第19题 · 17分 · 参考答案 + 两种另证 ↗</em>
-        </a>
-        <a class="more-mock" href="ningbo-2026/">
-          <span>另一份模考 · 2026 宁波二模</span>
-          <strong>状态转换与平衡次数</strong>
-          <em>第18题 · 17分 · 分类构造 + 容斥 ↗</em>
-        </a>
-        <a class="more-mock" href="changsha-2025/">
-          <span>另一份模考 · 2025 长沙适应性考试</span>
-          <strong>椭圆外心与距离范围</strong>
-          <em>第18题 · 17分 · 标准解法 + 只用两根之积的新思路 ↗</em>
-        </a>
-        <a class="more-mock" href="wuhan-2025/">
-          <span>另一份模考 · 2025 武汉二调</span>
-          <strong>冠军亲手淘汰了谁</strong>
-          <em>第18题 · 17分 · 标准解法 + 箭头计数 ↗</em>
-        </a>
-        <a class="more-mock" href="triangle-inequality/">
-          <span>2026 届广州一模 · 第 10 题</span>
-          <strong>三角不等式四选一</strong>
-          <em>4 个选项 · 答案 BC · 和差化积 + 半角代换 ↗</em>
-        </a>
-        </div>
-      </section>
       </div>
     </main>
 
