@@ -58,7 +58,7 @@
   function applyTheme(theme) {
     root.setAttribute("data-theme", theme);
     themeLabel.textContent = theme === "dark" ? "DARK" : "LIGHT";
-    themeToggle.setAttribute("aria-label", theme === "dark" ? "切换到浅色主题" : "切换到深色主题");
+    themeToggle.setAttribute("aria-label", theme === "dark" ? "Switch to light theme" : "Switch to dark theme");
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", theme === "dark" ? "#0b0b0d" : "#f4efe6");
   }
@@ -101,15 +101,15 @@
   function catCard(cat, i) {
     if (cat.id === "solid-big") {
       return `
-      <a class="cat" href="../solid/" aria-label="打开${esc(cat.name)}，原卷图形版">
+      <a class="cat" href="../solid/" aria-label="Open ${esc(cat.name)}, original figures">
         <span class="arrow" aria-hidden="true">↗</span>
         <span class="idx">${String(i + 1).padStart(2, "0")}</span>
         <h3>${esc(cat.name)}</h3>
-        <span class="meta"><span class="count">${cat.count}</span><span class="years">原卷图形</span></span>
+        <span class="meta"><span class="count">${cat.count}</span><span class="years">Original figures</span></span>
       </a>`;
     }
     return `
-      <button class="cat" type="button" data-cat="${esc(cat.id)}" aria-label="打开${esc(cat.name)}">
+      <button class="cat" type="button" data-cat="${esc(cat.id)}" aria-label="Open ${esc(cat.name)}">
         <span class="arrow" aria-hidden="true">↗</span>
         <span class="idx">${String(i + 1).padStart(2, "0")}</span>
         <h3>${esc(cat.name)}</h3>
@@ -161,8 +161,8 @@
     browserEl.classList.add("open");
     crumbName.textContent = meta.name;
     catTitle.textContent = meta.name;
-    catSub.textContent = `${yearLabel(meta.years)} · 共 ${meta.count} 道题`;
-    catTotal.textContent = "加载中…";
+    catSub.textContent = `${yearLabel(meta.years)} · ${meta.count} questions`;
+    catTotal.textContent = "Loading…";
     qList.innerHTML = Array.from({ length: 4 }, () =>
       '<div class="sk-card"><div class="sk-line w40"></div><div class="sk-line"></div><div class="sk-line w90"></div><div class="sk-line w70"></div></div>'
     ).join("");
@@ -193,14 +193,14 @@
 
   function renderYearChips(cat) {
     const years = cat.years || [];
-    yearRow.innerHTML = [`<button class="chip ${state.year === "" ? "active" : ""}" type="button" data-year="">全部</button>`]
+    yearRow.innerHTML = [`<button class="chip ${state.year === "" ? "active" : ""}" type="button" data-year="">All</button>`]
       .concat(years.map((y) => `<button class="chip ${String(y) === state.year ? "active" : ""}" type="button" data-year="${y}">${y}</button>`))
       .join("");
   }
 
   function renderRegions(cat) {
     const regions = Array.from(new Set(cat.questions.map((q) => q.region))).sort((a, b) => a.localeCompare(b, "zh-CN"));
-    regionSel.innerHTML = `<option value="">全部地区</option>` + regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join("");
+    regionSel.innerHTML = `<option value="">All regions</option>` + regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join("");
     regionSel.value = state.region;
   }
 
@@ -221,30 +221,30 @@
     const meta = [
       `<span class="year">${q.year}</span>`,
       `<span class="sep">·</span><span>${esc(q.region)}</span>`,
-      q.subject && q.subject !== "不分" ? `<span class="sep">·</span><span>${esc(q.subject)}</span>` : "",
-      q.score ? `<span class="sep">·</span><span>${q.score} 分</span>` : "",
+      q.subject && q.subject !== "-" ? `<span class="sep">·</span><span>${esc(q.subject)}</span>` : "",
+      q.score ? `<span class="sep">·</span><span>${q.score} pts</span>` : "",
     ].join("");
     const answer = q.answer ? `
-      <button class="ans-toggle" type="button" aria-expanded="false" data-ans="${esc(q.id)}" data-cat="${esc(cat.id)}">显示答案 <span aria-hidden="true">↓</span></button>
+      <button class="ans-toggle" type="button" aria-expanded="false" data-ans="${esc(q.id)}" data-cat="${esc(cat.id)}">Show answer <span aria-hidden="true">↓</span></button>
       <div class="answer" hidden></div>` : "";
     const figures = Array.isArray(q.figures) && q.figures.length
       ? `<div class="q-figure">${q.figures.map((f) =>
-          `<img src="${esc(typeof f === "string" ? f : f.path)}" alt="题目示意图" onerror="this.parentElement.style.display='none'">`
+          `<img src="${esc(typeof f === "string" ? f : f.path)}" alt="Question figure" onerror="this.parentElement.style.display='none'">`
         ).join("")}</div>`
       : "";
     const options = Array.isArray(q.optionImages) && q.optionImages.length
       ? `<div class="q-option-grid">${q.optionImages.map((src, i) =>
-          `<figure><img src="${esc(src)}" alt="选项 ${"ABCD"[i] || i + 1}" loading="lazy"></figure>`
+          `<figure><img src="${esc(src)}" alt="Option ${"ABCD"[i] || i + 1}" loading="lazy"></figure>`
         ).join("")}</div>`
       : "";
     return `<article class="q-card${q.figureOnly ? " figure-only" : ""}" style="--qd:${Math.min(qi, 8) * 28}ms">
-      <div class="q-meta">${meta}<span class="num"${q.paperNo ? ' title="按原卷题目顺序匹配"' : ''}>${q.paperNo ? "卷面第 " + q.paperNo + " 题" : ""}</span></div>
-      <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="公式加载中"></span>')}</div>
+      <div class="q-meta">${meta}<span class="num"${q.paperNo ? ' title="matched to the order of the original paper"' : ''}>${q.paperNo ? "Paper question " + q.paperNo : ""}</span></div>
+      <div class="q-text">${katexReady ? q.html : q.html.replace(/\\\((.*?)\\\)/gs, '<span class="math-ph" aria-label="Loading formulas"></span>')}</div>
       ${figures}
-      ${q.tableImage ? `<a class="table-link" href="${esc(q.tableImage)}" target="_blank" rel="noopener">查看表格图 ↗</a>` : ""}
+      ${q.tableImage ? `<a class="table-link" href="${esc(q.tableImage)}" target="_blank" rel="noopener">View table image ↗</a>` : ""}
       ${options}
       ${answer}
-      <div class="source"><span>2016–2026 高考真题汇编</span><span>P.${q.page || "—"}</span></div>
+      <div class="source"><span>2016–2026 gaokao papers</span><span>P.${q.page || "—"}</span></div>
     </article>`;
   }
 
@@ -255,8 +255,8 @@
     if (reset && !keepVisible) state.visible = PAGE;
     const list = filteredQuestions(cat);
     const shown = list.slice(0, state.visible);
-    filterNote.textContent = `${list.length} 道题${state.query ? " · 已筛选" : ""}`;
-    catTotal.textContent = `${list.length} 题`;
+    filterNote.textContent = `${list.length} questions${state.query ? " · filtered" : ""}`;
+    catTotal.textContent = `${list.length} questions`;
     if (!list.length) {
       qList.innerHTML = "";
       emptyEl.hidden = false;
@@ -284,7 +284,7 @@
     moreWrap.hidden = noMore;
     moreWrap.style.display = noMore ? "none" : "flex";
     moreBtn.disabled = noMore;
-    moreBtn.textContent = `加载更多（还有 ${Math.max(0, list.length - state.visible)} 题）`;
+    moreBtn.textContent = `Load more (${Math.max(0, list.length - state.visible)} left)`;
     renderMath(qList);
     if (!reset || keepVisible) requestAnimationFrame(() => window.scrollTo(0, anchorY));
   }
@@ -322,12 +322,12 @@
   function renderBrowser() {
     const cat = catById(state.cat);
     if (!cat) {
-      catTotal.textContent = "加载失败";
+      catTotal.textContent = "Could not load";
       return;
     }
     crumbName.textContent = cat.name;
     catTitle.textContent = cat.name;
-    catSub.textContent = `${yearLabel(cat.years)} · 共 ${cat.count} 道题`;
+    catSub.textContent = `${yearLabel(cat.years)} · ${cat.count} questions`;
     renderYearChips(cat);
     renderRegions(cat);
     renderQuestions(true);
@@ -423,16 +423,16 @@
   }
 
   function answerHtml(a) {
-    if (!a) return '<div class="ans-empty">这道题的答案还在整理中。</div>';
+    if (!a) return '<div class="ans-empty">The answer to this question is still being written up.</div>';
     let html = "";
-    if (a.final) html += `<div class="ans-final">答案：${esc(a.final)}</div>`;
+    if (a.final) html += `<div class="ans-final">Answer: ${esc(a.final)}</div>`;
     if (a.solution) html += `<div class="ans-solution">${formatSolution(a.solution)}</div>`;
     if (Array.isArray(a.scoring) && a.scoring.length) {
       const total = a.scoring.reduce((s, x) => s + (Number(x.points) || 0), 0);
-      html += `<div class="scoring"><div class="scoring-title">给分点 <span>共 ${total} 分</span></div>`;
-      html += '<div class="score-row score-head"><span>步骤</span><span>分值</span></div>';
+      html += `<div class="scoring"><div class="scoring-title">Marking points <span>${total} marks in total</span></div>`;
+      html += '<div class="score-row score-head"><span>Step</span><span>Marks</span></div>';
       for (const row of a.scoring) {
-        html += `<div class="score-row"><span>${esc(row.text || "")}</span><span>${row.points != null ? row.points + " 分" : ""}</span></div>`;
+        html += `<div class="score-row"><span>${esc(row.text || "")}</span><span>${row.points != null ? row.points + " marks" : ""}</span></div>`;
       }
       html += "</div>";
     }
@@ -460,32 +460,32 @@
       if (box._anim) { box._anim.cancel(); box._anim = null; }
       box.hidden = false;
       box.dataset.state = "loading";
-      box.innerHTML = '<div class="ans-empty">答案加载中…</div>';
+      box.innerHTML = '<div class="ans-empty">Loading answer…</div>';
       const ok = await loadAnswerData(catId);
       if (!ok) {
         box.dataset.state = "error";
-        box.innerHTML = '<div class="ans-empty">答案加载失败，请重试。</div>';
+        box.innerHTML = '<div class="ans-empty">Could not load the answer. Please retry.</div>';
         const retryBtn = document.createElement("button");
         retryBtn.type = "button";
         retryBtn.className = "ans-toggle";
         retryBtn.dataset.cat = catId;
         retryBtn.dataset.ans = answerId;
         retryBtn.dataset.retry = "1";
-        retryBtn.textContent = "重新加载";
+        retryBtn.textContent = "Reload";
         retryBtn.addEventListener("click", function () {
           retryBtn.remove();
           box.hidden = false;
           box.dataset.state = "loading";
-          box.innerHTML = '<div class="ans-empty">答案加载中…</div>';
+          box.innerHTML = '<div class="ans-empty">Loading answer…</div>';
           loadAnswerData(catId).then(function (ok) {
             if (!ok) {
               box.dataset.state = "error";
-              box.innerHTML = '<div class="ans-empty">答案加载失败，请重试。</div>';
+              box.innerHTML = '<div class="ans-empty">Could not load the answer. Please retry.</div>';
               const again = document.createElement("button");
               again.type = "button";
               again.className = "ans-toggle";
               again.dataset.retry = "1";
-              again.textContent = "重新加载";
+              again.textContent = "Reload";
               again.addEventListener("click", function () { again.remove(); box.dataset.state = ""; btn.click(); });
               box.appendChild(again);
               return;
@@ -494,7 +494,7 @@
             box.dataset.state = "loaded";
             box.dataset.open = "1";
             btn.setAttribute("aria-expanded", "true");
-            btn.innerHTML = '收起答案 <span aria-hidden="true">↑</span>';
+            btn.innerHTML = 'Hide answer <span aria-hidden="true">↑</span>';
             renderMath(box);
           });
         });
@@ -537,7 +537,7 @@
       box.hidden = true;
     }
     btn.setAttribute("aria-expanded", String(open));
-    btn.innerHTML = open ? '收起答案 <span aria-hidden="true">↑</span>' : '显示答案 <span aria-hidden="true">↓</span>';
+    btn.innerHTML = open ? 'Hide answer <span aria-hidden="true">↑</span>' : 'Show answer <span aria-hidden="true">↓</span>';
   });
 
   function applyRoute() {

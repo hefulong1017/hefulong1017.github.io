@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
   <script src="../safe-store.js?v=3"></script>
 
-<title>立体几何大题 · 何富龙</title>
+<title>Solid geometry · He Fulong</title>
 <link rel="stylesheet" href="../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../katex.min.css"></noscript>
 <style>
 :root{--ink:#1f2328;--muted:#6b7280;--line:#e6e8eb;--bg:#f7f8fa;--blue:#2563eb;--soft:#eef4ff;--ease:cubic-bezier(.22,1,.36,1)}
@@ -108,24 +108,24 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
 <div class="scroll-progress" aria-hidden="true"></div>
 
 <nav class="nav">
-  <a class="brand" href="../"><i>何</i>何富龙</a>
-  <div class="links"><a href="../">主页</a><a href="../gaokao.html">高考题库</a><a href="../math/">高等数学</a><a href="../mworks/">数值实验</a><button class="theme" id="themeToggle" type="button" aria-label="切换深浅色">◐</button></div>
+  <a class="brand" href="../"><i>H</i>He Fulong</a>
+  <div class="links"><a href="../">Home</a><a href="../gaokao.html">Gaokao</a><a href="../math/">Calculus</a><a href="../mworks/">Experiments</a><button class="theme" id="themeToggle" type="button" aria-label="切换深浅色">◐</button></div>
 </nav>
 <main class="wrap">
   <p class="kicker">SOLID GEOMETRY / 2016—2026</p>
-  <h1>立体几何大题</h1>
-  <p class="lede">全国卷 40 道、地方卷 54 道立体几何大题。图形直接取自原卷，保留原题标注；题面与答案分开排布。</p>
+  <h1>Solid geometry</h1>
+  <p class="lede">94 solid-geometry problems: 40 from national papers, 54 from regional ones. Figures come straight from the original papers with their labels, and problem and answer are laid out separately.</p>
   <div class="stats">
-    <div><b>94</b><span>题目数量 · 全国 40 / 地方 54</span></div>
-    <div><b>2016—2026</b><span>年份范围</span></div>
-    <div><b>原卷图形</b><span>裁切保留</span></div>
+    <div><b>94</b><span>Problems · 40 national / 54 regional</span></div>
+    <div><b>2016—2026</b><span>Years</span></div>
+    <div><b>Original figures</b><span>cropped, kept as is</span></div>
   </div>
-  <div class="toolbar" id="types"><button class="chip on" data-type="all">全部</button><button class="chip" data-type="全国卷">全国卷</button><button class="chip" data-type="地方卷">地方卷</button></div>
-  <div class="toolbar" id="years"><button class="chip on" data-year="all">全部年份</button><span class="count" id="count">94 题</span></div>
-  <div class="list" id="list"><div class="empty">正在载入题目…</div></div>
-  <div class="foot"><span>2016—2026 高考数学 · 立体几何</span><span>图形取自原卷</span></div>
+  <div class="toolbar" id="types"><button class="chip on" data-type="all">All</button><button class="chip" data-type="全国卷">National</button><button class="chip" data-type="地方卷">Regional</button></div>
+  <div class="toolbar" id="years"><button class="chip on" data-year="all">All years</button><span class="count" id="count">94 problems</span></div>
+  <div class="list" id="list"><div class="empty">Loading problems…</div></div>
+  <div class="foot"><span>2016–2026 gaokao · solid geometry</span><span>Figures from the original papers</span></div>
 </main>
-<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="查看大图"><button type="button" aria-label="关闭">×</button><img alt=""></div>
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="View image"><button type="button" aria-label="关闭">×</button><img alt=""></div>
 <script defer src="../katex.min.js"></script>
 <script defer src="../auto-render.min.js"></script>
 <script defer src="data.js"></script>
@@ -144,25 +144,25 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
   function card(q){
     var el=document.createElement('article'); el.className='card'; el.dataset.year=q.year; el.dataset.type=q.paperType||'全国卷';
     var tags=[q.paperType||'全国卷',q.year,q.region,q.subject].filter(Boolean).map(function(x){return '<span>'+x+'</span>';}).join('');
-    var no=q.no?('第 '+q.no+' 题'):'';
+    var no=q.no?('Q'+q.no):'';
     el.innerHTML='<div class="head"><div class="tags">'+tags+'</div><div class="no">'+no+'</div></div>'+
       '<div class="q"></div>'+
-      '<div class="figure"><img loading="lazy" alt="'+(q.year||'')+' 立体几何图" src="'+q.image+'?v=3"></div>'+
-      '<button class="toggle" type="button">显示答案 ↓</button>'+
-      '<div class="answer"><div class="answer-inner"><div class="alabel">参考答案</div><div class="abody"></div></div></div>';
+      '<div class="figure"><img loading="lazy" alt="'+(q.year||'')+' solid geometry figure" src="'+q.image+'?v=3"></div>'+
+      '<button class="toggle" type="button">Show answer ↓</button>'+
+      '<div class="answer"><div class="answer-inner"><div class="alabel">Reference answer</div><div class="abody"></div></div></div>';
     el.querySelector('.q').textContent=clean(q.question);
     var ans=el.querySelector('.answer'), body=el.querySelector('.abody'), btn=el.querySelector('.toggle');
     btn.addEventListener('click',function(){
       if(!ans.classList.contains('open')){
         if(!ans.dataset.rendered){body.textContent=clean(q.answer);typeset(body);ans.dataset.rendered='1';}
-        ans.classList.add('open'); btn.textContent='收起答案 ↑';
-      }else{ans.classList.remove('open');btn.textContent='显示答案 ↓';}
+        ans.classList.add('open'); btn.textContent='Hide answer ↑';
+      }else{ans.classList.remove('open');btn.textContent='Show answer ↓';}
     });
     return el;
   }
   function build(){
     var data=window.SOLID_DATA||[];
-    if(!data.length){list.innerHTML='<div class="empty">题目数据没有载入，请刷新重试。</div>';return;}
+    if(!data.length){list.innerHTML='<div class="empty">The question data did not load. Please refresh.</div>';return;}
     list.innerHTML='';
     var io=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.05,rootMargin:'0px 0px -6% 0px'}):null;
     data.forEach(function(q,i){var c=card(q);c.style.transitionDelay=Math.min(i,8)*35+'ms';if(io)io.observe(c);else c.classList.add('in');list.appendChild(c);});
@@ -175,7 +175,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
         var ok=(curType==='all'||c.dataset.type===curType)&&(curYear==='all'||c.dataset.year===curYear);
         c.hidden=!ok;if(ok)n++;
       });
-      count.textContent=n+' 题';
+      count.textContent=n+' problems';
     }
     types.addEventListener('click',function(e){
       var b=e.target.closest('.chip'); if(!b)return;
@@ -187,7 +187,7 @@ h1{font-size:clamp(38px,7vw,64px);line-height:1.05;letter-spacing:-.04em;margin:
       years.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');}); b.classList.add('on');
       curYear=b.dataset.year; apply();
     });
-    count.textContent=data.length+' 题';
+    count.textContent=data.length+' problems';
   }
 
   var lb=document.getElementById('lightbox'), lbImg=lb.querySelector('img');

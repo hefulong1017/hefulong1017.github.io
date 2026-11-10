@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="../safe-store.js?v=3"></script>
 
-  <title>高等数学上册 · 课本答案</title>
-  <meta name="description" content="安徽大学版高等数学上册课本答案，按习题与复习题分类整理。">
+  <title>Advanced Mathematics I · answer key</title>
+  <meta name="description" content="Answer key for the Advanced Mathematics I textbook (Anhui University edition), grouped by exercise and review set.">
   <meta name="theme-color" content="#f5f5f7">
   <style>
     :root {
@@ -201,47 +201,47 @@
 <div class="scroll-progress" aria-hidden="true"></div>
 
   <header class="top">
-    <a class="brand" href="../"><span class="back">何</span>何富龙</a>
+    <a class="brand" href="../"><span class="back">H</span>He Fulong</a>
     <div class="top-actions">
-      <a href="advanced-math.pdf" download>下载 PDF</a>
-      <a href="../">返回主页</a>
+      <a href="advanced-math.pdf" download>Download PDF</a>
+      <a href="../">Back to home</a>
     </div>
   </header>
 
   <section class="hero">
-    <p class="eyebrow">ADVANCED MATHEMATICS · 上册</p>
-    <h1>高等数学上册 · 课本答案</h1>
-    <p class="sub">安徽大学版 · 230 页 · 39 个习题与复习题</p>
+    <p class="eyebrow">ADVANCED MATHEMATICS · Volume I</p>
+    <h1>Advanced Mathematics I · answer key</h1>
+    <p class="sub">Anhui University edition · 230 pages · 39 exercise sets</p>
   </section>
 
   <div class="wrap">
-    <aside class="side" aria-label="章节目录">
-      <input class="search" id="search" type="search" placeholder="搜索章节…" autocomplete="off">
+    <aside class="side" aria-label="Chapter list">
+      <input class="search" id="search" type="search" placeholder="Search chapters…" autocomplete="off">
       <div id="toc"></div>
     </aside>
 
     <main class="reader">
       <div class="reader-head">
         <div class="reader-kicker" id="kicker">SECTION</div>
-        <h2 id="title">选择一个章节</h2>
+        <h2 id="title">Pick a chapter</h2>
         <div class="reader-meta">
           <span id="pages"></span>
-          <a id="pdf-link" href="advanced-math.pdf" target="_blank" rel="noreferrer">PDF 原页 ↗</a>
+          <a id="pdf-link" href="advanced-math.pdf" target="_blank" rel="noreferrer">PDF page ↗</a>
         </div>
       </div>
       <div class="view-switch">
-        <button id="view-qa" type="button" class="active">题目答案</button>
-        <button id="view-latex" type="button">LaTeX 源码</button>
-        <button id="view-pages" type="button">排版页</button>
-        <button id="view-text" type="button">文字</button>
+        <button id="view-qa" type="button" class="active">Answers</button>
+        <button id="view-latex" type="button">LaTeX source</button>
+        <button id="view-pages" type="button">Typeset</button>
+        <button id="view-text" type="button">Text</button>
       </div>
 
       <div class="qa-view" id="qa-view">
         <div class="qa-toolbar">
-          <div class="qa-count" id="qa-count">正在加载…</div>
+          <div class="qa-count" id="qa-count">Loading…</div>
           <div class="qa-tools">
-            <button id="qa-expand" type="button">全部展开</button>
-            <button id="qa-collapse" type="button">全部收起</button>
+            <button id="qa-expand" type="button">Expand all</button>
+            <button id="qa-collapse" type="button">Collapse all</button>
           </div>
         </div>
         <div class="qa-intro" id="qa-intro" hidden></div>
@@ -251,20 +251,20 @@
       <div class="page-images" id="page-images" hidden></div>
       <div class="latex-view" id="latex-view" hidden>
         <div class="latex-toolbar">
-          <button id="latex-edit" type="button">源码 / 编辑</button>
-          <button id="latex-copy" type="button">复制本节 LaTeX</button>
-          <button id="latex-copy-doc" type="button">复制完整 .tex</button>
+          <button id="latex-edit" type="button">Source / edit</button>
+          <button id="latex-copy" type="button">Copy section as LaTeX</button>
+          <button id="latex-copy-doc" type="button">Copy whole .tex</button>
           <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
-          <span>可直接编辑；复制后可在 Overleaf / TeX Live 编译</span>
+          <span>Editable; copy it out and compile in Overleaf or TeX Live</span>
         </div>
-        <div class="latex-preview" id="latex-preview">正在转换…</div>
+        <div class="latex-preview" id="latex-preview">Converting…</div>
         <textarea class="latex-source" id="latex-source" spellcheck="false" hidden></textarea>
       </div>
-      <pre class="answer-text" id="text" hidden>正在加载…</pre>
+      <pre class="answer-text" id="text" hidden>Loading…</pre>
       <div class="pager">
-        <button id="prev" type="button">← 上一节</button>
+        <button id="prev" type="button">← Previous</button>
         <span id="count"></span>
-        <button id="next" type="button">下一节 →</button>
+        <button id="next" type="button">Next →</button>
       </div>
     </main>
   </div>
@@ -413,7 +413,7 @@
         num.textContent = item.label || String(index + 1);
         var q = document.createElement('div');
         q.className = 'qa-q';
-        q.textContent = (cleanDisplay(item.q) || '（题目略）').replace(/\n{2,}/g, '\n');
+        q.textContent = (cleanDisplay(item.q) || '(question omitted)').replace(/\n{2,}/g, '\n');
         head.appendChild(num);
         head.appendChild(q);
         card.appendChild(head);
@@ -427,7 +427,7 @@
           toggle.type = 'button';
           toggle.className = 'qa-toggle';
           toggle.setAttribute('aria-expanded', 'false');
-          toggle.innerHTML = '显示答案 <span aria-hidden="true">↓</span>';
+          toggle.innerHTML = 'Show answer <span aria-hidden="true">↓</span>';
           actions.appendChild(toggle);
           card.appendChild(actions);
 
@@ -436,7 +436,7 @@
           ans.hidden = true;
           var tag = document.createElement('div');
           tag.className = 'qa-a-tag';
-          tag.textContent = '参考答案';
+          tag.textContent = 'Reference answer';
           var body = document.createElement('div');
           body.className = 'qa-a-body';
           ans.appendChild(tag);
@@ -475,8 +475,8 @@
             }
             toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
             toggle.innerHTML = open
-              ? '收起答案 <span aria-hidden="true">↑</span>'
-              : '显示答案 <span aria-hidden="true">↓</span>';
+              ? 'Hide answer <span aria-hidden="true">↑</span>'
+              : 'Show answer <span aria-hidden="true">↓</span>';
           });
         }
 
@@ -486,24 +486,24 @@
       function renderQa() {
         var token = ++renderToken;
         var sec = flat[current].sec;
-        qaCount.textContent = '正在加载题目…';
+        qaCount.textContent = 'Loading questions…';
         qaList.innerHTML = '';
         qaIntro.hidden = true;
         var skeleton = document.createElement('div');
         skeleton.className = 'qa-empty';
-        skeleton.textContent = '正在整理这一节的题目…';
+        skeleton.textContent = 'Preparing the questions for this section…';
         qaList.appendChild(skeleton);
 
         loadItems(sec.id).then(function (block) {
           if (token !== renderToken) return;
           if (!block) {
             qaList.innerHTML = '';
-            qaCount.textContent = '题目加载失败';
+            qaCount.textContent = 'Could not load the questions';
             var failed = document.createElement('div');
             failed.className = 'qa-empty';
-            failed.textContent = '这一节的题目没能加载。';
+            failed.textContent = 'The questions for this section could not be loaded.';
             var retry = document.createElement('button');
-            retry.type = 'button'; retry.className = 'qa-toggle'; retry.textContent = '重新加载';
+            retry.type = 'button'; retry.className = 'qa-toggle'; retry.textContent = 'Reload';
             retry.addEventListener('click', function () {
               delete itemsLoading[sec.id];
               delete itemsCache[sec.id];
@@ -515,7 +515,7 @@
             return;
           }
           qaList.innerHTML = '';
-          qaCount.innerHTML = '共 <b>' + block.items.length + '</b> 题 · 先做题，再展开答案';
+          qaCount.innerHTML = '<b>' + block.items.length + '</b> questions · try them first, then open the answers';
           if (block.intro) {
             qaIntro.hidden = false;
             qaIntro.textContent = cleanDisplay(block.intro);
@@ -524,7 +524,7 @@
           if (!block.items.length) {
             var empty = document.createElement('div');
             empty.className = 'qa-empty';
-            empty.textContent = '这一节暂时没有可拆分的题目，可以切到 LaTeX 或排版页查看。';
+            empty.textContent = 'No per-question split for this section; switch to LaTeX or Typeset to read it.';
             qaList.appendChild(empty);
             return;
           }
@@ -543,9 +543,9 @@
       function sectionRetry(host, id, label) {
         host.textContent = '';
         var p = document.createElement('p');
-        p.textContent = label + '加载失败，请重试。';
+        p.textContent = label + ' could not be loaded. Please retry.';
         var b = document.createElement('button');
-        b.type = 'button'; b.className = 'qa-toggle'; b.textContent = '重新加载';
+        b.type = 'button'; b.className = 'qa-toggle'; b.textContent = 'Reload';
         b.addEventListener('click', function () { loadSection(id).then(function () { select(current, false); }); });
         host.appendChild(p); host.appendChild(b);
       }
@@ -553,11 +553,11 @@
         var sec = flat[current].sec;
         var id = sec.id;
         if (sec.text) { text.textContent = sec.text; return; }
-        text.textContent = '正在加载这一节的文字…';
+        text.textContent = 'Loading the text for this section…';
         loadSection(id).then(function (full) {
-          if (!full) { if (flat[current].sec.id === id) sectionRetry(text, id, '这一节的文字'); return; }
+          if (!full) { if (flat[current].sec.id === id) sectionRetry(text, id, 'The text for this section'); return; }
           if (flat[current].sec.id !== id) return;
-          text.textContent = full.text || '（本节暂无文字）';
+          text.textContent = full.text || '(no text for this section)';
         });
       }
 
@@ -576,11 +576,11 @@
         var sec = flat[current].sec;
         var id = sec.id;
         if (!sec.latex) {
-          latexPreview.textContent = '正在加载 LaTeX…';
+          latexPreview.textContent = 'Loading LaTeX…';
           latexSource.value = '';
           setCopyReady(false);
           loadSection(id).then(function (full) {
-            if (!full) { if (flat[current].sec.id === id) sectionRetry(latexPreview, id, '这一节的 LaTeX '); return; }
+            if (!full) { if (flat[current].sec.id === id) sectionRetry(latexPreview, id, 'The LaTeX for this section'); return; }
             if (flat[current].sec.id !== id) return;
             renderLatex();
           });
@@ -643,7 +643,7 @@
         if (!shown) {
           var empty = document.createElement('div');
           empty.className = 'sec';
-          empty.textContent = '没有匹配的章节';
+          empty.textContent = 'No matching chapters';
           toc.appendChild(empty);
         }
       }
@@ -657,15 +657,15 @@
         var item = flat[i];
         var s = item.sec;
         title.textContent = s.title;
-        kicker.textContent = item.ch + ' · ' + s.start + '–' + s.end + ' 页';
-        pages.textContent = '第 ' + s.start + '–' + s.end + ' 页';
+        kicker.textContent = item.ch + ' · pp. ' + s.start + '–' + s.end;
+        pages.textContent = 'pp. ' + s.start + '–' + s.end;
         pdf.href = 'advanced-math.pdf#page=' + s.start;
-        text.textContent = s.text || '正在加载这一节的文字…';
+        text.textContent = s.text || 'Loading the text for this section…';
 
         var html = '';
         for (var n = s.start; n <= s.end; n++) {
           var num = ('00' + n).slice(-3);
-          html += '<img loading="lazy" src="pages/' + num + '.jpg" alt="' + s.title + ' 第 ' + n + ' 页">';
+          html += '<img loading="lazy" src="pages/' + num + '.jpg" alt="' + s.title + ', p. ' + n + '">';
         }
         pageImages.innerHTML = html;
         pageImages.hidden = viewMode !== 'pages';
@@ -724,32 +724,32 @@
       });
 
       function doCopy(text, button, normal, success) {
-        if (!text) { setCopyStatus('源码尚未加载完成'); return; }
+        if (!text) { setCopyStatus('The source has not loaded yet'); return; }
         button.disabled = true;
         copyText(text).then(function (ok) {
           button.disabled = false;
           if (ok) {
-            setCopyStatus('已复制到剪贴板');
+            setCopyStatus('Copied to clipboard');
             button.textContent = success;
             setTimeout(function () { button.textContent = normal; }, 1400);
           } else {
-            setCopyStatus('复制失败，请切到源码框手动全选复制');
-            button.textContent = '复制失败';
+            setCopyStatus('Copy failed; select the source box and copy manually');
+            button.textContent = 'Copy failed';
             setTimeout(function () { button.textContent = normal; }, 2200);
           }
         });
       }
       copyBtn.addEventListener('click', function () {
-        doCopy(latexSource.value, copyBtn, '复制本节 LaTeX', '已复制');
+        doCopy(latexSource.value, copyBtn, 'Copy section as LaTeX', 'Copied');
       });
       copyDocBtn.addEventListener('click', function () {
-        doCopy(docWrap(latexSource.value), copyDocBtn, '复制完整 .tex', '已复制 .tex');
+        doCopy(docWrap(latexSource.value), copyDocBtn, 'Copy whole .tex', 'Copied .tex');
       });
       document.getElementById('latex-edit').addEventListener('click', function () {
         var showSource = latexSource.hidden;
         latexSource.hidden = !showSource;
         latexPreview.hidden = showSource;
-        this.textContent = showSource ? '渲染预览' : '源码 / 编辑';
+        this.textContent = showSource ? 'Rendered preview' : 'Source / edit';
         if (!showSource) {
           latexPreview.textContent = cleanDisplay(latexSource.value);
           typeset(latexPreview);

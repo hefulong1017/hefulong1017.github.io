@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="zh-CN" data-katex-base="">
+<html lang="en" data-katex-base="">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="safe-store.js?v=3"></script>
 
-  <title>高考题型分类 · 何富龙</title>
+  <title>Gaokao question index · He Fulong</title>
   <meta name="description" content="2016–2026 高考数学真题题型分类，按题型、年份、地区浏览，题目使用 LaTeX 排版，参考解答可逐题展开。">
   <meta name="theme-color" content="#f4efe6">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b64a32'/%3E%3Ctext x='32' y='44' font-family='serif' font-size='30' fill='%23fbf7ef' text-anchor='middle'%3E题%3C/text%3E%3C/svg%3E">
@@ -288,13 +288,13 @@
 
   <div class="shell">
     <header class="top">
-      <a class="brand" href="../" aria-label="返回何富龙个人主页">
-        <span class="brand-mark" aria-hidden="true">何</span>
-        <span class="brand-text"><span class="brand-name">何富龙</span><span class="brand-en">GAOKAO INDEX</span></span>
+      <a class="brand" href="../" aria-label="Back to He Fulong’s home page">
+        <span class="brand-mark" aria-hidden="true">H</span>
+        <span class="brand-text"><span class="brand-name">He Fulong</span><span class="brand-en">GAOKAO INDEX</span></span>
       </a>
       <div class="top-right">
-        <a class="back" href="../">← <span>返回主页</span></a>
-        <button class="theme" id="theme-toggle" type="button" aria-label="切换深浅色主题">
+        <a class="back" href="../">← <span>Back to home</span></a>
+        <button class="theme" id="theme-toggle" type="button" aria-label="Toggle light and dark theme">
           <span class="theme-dot" aria-hidden="true"></span><span id="theme-label">LIGHT</span>
         </button>
       </div>
@@ -303,25 +303,25 @@
     <main>
       <section class="hero">
         <p class="eyebrow">Gaokao / 2016–2026</p>
-        <h1>高考题型分类</h1>
+        <h1>Gaokao question index</h1>
         
         <div class="stats">
-          <div class="stat"><strong id="stat-cats">12</strong><span>题型分类</span></div>
-          <div class="stat"><strong id="stat-total">—</strong><span>题目数量</span></div>
-          <div class="stat"><strong>2016–2026</strong><span>年份范围</span></div>
+          <div class="stat"><strong id="stat-cats">12</strong><span>Topic groups</span></div>
+          <div class="stat"><strong id="stat-total">—</strong><span>Questions</span></div>
+          <div class="stat"><strong>2016–2026</strong><span>Years</span></div>
         </div>
       </section>
 
       <section class="section" id="categories">
         <div class="section-head">
-          <h2>选择题型</h2>
-          <p>点击一个分类开始浏览</p>
+          <h2>Pick a topic</h2>
+          <p>Click a category to start browsing</p>
         </div>
         <div class="cats" id="cats"></div>
       </section>
 
       <section class="browser" id="browser" aria-live="polite">
-        <div class="crumb"><button type="button" id="back-cats">← 全部题型</button><span>/</span><span id="crumb-name"></span></div>
+        <div class="crumb"><button type="button" id="back-cats">← All topics</button><span>/</span><span id="crumb-name"></span></div>
         <div class="browser-head">
           <div>
             <h2 id="cat-title"></h2>
@@ -332,23 +332,23 @@
         <div class="filters">
           <div class="year-row" id="year-row"></div>
           <div class="filter-row">
-            <select class="select" id="region" aria-label="按地区筛选"><option value="">全部地区</option></select>
-            <input class="search" id="search" type="search" placeholder="搜索题目关键词，例如：导数、椭圆、概率" aria-label="搜索题目">
+            <select class="select" id="region" aria-label="Filter by region"><option value="">All regions</option></select>
+            <input class="search" id="search" type="search" placeholder="Search questions, e.g. derivative, ellipse, probability" aria-label="Search questions">
             <span class="filter-note" id="filter-note"></span>
           </div>
         </div>
         <div class="q-list" id="q-list"></div>
-        <div class="empty" id="empty" hidden>没有找到符合条件的题目。</div>
-        <div class="more" id="more-wrap" hidden><button type="button" id="more">加载更多</button></div>
+        <div class="empty" id="empty" hidden>No questions match these filters.</div>
+        <div class="more" id="more-wrap" hidden><button type="button" id="more">Load more</button></div>
       </section>
 
       <section class="note">
-        <p>题目来自本人整理的 PDF 汇编，使用 LaTeX 重新排版，参考解答按高中方法整理，仅供对照；部分表格和公式在原 PDF 中为特殊排版，自动转换后可能有细微偏差。如发现明显问题，欢迎通过主页的 GitHub 告诉我。</p>
+        <p>Questions come from PDF compilations I put together and were re-typeset in LaTeX; the reference solutions follow high-school methods and are for comparison only. Some tables and formulas were laid out idiosyncratically in the original PDFs, so automatic conversion may leave small deviations. If you spot a real problem, tell me via GitHub on the home page.</p>
       </section>
 
       <section class="section mock-section" id="mock">
         <div class="section-head">
-          <h2>模考题型解法分享</h2>
+          <h2>Mock-paper walkthroughs</h2>
           <p>2026 武汉九调 · 2026 江浙皖共同体 · 2026 宁波二模 · 2025 长沙适应性 · 2025 武汉二调 · 2026 广州一模 · 2026 珠海教师招聘</p>
         </div>
         <a class="mock-card" href="mock/">
@@ -404,8 +404,8 @@
     </footer>
   </div>
 
-  <script src="gaokao-index.js?v=3"></script>
-  <script src="gaokao-app.js?v=39"></script>
+  <script src="gaokao-index.js?v=4"></script>
+  <script src="gaokao-app.js?v=40"></script>
 <script src="prefetch.js?v=2"></script>
   <script src="liquid-glass.js?v=2" defer></script>
 </body>

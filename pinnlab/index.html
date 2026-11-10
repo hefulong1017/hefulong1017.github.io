@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="dark" data-force-theme="dark">
+<html lang="en" data-theme="dark" data-force-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PINNLab · 偏微分方程体验工作台 · 何富龙</title>
-<meta name="description" content="PINNLab：用 LaTeX 输入偏微分方程，设置初边值，运行 PINN 数值候选，查看曲线、曲面切片与逐点结果。">
+<title>PINNLab · a hands-on PDE workbench · He Fulong</title>
+<meta name="description" content="PINNLab: write a PDE in LaTeX, set initial and boundary values, run PINN candidate solutions and inspect curves, surface slices and point values.">
 <script src="../safe-store.js?v=3"></script>
 <link rel="stylesheet" href="../katex.min.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="../katex.min.css"></noscript>
 <link rel="stylesheet" href="../page-transition.css?v=24">
@@ -146,11 +146,11 @@ pre .c{color:#6e6e73}
 <div class="scroll-progress" aria-hidden="true"></div>
 
 <header class="nav">
-  <a class="brand" href="../"><i>何</i><span>PINNLab<small>PINN · EXPERIMENT</small></span></a>
+  <a class="brand" href="../"><i>H</i><span>PINNLab<small>PINN · EXPERIMENT</small></span></a>
   <nav class="links">
-    <a class="hide-m" href="../gaokao.html">高考题库</a>
-    <a class="hide-m" href="../math/">高等数学</a>
-    <a href="../">返回主页 ↗</a>
+    <a class="hide-m" href="../gaokao.html">Gaokao</a>
+    <a class="hide-m" href="../math/">Calculus</a>
+    <a href="../">Back to home ↗</a>
   </nav>
 </header>
 
@@ -158,21 +158,21 @@ pre .c{color:#6e6e73}
   <section class="hero">
     <div>
       <p class="eyebrow">PINNLAB / SCIENTIFIC COMPUTING</p>
-      <h1>把偏微分方程，<br><em>写成可运行的实验。</em></h1>
-      <p class="lede">静态项目页，展示 PINNLab 的 LaTeX 方程输入、1D–3D 模板和曲线/曲面结果预览；在线求解需下载发布包并按部署说明运行。</p>
+      <h1>Partial differential equations,<br><em>written as runnable experiments.</em></h1>
+      <p class="lede">A static project page for PINNLab: LaTeX equation input, 1D–3D templates and previews of curve and surface results. Solving online means downloading the release and following the deployment notes.</p>
       <div class="pills">
-        <span class="pill">LaTeX 方程输入</span>
-        <span class="pill">1D–3D 模板</span>
-        <span class="pill">曲线 / 曲面切片</span>
-        <span class="pill">CSV 与逐点查询</span>
+        <span class="pill">LaTeX equations</span>
+        <span class="pill">1D–3D templates</span>
+        <span class="pill">Curve and surface slices</span>
+        <span class="pill">CSV and point queries</span>
       </div>
       <div class="actions">
-        <a class="btn primary" href="pinnlab-public-release-v2.zip" download>下载发布包 ↓</a>
-        <a class="btn ghost" href="#deploy">部署说明</a>
+        <a class="btn primary" href="pinnlab-public-release-v2.zip" download>Download release ↓</a>
+        <a class="btn ghost" href="#deploy">Deploy notes</a>
       </div>
     </div>
 
-    <div class="console" aria-label="PINNLab 界面示意">
+    <div class="console" aria-label="PINNLab interface preview">
       <div class="windowbar"><i></i><i></i><i></i><span>PINNLAB / PREVIEW</span></div>
       <div class="screen">
         <div class="label">EQUATION</div>
@@ -194,17 +194,17 @@ pre .c{color:#6e6e73}
   </section>
 
   <section id="features">
-    <div class="section-head"><h2>不是一个黑箱按钮</h2><p>WHAT IT DOES</p></div>
+    <div class="section-head"><h2>Not a black-box button</h2><p>WHAT IT DOES</p></div>
     <div class="features">
-      <article class="card"><div class="ico">∂</div><h3>方程直接写</h3><p>支持 \(x,y,z\) 与时间 \(t\)，可写变系数、散度形式和常见初边值条件，页面内实时编译 LaTeX。</p></article>
-      <article class="card"><div class="ico">3D</div><h3>从 1D 到 3D</h3><p>已通过方程族的 1D、2D、3D 扩展模板，包含坐标依赖系数示例；模板载入后仍可逐项修改。</p></article>
-      <article class="card"><div class="ico">∿</div><h3>结果能看，也能查</h3><p>固定坐标看曲线和曲面切片，单点查询具体数值，批量结果导出 CSV。</p></article>
-      <article class="card"><div class="ico">◌</div><h3>多版本候选</h3><p>V5–V8 数值候选并排比较，保留训练过程与误差信息，方便判断结果是否可信。</p></article>
+      <article class="card"><div class="ico">∂</div><h3>Write the equation directly</h3><p>Supports \(x,y,z\) and time \(t\), variable coefficients, divergence form and the usual initial and boundary conditions; LaTeX compiles live on the page.</p></article>
+      <article class="card"><div class="ico">3D</div><h3>From 1D to 3D</h3><p>Equation families come with 1D, 2D and 3D templates, including coordinate-dependent coefficient examples; everything stays editable once a template is loaded.</p></article>
+      <article class="card"><div class="ico">∿</div><h3>Results you can look at and query</h3><p>Fix a coordinate to see curve and surface slices, query single points for exact values, and export batch results as CSV.</p></article>
+      <article class="card"><div class="ico">◌</div><h3>Multiple candidate runs</h3><p>V5–V8 candidates sit side by side with their training history and error data, so you can judge whether a result is trustworthy.</p></article>
     </div>
   </section>
 
   <section>
-    <div class="section-head"><h2>方程库</h2><p>PARTIAL CATALOG</p></div>
+    <div class="section-head"><h2>Equation library</h2><p>PARTIAL CATALOG</p></div>
     <div class="chips">
       <span class="chip">Heat 1D / 2D</span><span class="chip">Poisson</span><span class="chip">Burgers</span>
       <span class="chip">Wave</span><span class="chip">Allen–Cahn</span><span class="chip">Black–Scholes</span>
@@ -214,23 +214,23 @@ pre .c{color:#6e6e73}
   </section>
 
   <section id="deploy">
-    <div class="section-head"><h2>部署到自己的容器</h2><p>DOCKER / STREAMLIT</p></div>
+    <div class="section-head"><h2>Deploy to your own container</h2><p>DOCKER / STREAMLIT</p></div>
     <div class="deploy">
       <div class="card">
         <span class="badge">PUBLIC RELEASE V2</span>
         <div class="steps">
-          <div class="step">下载右侧发布包，解压到仓库根目录，确认 <code>Dockerfile</code> 在根目录。</div>
-          <div class="step">在支持 Dockerfile 的平台创建 Web 服务，构建上下文选仓库根目录。</div>
-          <div class="step">容器读取平台注入的 <code>PORT</code>，健康检查路径 <code>/_stcore/health</code>。</div>
+          <div class="step">Download the release, unpack it into the repository root, and check that <code>Dockerfile</code> sits in the root.</div>
+          <div class="step">Create a web service on any platform that supports Dockerfiles, with the repository root as the build context.</div>
+          <div class="step">The container reads the <code>PORT</code>injected by the platform; the health-check path is <code>/_stcore/health</code>。</div>
         </div>
-        <pre><span class="c"># 本机预览</span>
+        <pre><span class="c"># local preview</span>
 docker build -t pinnlab-public .
 docker run --rm -p 8501:8501 pinnlab-public</pre>
-        <p class="note">不需要 GPU。默认镜像含公式图片识别，建议至少 4 GB 内存；资源紧张时可在构建时关闭 OCR。</p>
+        <p class="note">No GPU needed. The default image includes formula OCR, so allow at least 4 GB of memory; on a tight machine, turn OCR off at build time.</p>
       </div>
       <div class="card">
-        <h3>包里有什么</h3>
-        <p>Streamlit 界面、PINN 求解器、V5–V8 研究代码、方程模板与 Dockerfile。公开模式限制单任务 20 秒，适合体验和教学演示。</p>
+        <h3>What is in the release</h3>
+        <p>A Streamlit interface, the PINN solver, the V5–V8 research code, equation templates and a Dockerfile. Public mode caps each job at 20 seconds, which suits demos and teaching.</p>
         <div style="height:14px"></div>
         <a class="btn ghost" href="pinnlab-public-release-v2.zip" download>pinnlab-public-release-v2.zip ↓</a>
         <div style="height:10px"></div>
@@ -241,7 +241,7 @@ docker run --rm -p 8501:8501 pinnlab-public</pre>
 
   <footer class="footer">
     <span>PINNLAB / 2026</span>
-    <span><a href="../">何富龙 · 主页 ↗</a></span>
+    <span><a href="../">He Fulong · home ↗</a></span>
   </footer>
 </main>
 
