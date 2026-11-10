@@ -1552,10 +1552,14 @@
       var anchors = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"]'));
       var sections = anchors.map(function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
       if ('IntersectionObserver' in window && sections.length) {
+        var seen = {};
         var nio = new IntersectionObserver(function (entries) {
           entries.forEach(function (en) {
-            if (!en.isIntersecting) return;
-            anchors.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id); });
+            if (en.isIntersecting) { seen[en.target.id] = true; } else { delete seen[en.target.id]; }
+          });
+          var current = sections.filter(function (s) { return seen[s.id]; })[0];
+          anchors.forEach(function (a) {
+            a.classList.toggle('active', !!current && a.getAttribute('href') === '#' + current.id);
           });
         }, { rootMargin: '-34% 0px -52% 0px', threshold: 0 });
         sections.forEach(function (s) { nio.observe(s); });
