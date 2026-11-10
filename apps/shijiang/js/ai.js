@@ -310,9 +310,15 @@ function buildPrompt(payload) {
     dailyPerIp: 0,
     _probing: null,
 
+    /** 只有本地起服务时才有 /api/ai/* 后端；静态托管上不探测，避免 404 噪音 */
+    hasServer: function () {
+      var h = location.hostname;
+      return h === 'localhost' || h === '127.0.0.1' || h === '[::1]' || h === '';
+    },
+
     probe: function (force) {
       if (ai._probing && !force) return ai._probing;
-      if (typeof fetch !== 'function') {
+      if (typeof fetch !== 'function' || !ai.hasServer()) {
         ai._probing = Promise.resolve(false);
         return ai._probing;
       }

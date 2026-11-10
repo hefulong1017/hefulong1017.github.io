@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -134,7 +134,10 @@
       footer { flex-direction: column; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  </style>
+      .gallery-grid img { background: rgba(0,0,0,.04); }
+    .img-missing { display: grid; place-items: center; min-height: 120px; padding: 18px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); font-size: 13px; cursor: pointer; }
+    html[data-theme="dark"] .gallery-grid img { background: rgba(255,255,255,.05); }
+</style>
   <link rel="stylesheet" href="../page-transition.css?v=24">
   <link rel="stylesheet" href="../liquid-glass.css?v=2">
 </head>
@@ -339,6 +342,18 @@
           img.src = im.src;
           img.alt = im.cap;
           img.loading = 'lazy';
+          img.decoding = 'async';
+          if (im.w && im.h) { img.width = im.w; img.height = im.h; }
+          img.addEventListener('error', function () {
+            if (!img.isConnected) return;
+            var box = document.createElement('div');
+            box.className = 'img-missing';
+            box.textContent = '图片没能加载，点此重试';
+            box.addEventListener('click', function () {
+              img.src = im.src + (im.src.indexOf('?') < 0 ? '?r=' : '&r=') + Date.now();
+            });
+            a.replaceChildren(box);
+          });
           a.appendChild(img);
           var cap = document.createElement('figcaption');
           cap.textContent = im.cap;
