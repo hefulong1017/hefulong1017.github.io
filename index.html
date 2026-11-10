@@ -1006,6 +1006,15 @@
    "description":"MSc student in mathematics at Anhui University. Works on numerical PDEs, and turns the repetitive parts of teaching and research into tools.",
    "url":"https://hefulong1017.github.io/","sameAs":["https://github.com/hefulong1017"]}
   </script>
+  <style>
+    /* background-clip:text paints only inside the inline box, so Latin descenders
+       (the g in Fulong) were being cut off. Grow the paint box downwards, then
+       pull the layout back with a negative margin. */
+    .hero-title span {
+      padding-bottom: .14em;
+      margin-bottom: -.14em;
+    }
+  </style>
 </head>
 <body>
 
