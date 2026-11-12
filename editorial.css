@@ -1,0 +1,218 @@
+/* Editorial pass for the secondary pages. Mirrors the homepage language:
+   hairline rules, label typography, no card shadows. Scoped by body class. */
+
+:root {
+  --ed-rule: rgba(0, 0, 0, .12);
+  --ed-rule-soft: rgba(0, 0, 0, .07);
+  --ed-ink: #15171c;
+  --ed-muted: #6e6e73;
+  --ed-label: #6e6e73;
+  --ed-serif: "Songti SC", "Noto Serif SC", Georgia, serif;
+}
+
+html[data-theme="dark"] {
+  --ed-rule: rgba(255, 255, 255, .18);
+  --ed-rule-soft: rgba(255, 255, 255, .1);
+  --ed-ink: #f2f2f5;
+  --ed-muted: #a5a5ab;
+  --ed-label: #9a9aa0;
+}
+
+html body.ed .wrap,
+html body.ed .shell { max-width: 1080px; }
+
+/* shared: chips become plain labels */
+html body.ed .chip,
+html body.ed .jump a,
+html body.ed .select {
+  padding: 4px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid transparent !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  font-size: 12.5px !important;
+  letter-spacing: .02em;
+  color: var(--ed-muted) !important;
+}
+
+html body.ed .chip.on,
+html body.ed .chip[aria-pressed="true"],
+html body.ed .jump a.on {
+  background: none !important;
+  border-bottom-color: var(--ed-ink) !important;
+  color: var(--ed-ink) !important;
+}
+
+html body.ed .chip:hover,
+html body.ed .jump a:hover { color: var(--ed-ink) !important; }
+
+/* shared: any card-ish surface loses its shell */
+html body.ed .q,
+html body.ed .doc,
+html body.ed .example,
+html body.ed .mock-card {
+  border: 0 !important;
+  border-top: 1px solid var(--ed-rule) !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* ---------- solid geometry ---------- */
+html body.ed-solid .stats { border-bottom: 1px solid var(--ed-rule-soft); }
+
+html body.ed-solid .q { padding: 22px 0 30px !important; }
+
+html body.ed-solid .no {
+  display: inline-block;
+  min-width: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  font-size: 11px;
+  letter-spacing: .14em;
+  color: var(--ed-label) !important;
+}
+
+html body.ed-solid .ans-toggle,
+html body.ed-solid .q .toggle {
+  border: 0 !important;
+  border-bottom: 1px solid var(--ed-rule) !important;
+  border-radius: 0 !important;
+  background: none !important;
+  color: var(--ed-ink) !important;
+  font-size: 12.5px;
+}
+
+html body.ed-solid .card {
+  border: 0 !important;
+  border-top: 1px solid var(--ed-rule) !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  padding: 20px 0 26px !important;
+}
+
+html body.ed-solid .tags { gap: 14px !important; font-size: 10.5px !important; letter-spacing: .13em; text-transform: uppercase; color: var(--ed-label) !important; }
+
+html body.ed-solid .tags span {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  color: inherit !important;
+}
+
+html body.ed-solid .card .no { font-size: 11px; letter-spacing: .13em; color: var(--ed-label); }
+
+html body.ed-solid .card .figure img { border-radius: 0 !important; }
+
+html body.ed-solid .card .toggle {
+  margin-top: 14px;
+  padding: 4px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--ed-rule) !important;
+  border-radius: 0 !important;
+  background: none !important;
+  color: var(--ed-ink) !important;
+  font-size: 12.5px;
+}
+
+html body.ed-solid .card .toggle:hover { border-bottom-color: var(--ed-ink) !important; }
+
+html body.ed-solid .card .answer { border-radius: 0 !important; background: none !important; }
+
+/* ---------- numerical experiments ---------- */
+html body.ed-mworks .doc { padding: 26px 0 34px !important; }
+
+html body.ed-mworks .example { padding: 22px 0 26px !important; }
+
+html body.ed-mworks .example .doc-head,
+html body.ed-mworks .example .head { border-bottom: 1px solid var(--ed-rule-soft) !important; }
+
+html body.ed-mworks .example h2 { margin-bottom: 6px; }
+
+html body.ed-mworks .doc h2 {
+  font-family: var(--ed-serif) !important;
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+}
+
+html body.ed-mworks .doc-no,
+html body.ed-mworks .doc .no {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  font-size: 11px !important;
+  letter-spacing: .14em;
+  color: var(--ed-label) !important;
+}
+
+html body.ed-mworks .jump { border-bottom: 1px solid var(--ed-rule-soft); padding-bottom: 6px; }
+
+html body.ed-mworks .ex-no {
+  display: inline-block;
+  min-width: 0;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  font-size: 11px !important;
+  letter-spacing: .14em;
+  color: var(--ed-label) !important;
+}
+
+html body.ed-mworks .ex-src {
+  font-size: 10.5px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--ed-label) !important;
+}
+
+html body.ed-mworks .ex-head { gap: 16px; align-items: baseline; }
+
+/* ---------- gaokao ---------- */
+html body.ed-gaokao .cat {
+  border: 0 !important;
+  border-top: 1px solid var(--ed-rule) !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  padding: 18px 0 !important;
+}
+
+html body.ed-gaokao .cat:hover { background: none !important; transform: none !important; }
+
+html body.ed-gaokao .section-head {
+  border-top: 1px solid var(--ed-rule);
+  padding-top: 16px;
+}
+
+html body.ed-gaokao .section-head h2 { font-family: var(--ed-serif); font-weight: 600; }
+
+html body.ed-gaokao .mock-card {
+  padding: 18px 0 !important;
+  border-bottom: 1px solid var(--ed-rule-soft) !important;
+}
+
+html body.ed-gaokao .mock-card h3 { font-family: var(--ed-serif); }
+
+html body.ed-gaokao .search,
+html body.ed-gaokao .select {
+  border: 0 !important;
+  border-bottom: 1px solid var(--ed-rule) !important;
+  border-radius: 0 !important;
+  background: none !important;
+}
+
+html body.ed-solid .figure {
+  background: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}

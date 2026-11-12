@@ -301,15 +301,19 @@ html body .acc-plus {
   justify-content: center;
   width: 18px;
   height: 18px;
+  background: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
   font-size: 15px;
   line-height: 1;
   font-weight: 400;
-  color: var(--label);
+  color: var(--label) !important;
   transform: none !important;
   transition: transform .3s var(--ease), color .2s var(--ease);
 }
 
-html body .acc-block.open .acc-plus { transform: rotate(45deg) !important; color: var(--ink); }
+html body .acc-block.open .acc-plus { transform: rotate(45deg) !important; color: var(--ink) !important; }
 
 /* ---------- tools ---------- */
 html body .acc-block.acc-block,
@@ -352,18 +356,87 @@ html body .acc-title {
 
 html body .acc-count { font-size: 12px; color: var(--label); }
 
-html body .acc-inner { padding: 4px 0 20px !important; }
+html body .acc-inner { padding: 2px 0 14px !important; }
 
 html body .tool-row {
   border: 0 !important;
   border-top: 1px solid var(--rule-soft) !important;
   border-radius: 0 !important;
   background: none !important;
-  padding: 14px 0 !important;
+  padding: 11px 0 !important;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: baseline;
 }
 
-html body .tool-info h4 { font-size: 13.5px; font-weight: 600; }
-html body .tool-info p { font-size: 12.5px; line-height: 1.6; color: var(--muted); }
+html body .tool-icon {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  background: none !important;
+  font-size: 10.5px;
+  line-height: 20px;
+  color: var(--label);
+}
+
+html body .tool-info h4 {
+  margin: 0 0 3px;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+
+html body .tool-info h4 span {
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  color: var(--label);
+}
+
+html body .tool-info p {
+  margin: 0;
+  max-width: 66ch;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+html body .tool-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  font-size: 12px;
+}
+
+html body .tool-dl {
+  padding: 3px 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--rule) !important;
+  border-radius: 0 !important;
+  background: none !important;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+html body .tool-dl:hover { color: var(--accent); border-bottom-color: currentColor !important; }
+
+html body .tool-parts { font-size: 11px; color: var(--label); }
+html body .tool-sha { font-size: 11px; color: var(--label); }
+html body .tool-sha summary { cursor: pointer; }
+html body .tool-sha code {
+  display: block;
+  margin-top: 4px;
+  max-width: 260px;
+  font-size: 10px;
+  line-height: 1.5;
+  word-break: break-all;
+  color: var(--label);
+}
 
 /* ---------- education ---------- */
 html body .section#tools .acc-block:last-of-type { border-bottom: 0 !important; }
@@ -435,6 +508,44 @@ html body .nav-links a { font-size: 12.5px; letter-spacing: .01em; }
   html body .p-card h3, html body .p-card p { grid-column: 1; }
   html body .education .item { grid-template-columns: 1fr !important; row-gap: 4px; }
 }
+
+/* ---------- section anchors ---------- */
+html body .sec-anchor {
+  margin-left: 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  vertical-align: 2px;
+  color: var(--label);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity .16s var(--ease), color .16s var(--ease);
+}
+
+html body .section-head:hover .sec-anchor,
+html body .education:hover .sec-anchor,
+html body .sec-anchor:focus-visible { opacity: 1; }
+
+html body .sec-anchor:hover { color: var(--accent); }
+
+html body .anchor-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translate(-50%, 8px);
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(20, 22, 26, .92);
+  color: #fff;
+  font-size: 12px;
+  letter-spacing: .02em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+  z-index: 90;
+}
+
+html body .anchor-toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* ---------- focus ---------- */
 html body a:focus-visible,

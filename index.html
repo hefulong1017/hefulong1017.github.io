@@ -1116,7 +1116,7 @@
     <div class="flow-band" aria-hidden="true"><span></span><span></span><span></span></div>
 
     <section class="section" id="research">
-      <div class="section-head"><h2>Research</h2><p>Things I build to understand the maths</p></div>
+      <div class="section-head"><h2>Research<a class="sec-anchor" href="#research" data-anchor aria-label="Link to this section">#</a></h2><p>Things I build to understand the maths</p></div>
       <div class="p-grid">
       <a class="p-card" href="pinnlab/" aria-label="Open the PINNLab PDE workbench">
         <span class="tag">PDE · PINN</span>
@@ -1133,7 +1133,7 @@
 
 
     <section class="section" id="teaching">
-      <div class="section-head"><h2>Teaching &amp; notes</h2><p>Free to use, no sign-up</p></div>
+      <div class="section-head"><h2>Teaching &amp; notes<a class="sec-anchor" href="#teaching" data-anchor aria-label="Link to this section">#</a></h2><p>Free to use, no sign-up</p></div>
       <div class="p-grid">
       <a class="p-card" href="gaokao.html" aria-label="Browse the gaokao question index">
         <span class="tag">GAOKAO</span>
@@ -1160,7 +1160,7 @@
 
 
     <section class="section" id="tools">
-      <div class="section-head"><h2>Tools</h2><p>Small things that save me time</p></div>
+      <div class="section-head"><h2>Tools<a class="sec-anchor" href="#tools" data-anchor aria-label="Link to this section">#</a></h2><p>Small things that save me time</p></div>
 <div class="toolbox acc-block" id="software">
         <button class="acc-head" type="button" aria-expanded="false" aria-controls="software-panel">
           <span class="acc-head-main">
@@ -1321,7 +1321,7 @@
 
 
     <section class="education reveal" id="education">
-      <h2>Education</h2>
+      <h2>Education<a class="sec-anchor" href="#education" data-anchor aria-label="Link to this section">#</a></h2>
       <div class="timeline">
         <div class="item">
           <span class="year">2024.09–2027.06</span>
@@ -1629,6 +1629,33 @@
     })();
   </script>
 <script src="prefetch.js?v=2"></script>
+
+  <script>
+    (function () {
+      var links = document.querySelectorAll('[data-anchor]');
+      if (!links.length) return;
+      var toast = document.createElement('div');
+      toast.className = 'anchor-toast';
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toast);
+      var timer = null;
+      function show(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(timer);
+        timer = setTimeout(function () { toast.classList.remove('show'); }, 1600);
+      }
+      Array.prototype.forEach.call(links, function (a) {
+        a.addEventListener('click', function () {
+          var url = location.origin + location.pathname + a.getAttribute('href');
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(function () { show('Link copied'); }, function () {});
+          }
+        });
+      });
+    })();
+  </script>
   <script src="liquid-glass.js?v=2" defer></script>
 </body>
 </html>
