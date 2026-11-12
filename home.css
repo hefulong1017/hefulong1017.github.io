@@ -61,6 +61,23 @@ html body .hero-about {
 
 html[data-theme="dark"] body .hero-about { color: #c9c9cf; }
 
+html body .hero-interests {
+  margin: 0 0 28px;
+  max-width: 62ch;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+html body .hero-interests span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 10px;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  color: var(--label);
+}
+
 html body .hero-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
 
 html body .hero-links a {
@@ -430,3 +447,32 @@ html body button:focus-visible {
 html body ::selection { background: rgba(0, 113, 227, .16); }
 
 html body .year { font-variant-numeric: tabular-nums; }
+
+/* ---------- print: one clean sheet ---------- */
+@media print {
+  html body .nav,
+  html body .aurora,
+  html body .bg,
+  html body .scroll-progress,
+  html body .theme,
+  html body .hero-links,
+  html body .acc-panel,
+  html body .acc-plus { display: none !important; }
+
+  html body { background: #fff !important; color: #000 !important; }
+  html body main { width: 100% !important; }
+  html body .hero { display: block !important; padding: 0 0 18pt !important; }
+  html body .portrait { border-top: 0 !important; }
+  html body .section { padding: 14pt 0 0 !important; page-break-inside: avoid; }
+  html body .p-card { page-break-inside: avoid; }
+  html body .section-head h2,
+  html body .p-card h3,
+  html body .acc-title,
+  html body .education .item h3 { color: #000 !important; }
+  html body .p-card p,
+  html body .hero-about,
+  html body .hero-interests,
+  html body .education .item p { color: #333 !important; }
+  html body a { text-decoration: none !important; color: #000 !important; }
+  html body footer { margin-top: 18pt !important; padding-bottom: 0 !important; }
+}
